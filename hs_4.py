@@ -73,24 +73,35 @@ def calibrate_ispindel(event):
     """Print and save calibration point into Access database"""
     caller = event.widget
 
-    if caller == button_calibration_point_1:
-        calibration_point_1['Gravity'] = float(entry_gravity_point_1.get())
-        calibration_point_1['Angle'] = app.message['angle']
-        label_calibration_point_1.config(text=calibration_point_1)
+    try:
+        if caller == button_calibration_point_1:
+            calibration_point_1['Gravity'] = float(entry_gravity_point_1.get())
+            calibration_point_1['Angle'] = app.message['angle']
+            label_calibration_point_1.config(text=calibration_point_1)
 
-    if caller == button_calibration_point_2:
-        calibration_point_2['Gravity'] = float(entry_gravity_point_2.get())
-        calibration_point_2['Angle'] = app.message['angle']
-        label_calibration_point_2.config(text=calibration_point_2)
+        if caller == button_calibration_point_2:
+            calibration_point_2['Gravity'] = float(entry_gravity_point_2.get())
+            calibration_point_2['Angle'] = app.message['angle']
+            label_calibration_point_2.config(text=calibration_point_2)
+    except KeyError:
+        pass
+    except ValueError:
+        pass
 
 
 def generate_polynomial(event):
     """Calculate, print and save polynomial into Access database"""
-    a = ((float(entry_gravity_point_1.get()) - float(entry_gravity_point_2.get())) /
-         (calibration_point_1['Angle'] - calibration_point_2['Angle']))
-    b = float(entry_gravity_point_1.get()) - a * calibration_point_1['Angle']
-    label_generate_polynomial.config(text='y = ' + str(a) + 'x + ' + str(b))
-
+    try:
+        a = ((float(entry_gravity_point_1.get()) - float(entry_gravity_point_2.get())) /
+             (calibration_point_1['Angle'] - calibration_point_2['Angle']))
+        b = float(entry_gravity_point_1.get()) - a * calibration_point_1['Angle']
+        label_generate_polynomial.config(text='y = ' + str(a) + 'x + ' + str(b))
+    except KeyError:
+        pass
+    except ValueError:
+        pass
+    except ZeroDivisionError:
+        pass
 
 def resize_image(event):
     """Resize image when window size changed"""
@@ -153,7 +164,7 @@ def entry_unclick(event):
 
 
 # Input
-version = 3.05
+version = 4.01
 icon = 'images/icon.ico'
 image_ispindel = Image.open('images/iSpindel.bmp')
 image_brewery = Image.open('images/Brewery.bmp')
