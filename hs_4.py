@@ -3,8 +3,10 @@ from tkinter import *
 from tkinter import ttk
 import threading
 from ctypes import windll
+import os
 
 from PIL import Image, ImageTk
+import pyodbc as db
 
 """THREADING"""
 
@@ -91,11 +93,15 @@ def calibrate_ispindel(event):
 
 def generate_polynomial(event):
     """Calculate, print and save polynomial into Access database"""
+    global a
+    global b
+
     try:
         a = ((float(entry_gravity_point_1.get()) - float(entry_gravity_point_2.get())) /
              (calibration_point_1['Angle'] - calibration_point_2['Angle']))
         b = float(entry_gravity_point_1.get()) - a * calibration_point_1['Angle']
         label_generate_polynomial.config(text='y = ' + str(a) + 'x + ' + str(b))
+        print(a, b)
     except KeyError:
         pass
     except ValueError:
@@ -103,8 +109,12 @@ def generate_polynomial(event):
     except ZeroDivisionError:
         pass
 
+
 def resize_image(event):
     """Resize image when window size changed"""
+    global image_background_ispindel
+    global image_background_brewery
+
     width, height = event.width, event.height
     caller = event.widget
 
@@ -163,6 +173,42 @@ def entry_unclick(event):
         entry_gravity_point_2.config(fg='#c5c5c5')
 
 
+def confirm_settings(event):
+    """Confirm and save settings to Access database"""
+    global query
+
+    # Establish connection with local database and create cursor object
+    db_connection = db.connect(connection_string, autocommit=True)
+    cursor = db_connection.cursor()
+
+    # Fill table with new values
+    query = ("""INSERT INTO Fermentation_settings""" +
+             """(batch_number,""" +
+             """temperature_offset,""" +
+             """gravity_1,""" +
+             """gravity_2,""" +
+             """angle_1,""" +
+             """angle_2,""" +
+             """a,""" +
+             """b) VALUES """ +
+             """(""" +
+             str(entry_batch_number.get()) + """,""" +
+             str(entry_temperature_offset.get()) + """,""" +
+             str(calibration_point_1['Gravity']) + """,""" +
+             str(calibration_point_2['Gravity']) + """,""" +
+             str(calibration_point_1['Angle']) + """,""" +
+             str(calibration_point_2['Angle']) + """,""" +
+             str(a) + """,""" +
+             str(b) +
+             """);""")
+
+    db_connection.execute(query)
+
+    # Close cursor and connection with database
+    cursor.close()
+    db_connection.close()
+
+
 # Input
 version = 4.01
 icon = 'images/icon.ico'
@@ -171,6 +217,9 @@ image_brewery = Image.open('images/Brewery.bmp')
 title_str = 'Hajle Silesia Homebrewing System '
 calibration_point_1 = {}
 calibration_point_2 = {}
+a = 0.0
+b = 0.0
+
 
 # Window setup
 windll.shcore.SetProcessDpiAwareness(1)  # no blur of fonts - NOT WORKING
@@ -219,7 +268,7 @@ label_ispindel_parameters_values = Label(tab_1, font=(None, 14), bg='white', jus
 frame_entries_buttons = Frame(tab_1, bg='white')
 frame_entries_buttons.place(relx=0.2, rely=0)
 
-for i in range(7):
+for i in range(8):
     frame_entries_buttons.rowconfigure(i, weight=1, uniform='row')
 
 # Entries
@@ -263,6 +312,12 @@ button_generate_polynomial = Button(frame_entries_buttons, text='Generate polyno
 button_generate_polynomial.bind('<Button-1>', generate_polynomial)
 button_generate_polynomial.grid(row=6, column=0, sticky=W+E)
 
+button_confirm_settings = Button(frame_entries_buttons, text='Confirm settings', font=(None, 14),
+                                 anchor=W)
+button_confirm_settings.bind('<Button-1>', confirm_settings)
+button_confirm_settings.grid(row=7, column=0, sticky=W+E)
+
+
 image_button = PhotoImage(file='images/but.png')
 # image_button_copy = image_button.copy()
 button_valve_1 = Button(tab_2, image=image_button, borderwidth=0, bg='white')
@@ -286,6 +341,35 @@ sock.bind(server_address)
 
 # Listen for incoming connections (max 5 before refusing)
 sock.listen(5)
+
+"""DATABASE"""
+# Database setup
+database_path = os.getcwd() + r"\hajle_silesia_db.accdb"
+connection_string = ("Driver={Microsoft Access Driver (*.mdb, *.accdb)};" +
+                     "DBQ=" + database_path + ";")
+
+# Establish connection with local database and create cursor object
+db_connection = db.connect(connection_string, autocommit=True)
+cursor = db_connection.cursor()
+
+# Prepare query for table creation
+query = ("""CREATE TABLE Fermentation_settings""" +
+         """(batch_number short PRIMARY KEY NOT NULL,""" +
+         """temperature_offset DOUBLE NOT NULL, """ +
+         """gravity_1 DOUBLE NOT NULL,""" +
+         """gravity_2 DOUBLE NOT NULL,""" +
+         """angle_1 DOUBLE NOT NULL,""" +
+         """angle_2 DOUBLE NOT NULL,""" +
+         """a DOUBLE NOT NULL,""" +
+         """b DOUBLE NOT NULL);""")
+
+# Check existence / create table
+if not cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
+    db_connection.execute(query)
+
+# Close cursor and connection with database
+cursor.close()
+db_connection.close()
 
 # Create window
 app = App(root)
