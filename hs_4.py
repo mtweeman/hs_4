@@ -1,10 +1,11 @@
 import socket
 from tkinter import *
 from tkinter import ttk
+from tkinter import filedialog
 import threading
 from ctypes import windll
 import os
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as element_tree
 import copy
 
 from PIL import Image, ImageTk
@@ -211,19 +212,41 @@ def confirm_settings(event):
     cursor.close()
     db_connection.close()
 
-"""XML"""
-recipe = ET.parse(r'data/#070_American_Stout.xml').getroot()
 
-xml_dict = XmlDictConfig(recipe)
-mash_step = {}
-mash_steps = []
+def import_recipe(event):
+    """Open dialog window to import XML recipe"""
+    global xml_filepath
+    xml_filepath = filedialog.askopenfilename()
 
-for v in xml_dict['RECIPE']['MASH']['MASH_STEPS']['MASH_STEP']:
-    # print(v)
-    mash_step['NAME'] = v['NAME']
-    mash_step['STEP_TIME'] = int(float(v['STEP_TIME']))
-    mash_step['STEP_TEMP'] = int(float(v['STEP_TEMP']))
-    mash_steps.append(copy.deepcopy(mash_step))  # deep copy to avoid binding each element of the list with variable
+    recipe = element_tree.parse(xml_filepath).getroot()
+
+    xml_dict = XmlDictConfig(recipe)
+    mash_step = {}
+    mash_steps = []
+
+    for v in xml_dict['RECIPE']['MASH']['MASH_STEPS']['MASH_STEP']:
+        # print(v)
+        mash_step['NAME'] = v['NAME']
+        mash_step['STEP_TIME'] = int(float(v['STEP_TIME']))
+        mash_step['STEP_TEMP'] = int(float(v['STEP_TEMP']))
+        mash_steps.append(copy.deepcopy(mash_step))  # deep copy to avoid binding each element of the list with variable
+
+    mash_steps_texts = {'NAME': 'NAME', 'STEP_TIME': 'STEP_TIME', 'STEP_TEMP': 'STEP_TEMP'}
+
+    for v in mash_steps:
+        mash_steps_texts['NAME'] += '\n' + v['NAME']
+        mash_steps_texts['STEP_TIME'] += '\n' + str(v['STEP_TIME'])
+        mash_steps_texts['STEP_TEMP'] += '\n' + str(v['STEP_TEMP'])
+
+    frame_mash_steps.grid()
+    label_mash_steps_1.grid(row=0, column=0)
+    label_mash_steps_2.grid(row=0, column=1)
+    label_mash_steps_3.grid(row=0, column=2)
+
+    label_mash_steps_1.config(text=mash_steps_texts['NAME'])
+    label_mash_steps_2.config(text=mash_steps_texts['STEP_TIME'])
+    label_mash_steps_3.config(text=mash_steps_texts['STEP_TEMP'])
+
 
 # Input
 version = 4.01
@@ -235,7 +258,7 @@ calibration_point_1 = {}
 calibration_point_2 = {}
 a = 0.0
 b = 0.0
-
+xml_filepath = ''
 
 # Window setup
 windll.shcore.SetProcessDpiAwareness(1)  # no blur of fonts - NOT WORKING
@@ -252,12 +275,17 @@ style = ttk.Style()
 style.configure('TNotebook.Tab', font=('None', '14'))
 
 tab_control = ttk.Notebook(root)
-tab_1 = Frame(tab_control)
-tab_control.add(tab_1, text='iSpindel')
-tab_2 = Frame(tab_control)
-tab_control.add(tab_2, text='Brewery')
-tab_3 = Frame(tab_control)
-tab_control.add(tab_3, text='BeerSmith XML data')
+
+tab_ispindel = Frame(tab_control)
+tab_brewery = Frame(tab_control)
+tab_recipe = Frame(tab_control)
+tab_graph = Frame(tab_control)
+
+tab_control.add(tab_recipe, text='Recipe')
+tab_control.add(tab_ispindel, text='iSpindel')
+tab_control.add(tab_brewery, text='Brewery')
+tab_control.add(tab_graph, text='Graph')
+
 tab_control.pack(expand=1, fill='both')
 
 # Image preparation
@@ -267,23 +295,23 @@ image_brewery_copy = image_brewery.copy()
 image_background_brewery = ImageTk.PhotoImage(image_brewery)
 
 # Background image
-label_ispindel = Label(tab_1, image=image_background_ispindel)
+label_ispindel = Label(tab_ispindel, image=image_background_ispindel)
 label_ispindel.bind('<Configure>', resize_image)  # widget changed its size
 label_ispindel.place(relwidth=1, relheight=1)
 
-label_brewery = Label(tab_2, image=image_background_brewery)
+label_brewery = Label(tab_brewery, image=image_background_brewery)
 label_brewery.bind('<Configure>', resize_image)  # widget changed its size
 label_brewery.place(relwidth=1, relheight=1)
 
 # iSpindel labels
-label_ispindel_name = Label(tab_1, font=(None, 14), bg='white')
-label_ispindel_parameters_names = Label(tab_1, font=(None, 14), text='Waiting for data acquisition', bg='white',
+label_ispindel_name = Label(tab_ispindel, font=(None, 14), bg='white')
+label_ispindel_parameters_names = Label(tab_ispindel, font=(None, 14), text='Waiting for data acquisition', bg='white',
                                         justify=LEFT)
 label_ispindel_parameters_names.grid(row=0, column=0)
-label_ispindel_parameters_values = Label(tab_1, font=(None, 14), bg='white', justify=LEFT)
+label_ispindel_parameters_values = Label(tab_ispindel, font=(None, 14), bg='white', justify=LEFT)
 
 # Frames
-frame_entries_buttons = Frame(tab_1, bg='white')
+frame_entries_buttons = Frame(tab_ispindel, bg='white')
 frame_entries_buttons.place(relx=0.2, rely=0)
 
 for i in range(8):
@@ -315,6 +343,7 @@ entry_gravity_point_2.bind('<FocusOut>', entry_unclick)
 entry_gravity_point_2.grid(row=3, column=0, sticky=W+E)
 
 # Buttons setup
+# iSpindel tab
 button_calibration_point_1 = Button(frame_entries_buttons, text='Calibrate point 1', font=(None, 14),
                                     anchor=W)
 button_calibration_point_1.bind('<Button-1>', calibrate_ispindel)
@@ -335,10 +364,14 @@ button_confirm_settings = Button(frame_entries_buttons, text='Confirm settings',
 button_confirm_settings.bind('<Button-1>', confirm_settings)
 button_confirm_settings.grid(row=7, column=0, sticky=W+E)
 
+# Recipe tab
+button_import_recipe = Button(tab_recipe, text='Import recipe', font=(None, 14), anchor=W)
+button_import_recipe.bind('<Button-1>', import_recipe)
+button_import_recipe.grid(row=0, column=0)
 
 image_button = PhotoImage(file='images/but.png')
 # image_button_copy = image_button.copy()
-button_valve_1 = Button(tab_2, image=image_button, borderwidth=0, bg='white')
+button_valve_1 = Button(tab_brewery, image=image_button, borderwidth=0, bg='white')
 button_valve_1.place(relx=0.5, rely=0.5)
 
 # Text
@@ -350,26 +383,11 @@ label_generate_polynomial = Label(frame_entries_buttons, font=(None, 14), bg='wh
 label_generate_polynomial.grid(row=6, column=1, sticky=W+E)
 
 # Text XML
-mash_steps_texts = {'NAME': 'NAME', 'STEP_TIME': 'STEP_TIME', 'STEP_TEMP': 'STEP_TEMP'}
+frame_mash_steps = Frame(tab_recipe, bg='white', borderwidth=4, relief='solid')
 
-for v in mash_steps:
-    mash_steps_texts['NAME'] += '\n' + v['NAME']
-    mash_steps_texts['STEP_TIME'] += '\n' + str(v['STEP_TIME'])
-    mash_steps_texts['STEP_TEMP'] += '\n' + str(v['STEP_TEMP'])
-
-frame_mash_steps = Frame(tab_3, bg='white', borderwidth=4, relief='solid')
-frame_mash_steps.grid()
-
-label_mash_steps = Label(frame_mash_steps, bg='white', font=(None, 14), text=mash_steps_texts['NAME'],
-                         justify=LEFT)
-label_mash_steps.grid(row=0, column=0)
-label_mash_steps = Label(frame_mash_steps, bg='white', font=(None, 14), text=mash_steps_texts['STEP_TIME'],
-                         justify=LEFT)
-label_mash_steps.grid(row=0, column=1)
-label_mash_steps = Label(frame_mash_steps, bg='white', font=(None, 14), text=mash_steps_texts['STEP_TEMP'],
-                         justify=LEFT)
-label_mash_steps.grid(row=0, column=2)
-
+label_mash_steps_1 = Label(frame_mash_steps, bg='white', font=(None, 14), text='', justify=LEFT)
+label_mash_steps_2 = Label(frame_mash_steps, bg='white', font=(None, 14), text='', justify=LEFT)
+label_mash_steps_3 = Label(frame_mash_steps, bg='white', font=(None, 14), text='', justify=LEFT)
 
 """SOCKET"""
 # Create a TCP/IP socket
