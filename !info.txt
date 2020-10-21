@@ -1,0 +1,12 @@
+XML:
+
+https://stackoverflow.com/questions/2148119/how-to-convert-an-xml-string-to-a-dictionary
+
+https://stackoverflow.com/questions/1912434/how-do-i-parse-xml-in-python
+
+DEEPCOPY:
+
+https://stackoverflow.com/questions/5244810/python-appending-a-dictionary-to-a-list-i-see-a-pointer-like-behavior
+
+
+

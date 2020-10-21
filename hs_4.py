@@ -4,9 +4,12 @@ from tkinter import ttk
 import threading
 from ctypes import windll
 import os
+import xml.etree.ElementTree as ET
+import copy
 
 from PIL import Image, ImageTk
 import pyodbc as db
+from xml_list_config import *
 
 """THREADING"""
 
@@ -208,6 +211,19 @@ def confirm_settings(event):
     cursor.close()
     db_connection.close()
 
+"""XML"""
+recipe = ET.parse(r'data/#070_American_Stout.xml').getroot()
+
+xml_dict = XmlDictConfig(recipe)
+mash_step = {}
+mash_steps = []
+
+for v in xml_dict['RECIPE']['MASH']['MASH_STEPS']['MASH_STEP']:
+    # print(v)
+    mash_step['NAME'] = v['NAME']
+    mash_step['STEP_TIME'] = int(float(v['STEP_TIME']))
+    mash_step['STEP_TEMP'] = int(float(v['STEP_TEMP']))
+    mash_steps.append(copy.deepcopy(mash_step))  # deep copy to avoid binding each element of the list with variable
 
 # Input
 version = 4.01
@@ -240,6 +256,8 @@ tab_1 = Frame(tab_control)
 tab_control.add(tab_1, text='iSpindel')
 tab_2 = Frame(tab_control)
 tab_control.add(tab_2, text='Brewery')
+tab_3 = Frame(tab_control)
+tab_control.add(tab_3, text='BeerSmith XML data')
 tab_control.pack(expand=1, fill='both')
 
 # Image preparation
@@ -331,6 +349,28 @@ label_calibration_point_2.grid(row=5, column=1, sticky=W+E)
 label_generate_polynomial = Label(frame_entries_buttons, font=(None, 14), bg='white', anchor=W)
 label_generate_polynomial.grid(row=6, column=1, sticky=W+E)
 
+# Text XML
+mash_steps_texts = {'NAME': 'NAME', 'STEP_TIME': 'STEP_TIME', 'STEP_TEMP': 'STEP_TEMP'}
+
+for v in mash_steps:
+    mash_steps_texts['NAME'] += '\n' + v['NAME']
+    mash_steps_texts['STEP_TIME'] += '\n' + str(v['STEP_TIME'])
+    mash_steps_texts['STEP_TEMP'] += '\n' + str(v['STEP_TEMP'])
+
+frame_mash_steps = Frame(tab_3, bg='white', borderwidth=4, relief='solid')
+frame_mash_steps.grid()
+
+label_mash_steps = Label(frame_mash_steps, bg='white', font=(None, 14), text=mash_steps_texts['NAME'],
+                         justify=LEFT)
+label_mash_steps.grid(row=0, column=0)
+label_mash_steps = Label(frame_mash_steps, bg='white', font=(None, 14), text=mash_steps_texts['STEP_TIME'],
+                         justify=LEFT)
+label_mash_steps.grid(row=0, column=1)
+label_mash_steps = Label(frame_mash_steps, bg='white', font=(None, 14), text=mash_steps_texts['STEP_TEMP'],
+                         justify=LEFT)
+label_mash_steps.grid(row=0, column=2)
+
+
 """SOCKET"""
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -344,7 +384,7 @@ sock.listen(5)
 
 """DATABASE"""
 # Database setup
-database_path = os.getcwd() + r"\hajle_silesia_db.accdb"
+database_path = os.getcwd() + r"/hajle_silesia_db.accdb"
 connection_string = ("Driver={Microsoft Access Driver (*.mdb, *.accdb)};" +
                      "DBQ=" + database_path + ";")
 
