@@ -8,5 +8,25 @@ DEEPCOPY:
 
 https://stackoverflow.com/questions/5244810/python-appending-a-dictionary-to-a-list-i-see-a-pointer-like-behavior
 
+DIALOG WINDOW:
+
+https://stackoverflow.com/questions/9319317/quick-and-easy-file-dialog-in-python
+
+TIMEDELTA:
+
+https://docs.python.org/3.4/library/datetime.html?highlight=weekday
+
+KEY=LAMBDA
+
+https://stackoverflow.com/questions/46154773/sort-a-dictionary-of-values-with-custom-sequence/46154865
+
+https://stackoverflow.com/questions/34308635/sort-elements-with-specific-order-in-python
+
+BEERXML:
+
+http://www.beerxml.com/beerxml.htm
+
+
+
 
 
