@@ -9,6 +9,8 @@ import xml.etree.ElementTree as element_tree
 import copy
 import datetime
 from _collections import OrderedDict
+import smtplib
+from email.message import EmailMessage
 
 from PIL import Image, ImageTk
 import pyodbc as db
@@ -19,7 +21,6 @@ from xml_list_config import *
 
 class App(threading.Thread):
     """A class to handle thread for socket"""
-
     def __init__(self, root):
         """Initialize class"""
         super().__init__()
@@ -99,8 +100,7 @@ def calibrate_ispindel(event):
 
 def generate_polynomial(event):
     """Calculate, print and save polynomial into Access database"""
-    global a
-    global b
+    global a, b
 
     try:
         a = ((float(entry_gravity_point_1.get()) - float(entry_gravity_point_2.get())) /
@@ -250,6 +250,9 @@ def import_recipe():
     parameters = OrderedDict()
     parameters_texts = {'NAME': 'NAME', 'VALUE': 'VALUE'}
 
+    total_grains_weight = 0.0
+    total_hops_weight = 0
+
     # RECIPE AND BATCH NUMBER
     label_recipe.config(text=xml_dict['RECIPE']['NAME'])
     label_recipe.grid(row=3, columnspan=6, sticky=NSEW)
@@ -285,7 +288,6 @@ def import_recipe():
 
     # HOPS
     if 'HOPS' in xml_dict['RECIPE']:
-        total_hops_weight = 0
 
         for v in xml_dict['RECIPE']['HOPS']['HOP']:
             if v['USE'] == 'First Wort' or v['USE'] == 'Boil' or v['USE'] == 'Aroma':
@@ -358,7 +360,6 @@ def import_recipe():
 
     # FERMENTABLES
     if 'FERMENTABLES' in xml_dict['RECIPE']:
-        total_grains_weight = 0.0
 
         for v in xml_dict['RECIPE']['FERMENTABLES']['FERMENTABLE']:
             fermentable['NAME'] = v['NAME']
