@@ -26,6 +26,13 @@ BEERXML:
 
 http://www.beerxml.com/beerxml.htm
 
+PRINT ALL VARIABLES IN CLASS:
+
+https://stackoverflow.com/questions/3992803/print-all-variables-in-a-class-python
+
+PARTIALLY TRANSPARENT LABELS ON THE BACKGROUND + CANVAS:
+
+https://stackoverflow.com/questions/48327765/draggable-tkinter-label-with-transparent-image-still-covers-image-from-parent-ca
 
 
 
