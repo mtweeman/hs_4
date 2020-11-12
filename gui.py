@@ -21,8 +21,10 @@ import pyodbc as db
 from xml_list_config import *
 from recipe_tab_gui import RecipeTabGUI
 from brewery_tab_gui import BreweryTabGUI
+from ispindel_tab_gui import iSpindelTabGUI
 from recipe_parameters import RecipeParameters
 from brewery_parameters import BreweryParameters
+from ispindel_parameters import iSpindelParameters
 
 # Input
 version = 4.01
@@ -32,6 +34,7 @@ title_str = 'Hajle Silesia Homebrewing System '
 
 recipe_parameters = RecipeParameters()
 brewery_parameters = BreweryParameters()
+ispindel_parameters = iSpindelParameters()
 
 # Window setup
 windll.shcore.SetProcessDpiAwareness(1)  # no blur of fonts - NOT WORKING
@@ -47,7 +50,8 @@ root.title(title_str + str(version))
 tab_control = ttk.Notebook(root)
 tab_control.pack(fill='both', expand=1)
 
-tabs = [RecipeTabGUI(tab_control, recipe_parameters),
+tabs = [iSpindelTabGUI(tab_control, ispindel_parameters),
+        RecipeTabGUI(tab_control, recipe_parameters),
         BreweryTabGUI(tab_control, brewery_parameters),
         ]
 

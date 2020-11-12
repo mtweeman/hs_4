@@ -218,8 +218,6 @@ b = 0.0
 # Image preparation
 image_ispindel_copy = image_ispindel.copy()
 image_background_ispindel = ImageTk.PhotoImage(image_ispindel)
-image_brewery_copy = image_brewery.copy()
-image_background_brewery = ImageTk.PhotoImage(image_brewery)
 
 # Background image
 label_ispindel = Label(tab_ispindel, image=image_background_ispindel)
@@ -286,11 +284,6 @@ button_confirm_settings = Button(frame_entries_buttons, text='Confirm settings',
                                  anchor=W)
 button_confirm_settings.bind('<Button-1>', confirm_settings)
 button_confirm_settings.grid(row=7, column=0, sticky=W+E)
-
-image_button = PhotoImage(file='images/but.png')
-# image_button_copy = image_button.copy()
-button_valve_1 = Button(tab_brewery, image=image_button, borderwidth=0, bg='white')
-button_valve_1.place(relx=0.5, rely=0.5)
 
 # Text
 label_calibration_point_1 = Label(frame_entries_buttons, font=(None, 14), bg='white', anchor=W)
