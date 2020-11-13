@@ -51,7 +51,6 @@ class iSpindelTabGUI(Frame):
             self.f_settings_parameters, font=(None, 14), text='Confirm settings', anchor=W)
 
         # f_parameters
-        # self.parameters_values = ['time', 'angle', 'rssi', 'name', 'battery', 'temperature']
         self.parameters_values = OrderedDict.fromkeys(['time', 'angle', 'rssi', 'name', 'battery', 'temperature'])
         self.l_parameters_names = []
         self.l_parameters_values = []
@@ -130,12 +129,13 @@ class iSpindelTabGUI(Frame):
         # Coordinates of GUI objects
         if self.c_dots and self.c_lines:
             for i, ispindel_coord_tuple in enumerate(self.ispindel_coords.items()):
+                print(ispindel_coord_tuple)
                 self.c_ispindel.coords(
                     self.c_lines[ispindel_coord_tuple[0]],
                     int(round(self.w_scale * self.img_ispindel.width * (ispindel_coord_tuple[1][0] / self.ispindel_rect[0]), 0)),
                     int(round(self.h_scale * self.img_ispindel.height * (ispindel_coord_tuple[1][1] / self.ispindel_rect[1]), 0)),
                     self.w_scale * self.img_ispindel.width / 3,
-                    self.l_parameters_names[i].winfo_y() + self.l_parameters_names[i].winfo_height() / 2)
+                    self.l_parameters_names[i + 1].winfo_y() + self.l_parameters_names[i + 1].winfo_height() / 2)
                 self.c_ispindel.coords(
                     self.c_dots[ispindel_coord_tuple[0]],
                     int(round(self.w_scale * (self.img_ispindel.width * (ispindel_coord_tuple[1][0] / self.ispindel_rect[0]) - 10), 0)),
@@ -183,7 +183,7 @@ class iSpindelTabGUI(Frame):
                 xa = int(round(self.w_scale * (self.img_ispindel.width * (ispindel_coord_tuple[1][0] / self.ispindel_rect[0])), 0))
                 ya = int(round(self.h_scale * (self.img_ispindel.height * (ispindel_coord_tuple[1][1] / self.ispindel_rect[1])), 0))
                 xb = self.w_scale * self.img_ispindel.width / 3
-                yb = self.l_parameters_names[i].winfo_y() + self.l_parameters_names[i].winfo_height() / 2
+                yb = self.l_parameters_names[i + 1].winfo_y() + self.l_parameters_names[i + 1].winfo_height() / 2
                 a = (ya - yb) / (xa - xb)
                 b = ya - a * xa
                 x = xa + (xb - xa) * (1 - (stop - datetime.datetime.now()).total_seconds() / difference)
@@ -197,7 +197,7 @@ class iSpindelTabGUI(Frame):
             self.c_ispindel.update_idletasks()
 
         # Extract needed parameters into 'iSpindelTabGUI' instance variable
-        self.parameters_values['time'] = datetime.datetime.now().isoformat(timespec='seconds')
+        self.parameters_values['time'] = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S')
 
         for key, value in self.parameters_values.items():
             if key in socket_message.keys():
