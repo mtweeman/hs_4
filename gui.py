@@ -18,13 +18,13 @@ from PIL import Image, ImageTk
 import pyodbc as db
 
 # My libraries
-from xml_list_config import *
 from recipe_tab_gui import RecipeTabGUI
 from brewery_tab_gui import BreweryTabGUI
 from ispindel_tab_gui import iSpindelTabGUI
 from recipe_parameters import RecipeParameters
 from brewery_parameters import BreweryParameters
 from ispindel_parameters import iSpindelParameters
+from socket_thread import SocketThread
 
 # Input
 version = 4.01
@@ -58,4 +58,5 @@ tabs = [iSpindelTabGUI(tab_control, ispindel_parameters),
 for tab in tabs:
     tab_control.add(tab, text=tab.name)
 
+socket_thread = SocketThread(tabs[0])
 root.mainloop()

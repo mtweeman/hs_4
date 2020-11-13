@@ -1,76 +1,10 @@
 import socket
 from tkinter import *
-from tkinter import ttk
-from tkinter import filedialog
 import threading
-from ctypes import windll
 import os
-import xml.etree.ElementTree as element_tree
-import copy
-import datetime
-from _collections import OrderedDict
 
 from PIL import Image, ImageTk
 import pyodbc as db
-
-"""THREADING"""
-
-
-class App(threading.Thread):
-    """A class to handle thread for socket"""
-    def __init__(self, root):
-        """Initialize class"""
-        super().__init__()
-        self.root = root
-        self.daemon = True  # destroy when main thread is terminates
-        self.start()
-        self.message = {}
-
-    def run(self):
-        """Run socket loop"""
-        while True:
-            # Wait for a connection
-            (connection, client_address) = sock.accept()
-
-            label_ispindel_parameters_names.config(text='')
-            label_ispindel_parameters_names.grid(row=0, column=0)
-            label_ispindel_parameters_values.config(text='')
-            label_ispindel_parameters_values.grid(row=0, column=0)
-            label_ispindel_parameters_names.config(text='Data processing')
-            label_ispindel_parameters_names.grid(row=0, column=0)
-
-            message_string = ''
-            parameters = ''
-            values = ''
-
-            try:
-                while True:
-                    data = connection.recv(200).decode("utf-8")
-
-                    if data:
-                        message_string += data
-                    else:
-                        message = eval(message_string)
-
-                        label_ispindel_name.config(text=message['token'])
-                        label_ispindel_name.place(relx=0.1, rely=0.71, anchor='center')
-                        self.message = message
-                        for key, value in message.items():
-                            parameters += key.title() + '\n'
-                            values += str(value) + '\n'
-
-                        label_ispindel_parameters_names.config(text=parameters)
-                        label_ispindel_parameters_names.grid(row=0, column=1)
-                        label_ispindel_parameters_values.config(text=values)
-                        label_ispindel_parameters_values.place(x=label_ispindel_parameters_names.winfo_width() + 20,
-                                                               rely=0, anchor=NW)
-
-                        break
-
-            finally:
-                # Clean up the connection
-                connection.close()
-
 
 """TKINTER"""
 
@@ -111,21 +45,6 @@ def generate_polynomial(event):
         pass
     except ZeroDivisionError:
         pass
-
-
-def resize_image(event):
-    """Resize image when window size changed"""
-    global image_background_ispindel, image_background_brewery
-    global image_button_toggle_switch_on, image_button_toggle_switch_off
-
-    width, height = event.width, event.height
-    caller = event.widget
-
-    if caller == label_ispindel:
-        image = image_ispindel_copy.resize((width, height))
-        image_background_ispindel = ImageTk.PhotoImage(image)
-        label_ispindel.config(image=image_background_ispindel)
-        label_ispindel.image = image_background_ispindel  # avoid garbage collection, doesn't work without this line
 
 
 def entry_click(event):
@@ -206,7 +125,6 @@ def confirm_settings(event):
     db_connection.close()
 
 # Input
-image_ispindel = Image.open('images/iSpindel.bmp')
 calibration_point_1 = {}
 calibration_point_2 = {}
 a = 0.0
@@ -214,15 +132,6 @@ b = 0.0
 
 
 # Tab setup
-
-# Image preparation
-image_ispindel_copy = image_ispindel.copy()
-image_background_ispindel = ImageTk.PhotoImage(image_ispindel)
-
-# Background image
-label_ispindel = Label(tab_ispindel, image=image_background_ispindel)
-label_ispindel.bind('<Configure>', resize_image)  # widget changed its size
-label_ispindel.place(relwidth=1, relheight=1)
 
 # iSpindel labels
 label_ispindel_name = Label(tab_ispindel, font=(None, 14), bg='white')
@@ -292,17 +201,6 @@ label_calibration_point_2 = Label(frame_entries_buttons, font=(None, 14), bg='wh
 label_calibration_point_2.grid(row=5, column=1, sticky=W+E)
 label_generate_polynomial = Label(frame_entries_buttons, font=(None, 14), bg='white', anchor=W)
 label_generate_polynomial.grid(row=6, column=1, sticky=W+E)
-
-"""SOCKET"""
-# Create a TCP/IP socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-# Bind the socket to the port
-server_address = (socket.gethostname(), 9501)
-sock.bind(server_address)
-
-# Listen for incoming connections (max 5 before refusing)
-sock.listen(5)
 
 """DATABASE"""
 # Database setup

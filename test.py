@@ -1,39 +1,30 @@
 from tkinter import *
+from PIL import Image, ImageTk
 
-# a subclass of Canvas for dealing with resizing of windows
-class ResizingCanvas(Canvas):
-    def __init__(self,parent,**kwargs):
-        Canvas.__init__(self,parent,**kwargs)
-        self.bind("<Configure>", self.on_resize)
-        self.height = self.winfo_reqheight()
-        self.width = self.winfo_reqwidth()
 
-    def on_resize(self,event):
-        # determine the ratio of old width/height to new width/height
-        wscale = float(event.width)/self.width
-        hscale = float(event.height)/self.height
-        self.width = event.width
-        self.height = event.height
-        # resize the canvas
-        self.config(width=self.width, height=self.height)
-        # rescale all the objects tagged with the "all" tag
-        self.scale("all",0,0,wscale,hscale)
+def resize(event):
+    global c_img, img
+    width, height = event.width, event.height
+    w_scale = width / img.width
+    h_scale = width / img.height
 
-def main():
-    root = Tk()
-    myframe = Frame(root)
-    myframe.pack(fill=BOTH, expand=YES)
-    mycanvas = ResizingCanvas(myframe,width=850, height=400, bg="red", highlightthickness=0)
-    mycanvas.pack(fill=BOTH, expand=YES)
+    image = img_c.resize((width, height))
+    c_img = ImageTk.PhotoImage(image)
+    can.itemconfig(c_back, image=c_img)
 
-    # add some widgets to the canvas
-    mycanvas.create_line(0, 0, 200, 100)
-    mycanvas.create_line(0, 100, 200, 0, fill="red", dash=(4, 4))
-    mycanvas.create_rectangle(50, 25, 150, 75, fill="blue")
+    can.coords(c_line, 20 * w_scale, 20 * h_scale, 200 * w_scale, 200 * h_scale)
 
-    # tag all of the drawn widgets
-    mycanvas.addtag_all("all")
-    root.mainloop()
+root = Tk()
+root.state('zoomed')
+can = Canvas(root)
 
-if __name__ == "__main__":
-    main()
+img = Image.open('images/ispindel2.bmp')
+img_c = img.copy()
+c_img = ImageTk.PhotoImage(image=img)
+
+c_back = can.create_image(0, 0, anchor=N + W, image=c_img)
+c_line = can.create_line(20, 20, 200, 200, width=2)
+can.place(relwidth=1, relheight=1)
+can.bind('<Configure>', resize)
+
+root.mainloop()
