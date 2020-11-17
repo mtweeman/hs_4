@@ -42,7 +42,7 @@ class SocketThread(threading.Thread):
                     else:
                         socket_message = eval(socket_message)
                         socket_message = {k.lower(): v for k, v in socket_message.items()}
-                        self.ispindel_tab_gui.draw_indicators(socket_message)
+                        self.ispindel_tab_gui.update_parameters(socket_message)
                         break
             finally:
                 connection.close()

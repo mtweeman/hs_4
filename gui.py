@@ -20,11 +20,12 @@ import pyodbc as db
 # My libraries
 from recipe_tab_gui import RecipeTabGUI
 from brewery_tab_gui import BreweryTabGUI
-from ispindel_tab_gui import iSpindelTabGUI
+from ispindel_tab_gui import ISpindelTabGUI
 from recipe_parameters import RecipeParameters
 from brewery_parameters import BreweryParameters
-from ispindel_parameters import iSpindelParameters
+from ispindel_parameters import ISpindelParameters
 from socket_thread import SocketThread
+from database import Database
 
 # Input
 version = 4.01
@@ -34,7 +35,8 @@ title_str = 'Hajle Silesia Homebrewing System '
 
 recipe_parameters = RecipeParameters()
 brewery_parameters = BreweryParameters()
-ispindel_parameters = iSpindelParameters()
+ispindel_parameters = ISpindelParameters()
+database = Database()
 
 # Window setup
 windll.shcore.SetProcessDpiAwareness(1)  # no blur of fonts - NOT WORKING
@@ -50,13 +52,17 @@ root.title(title_str + str(version))
 tab_control = ttk.Notebook(root)
 tab_control.pack(fill='both', expand=1)
 
-tabs = [iSpindelTabGUI(tab_control, ispindel_parameters),
-        RecipeTabGUI(tab_control, recipe_parameters),
-        BreweryTabGUI(tab_control, brewery_parameters),
+ispindel_tab_gui = ISpindelTabGUI(tab_control, ispindel_parameters, database)
+recipe_tab_gui = RecipeTabGUI(tab_control, recipe_parameters)
+brewery_tab__gui = BreweryTabGUI(tab_control, brewery_parameters)
+
+tabs = [ispindel_tab_gui,
+        recipe_tab_gui,
+        brewery_tab__gui,
         ]
 
 for tab in tabs:
     tab_control.add(tab, text=tab.name)
 
-socket_thread = SocketThread(tabs[0])
+socket_thread = SocketThread(ispindel_tab_gui)
 root.mainloop()

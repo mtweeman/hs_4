@@ -86,7 +86,7 @@ class RecipeTabGUI(Frame):
         self.l_hop_time = Label(self.f_hops, font=(None, 14), text='', justify=LEFT)
 
         # Creating list with all frames for looping
-        self.frames = [self.f_miscs,
+        self.f_frames = [self.f_miscs,
                        self.f_fermentables,
                        self.f_parameters,
                        self.f_mash,
@@ -94,7 +94,7 @@ class RecipeTabGUI(Frame):
                        ]
 
         # Creatiing list with all toggles for looping
-        self.toggles = [self.s_yos,
+        self.s_toggles = [self.s_yos,
                         self.s_mlt_rinse,
                         self.s_mlt_cip,
                         self.s_bk_rinse,
@@ -166,12 +166,12 @@ class RecipeTabGUI(Frame):
         for i in range(self.f_user_settings.grid_size()[0]):
             self.f_user_settings.columnconfigure(i, weight=1, uniform='column')
 
-        for f in self.frames:
+        for f in self.f_frames:
             for i in range(f.grid_size()[0]):
                 f.columnconfigure(i, weight=1)
 
         # Adding separators to columns in frames
-        for f in self.frames:
+        for f in self.f_frames:
             for i in range(f.grid_size()[0]-1):
                 ttk.Separator(f, orient=VERTICAL).grid(row=1, column=i, padx=20, sticky=N+S+E)
 
@@ -275,7 +275,7 @@ class RecipeTabGUI(Frame):
         elif caller == self.s_bk_cip:
             self.recipe_parameters.verify_user_parameters('bk_cip')
 
-        for i, toggle in enumerate(self.toggles):
+        for i, toggle in enumerate(self.s_toggles):
             if list(self.recipe_parameters.user_parameters.items())[i][1]:
                 toggle.config(image=self.img_l_switch_on)
             else:

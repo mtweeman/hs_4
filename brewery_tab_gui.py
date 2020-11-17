@@ -33,6 +33,8 @@ class BreweryTabGUI(Frame):
         # Names of GUI objects in the tab
         self.c_brewery = Canvas(self)
 
+        self.c_items = {}
+
         # CATIA coordinates
         self.brewery_rect = (2160, 1215)
         filename = 'data/brewery_coords.csv'
@@ -48,8 +50,6 @@ class BreweryTabGUI(Frame):
 
         # Adding images to GUI objects
         self.c_background = self.c_brewery.create_image(0, 0, anchor=N + W, image=self.img_c_brewery)
-
-        self.c_items = {}
 
         for key, value in self.brewery_coords.items():
             self.c_items[key] = self.c_brewery.create_image(
