@@ -1,21 +1,10 @@
 # Standard libraries
-import socket
 from tkinter import *
 from tkinter import ttk
-from tkinter import filedialog
-import threading
 from ctypes import windll
-import os
-import xml.etree.ElementTree as element_tree
-import copy
-import datetime
-from _collections import OrderedDict
-import smtplib
-from email.message import EmailMessage
 
 # Imported libraries
-from PIL import Image, ImageTk
-import pyodbc as db
+from PIL import Image
 
 # My libraries
 from recipe_tab_gui import RecipeTabGUI

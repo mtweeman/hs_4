@@ -18,6 +18,7 @@ class ISpindelParameters:
                                                   'angle_1',
                                                   'a',
                                                   'b',
+                                                  'battery_notification',
                                                   ])
 
     def calculate_polynomial(self):

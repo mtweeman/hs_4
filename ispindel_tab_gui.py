@@ -4,7 +4,6 @@ from tkinter import ttk
 import csv
 import datetime
 from _collections import OrderedDict
-import time
 
 # Imported libraries
 from PIL import Image, ImageTk
@@ -97,7 +96,7 @@ class ISpindelTabGUI(Frame):
                           self.e_temperature_offset,
                           self.e_gravity_point_1,
                           self.e_gravity_point_2,
-                        ]
+                          ]
 
         self.b_calibration_points = [self.b_calibration_point_1,
                                      self.b_calibration_point_2,
@@ -176,16 +175,22 @@ class ISpindelTabGUI(Frame):
             for i, ispindel_coord_tuple in enumerate(self.ispindel_coords.items()):
                 self.c_ispindel.coords(
                     self.c_lines[ispindel_coord_tuple[0]],
-                    int(round(self.w_scale * self.img_ispindel.width * (int(ispindel_coord_tuple[1][0]) / self.ispindel_rect[0]), 0)),
-                    int(round(self.h_scale * self.img_ispindel.height * (int(ispindel_coord_tuple[1][1]) / self.ispindel_rect[1]), 0)),
+                    int(round(self.w_scale * self.img_ispindel.width * (int(ispindel_coord_tuple[1][0]) /
+                                                                        self.ispindel_rect[0]), 0)),
+                    int(round(self.h_scale * self.img_ispindel.height * (int(ispindel_coord_tuple[1][1]) /
+                                                                         self.ispindel_rect[1]), 0)),
                     self.w_scale * self.img_ispindel.width / 3,
                     self.l_parameters_names[i + 1].winfo_y() + self.l_parameters_names[i + 1].winfo_height() / 2)
                 self.c_ispindel.coords(
                     self.c_dots[ispindel_coord_tuple[0]],
-                    int(round(self.w_scale * (self.img_ispindel.width * (int(ispindel_coord_tuple[1][0]) / self.ispindel_rect[0]) - 10), 0)),
-                    int(round(self.h_scale * (self.img_ispindel.height * (int(ispindel_coord_tuple[1][1]) / self.ispindel_rect[1]) - 10), 0)),
-                    int(round(self.w_scale * (self.img_ispindel.width * (int(ispindel_coord_tuple[1][0]) / self.ispindel_rect[0]) + 10), 0)),
-                    int(round(self.h_scale * (self.img_ispindel.height * (int(ispindel_coord_tuple[1][1]) / self.ispindel_rect[1]) + 10), 0)))
+                    int(round(self.w_scale * (self.img_ispindel.width * (int(ispindel_coord_tuple[1][0]) /
+                                                                         self.ispindel_rect[0]) - 10), 0)),
+                    int(round(self.h_scale * (self.img_ispindel.height * (int(ispindel_coord_tuple[1][1]) /
+                                                                          self.ispindel_rect[1]) - 10), 0)),
+                    int(round(self.w_scale * (self.img_ispindel.width * (int(ispindel_coord_tuple[1][0]) /
+                                                                         self.ispindel_rect[0]) + 10), 0)),
+                    int(round(self.h_scale * (self.img_ispindel.height * (int(ispindel_coord_tuple[1][1]) /
+                                                                          self.ispindel_rect[1]) + 10), 0)))
 
     # def button_switch(self, key=None):
     #     self.brewery_parameters.verify_parameters(key)
@@ -224,8 +229,10 @@ class ISpindelTabGUI(Frame):
 
         while (stop - datetime.datetime.now()).total_seconds() >= 0:
             for i, ispindel_coord_tuple in enumerate(self.ispindel_coords.items()):
-                xa = int(round(self.w_scale * (self.img_ispindel.width * (int(ispindel_coord_tuple[1][0]) / self.ispindel_rect[0])), 0))
-                ya = int(round(self.h_scale * (self.img_ispindel.height * (int(ispindel_coord_tuple[1][1]) / self.ispindel_rect[1])), 0))
+                xa = int(round(self.w_scale * (self.img_ispindel.width * (int(ispindel_coord_tuple[1][0]) /
+                                                                          self.ispindel_rect[0])), 0))
+                ya = int(round(self.h_scale * (self.img_ispindel.height * (int(ispindel_coord_tuple[1][1]) /
+                                                                           self.ispindel_rect[1])), 0))
                 xb = self.w_scale * self.img_ispindel.width / 3
                 yb = self.l_parameters_names[i + 1].winfo_y() + self.l_parameters_names[i + 1].winfo_height() / 2
                 a = (ya - yb) / (xa - xb)
@@ -234,8 +241,10 @@ class ISpindelTabGUI(Frame):
                 y = a * x + b
 
                 self.c_ispindel.coords(self.c_lines[ispindel_coord_tuple[0]],
-                    int(round(self.w_scale * self.img_ispindel.width * (int(ispindel_coord_tuple[1][0]) / self.ispindel_rect[0]), 0)),
-                    int(round(self.h_scale * self.img_ispindel.height * (int(ispindel_coord_tuple[1][1]) / self.ispindel_rect[1]), 0)),
+                    int(round(self.w_scale * self.img_ispindel.width * (int(ispindel_coord_tuple[1][0]) /
+                                                                        self.ispindel_rect[0]), 0)),
+                    int(round(self.h_scale * self.img_ispindel.height * (int(ispindel_coord_tuple[1][1]) /
+                                                                         self.ispindel_rect[1]), 0)),
                     x, y)
 
             self.c_ispindel.update_idletasks()
@@ -296,5 +305,6 @@ class ISpindelTabGUI(Frame):
     def confirm_settings(self, event):
         self.ispindel_parameters.parameters['batch_number'] = int(self.e_batch_number.get())
         self.ispindel_parameters.parameters['temperature_offset'] = float(self.e_temperature_offset.get())
+        self.ispindel_parameters.parameters['battery_notification'] = False
 
         self.database.fermentation_settings_execute(self.ispindel_parameters)

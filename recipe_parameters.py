@@ -131,12 +131,12 @@ class RecipeParameters:
 
     def verify_user_parameters(self, key):
         if key == 'yos':
-            if self.user_parameters[key] == False:
+            if not self.user_parameters[key]:
                 self.user_parameters[key] = True
             else:
                 self.user_parameters[key] = False
         elif key == 'mlt_rinse' or key == 'bk_rinse':
-            if self.user_parameters[key] == False:
+            if not self.user_parameters[key]:
                 self.user_parameters[key] = True
             else:
                 if key == 'mlt_rinse':
@@ -145,7 +145,7 @@ class RecipeParameters:
                     self.user_parameters['bk_cip'] = False
                 self.user_parameters[key] = False
         elif key == 'mlt_cip' or key == 'bk_cip':
-            if self.user_parameters[key] == False:
+            if not self.user_parameters[key]:
                 if key == 'mlt_cip':
                     self.user_parameters['mlt_rinse'] = True
                 elif key == 'bk_cip':
@@ -153,4 +153,3 @@ class RecipeParameters:
                 self.user_parameters[key] = True
             else:
                 self.user_parameters[key] = False
-
