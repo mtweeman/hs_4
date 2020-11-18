@@ -87,19 +87,19 @@ class RecipeTabGUI(Frame):
 
         # Creating list with all frames for looping
         self.f_frames = [self.f_miscs,
-                       self.f_fermentables,
-                       self.f_parameters,
-                       self.f_mash,
-                       self.f_hops,
-                       ]
+                         self.f_fermentables,
+                         self.f_parameters,
+                         self.f_mash,
+                         self.f_hops,
+                         ]
 
         # Creatiing list with all toggles for looping
         self.s_toggles = [self.s_yos,
-                        self.s_mlt_rinse,
-                        self.s_mlt_cip,
-                        self.s_bk_rinse,
-                        self.s_bk_cip,
-                        ]
+                          self.s_mlt_rinse,
+                          self.s_mlt_cip,
+                          self.s_bk_rinse,
+                          self.s_bk_cip,
+                          ]
 
         # Adding GUI objects to the grid
         self.f_user_settings.grid(row=0, columnspan=3, sticky=N+W+E)
@@ -206,8 +206,7 @@ class RecipeTabGUI(Frame):
                  ]
 
         # Create text from recipe parameters (lists)
-        i = 0
-        for current_list in self.recipe_parameters.lists:
+        for i, current_list in enumerate(self.recipe_parameters.lists):
             if current_list:
                 for current_item in current_list:
                     if not texts[i]:
@@ -215,7 +214,6 @@ class RecipeTabGUI(Frame):
                             texts[i][element] = element
                     for key, val in current_item.items():
                         texts[i][key] += '\n' + str(val)
-            i += 1
 
         # Create text for parameters (dictionary)
         if self.recipe_parameters.parameters:

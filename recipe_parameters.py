@@ -3,6 +3,11 @@ import copy
 import datetime
 from _collections import OrderedDict
 
+# Imported libraries
+
+# My libraries
+import xml_list_config
+
 
 class RecipeParameters:
     """A class for 'Recipe' tab parameters storage"""
@@ -30,10 +35,21 @@ class RecipeParameters:
                       ]
 
     def extract_xml_data(self, xml_dict):
-        # Miscs
+        # Clear earlier records
+        for element in self.lists:
+            element.clear()
+        # self.miscs.clear()
+        # self.fermentables.clear()
+        # self.mash.clear()
+        # self.hops.clear()
+
         current_item = {}
 
+        # Miscs
         if 'MISCS' in xml_dict['RECIPE']:
+            if isinstance(xml_dict['RECIPE']['MISCS']['MISC'], xml_list_config.XmlDictConfig):
+                xml_dict['RECIPE']['MISCS']['MISC'] = list([xml_dict['RECIPE']['MISCS']['MISC']])
+
             for v in xml_dict['RECIPE']['MISCS']['MISC']:
                 current_item['NAME'] = v['NAME']
                 if v['USE']:
@@ -42,20 +58,22 @@ class RecipeParameters:
                     current_item['USE'] = 'Sparge'
                 current_item['AMOUNT'] = round(1e3 * float(v['AMOUNT']), 2)
                 current_item['TIME'] = datetime.timedelta(minutes=int(round(float(v['TIME']), 0)))
-                self.miscs.append(copy.deepcopy(current_item))
+                self.miscs.append(current_item.copy())
 
                 # if v['NAME'] == "Baker's Dry Yeast" and not self.recipe_parameters.user_parameters['yos']:
                 #     self.s_yos.config(image=self.img_l_switch_on)
                 #     self.recipe_parameters.user_parameters['yos'] = True
 
             order = {'Mash': 0, 'Sparge': 1, 'Boil': 2}
-            self.miscs = sorted(self.miscs, key=lambda k: (order[k['USE']], -k['TIME']))
+            self.miscs.sort(key=lambda k: (order[k['USE']], -k['TIME']))
 
         # Fermentables
-        current_item = {}
+        current_item.clear()
         self.parameters['GRAINS_WEIGHT'] = 0.0
 
         if 'FERMENTABLES' in xml_dict['RECIPE']:
+            if isinstance(xml_dict['RECIPE']['FERMENTABLES']['FERMENTABLE'], xml_list_config.XmlDictConfig):
+                xml_dict['RECIPE']['FERMENTABLES']['FERMENTABLE'] = list([xml_dict['RECIPE']['FERMENTABLES']['FERMENTABLE']])
 
             for v in xml_dict['RECIPE']['FERMENTABLES']['FERMENTABLE']:
                 current_item['NAME'] = v['NAME']
@@ -66,12 +84,15 @@ class RecipeParameters:
                     self.parameters['GRAINS_WEIGHT'] += current_item['AMOUNT']
 
             self.parameters['GRAINS_WEIGHT'] = round(self.parameters['GRAINS_WEIGHT'], 2)
-            self.fermentables = sorted(self.fermentables, key=lambda k: (-k['AMOUNT']))
+            self.fermentables.sort(key=lambda k: (-k['AMOUNT']))
 
         # Mash
-        current_item = {}
+        current_item.clear()
 
         if 'MASH_STEPS' in xml_dict['RECIPE']['MASH']:
+            if isinstance(xml_dict['RECIPE']['MASH']['MASH_STEPS']['MASH_STEP'], xml_list_config.XmlDictConfig):
+                xml_dict['RECIPE']['MASH']['MASH_STEPS']['MASH_STEP'] = list([xml_dict['RECIPE']['MASH']['MASH_STEPS']['MASH_STEP']])
+
             for v in xml_dict['RECIPE']['MASH']['MASH_STEPS']['MASH_STEP']:
                 current_item['NAME'] = v['NAME']
                 current_item['STEP_TIME'] = datetime.timedelta(minutes=int(round(float(v['STEP_TIME']), 0)))
@@ -79,10 +100,13 @@ class RecipeParameters:
                 self.mash.append(copy.deepcopy(current_item))
 
         # Hops
-        current_item = {}
+        current_item.clear()
         self.parameters['HOPS_WEIGHT'] = 0
 
         if 'HOPS' in xml_dict['RECIPE']:
+            if isinstance(xml_dict['RECIPE']['HOPS']['HOP'], xml_list_config.XmlDictConfig):
+                xml_dict['RECIPE']['HOPS']['HOP'] = list([xml_dict['RECIPE']['HOPS']['HOP']])
+
             for v in xml_dict['RECIPE']['HOPS']['HOP']:
                 if v['USE'] == 'First Wort' or v['USE'] == 'Boil' or v['USE'] == 'Aroma':
                     current_item['NAME'] = v['NAME']
@@ -93,7 +117,7 @@ class RecipeParameters:
                     self.hops.append(copy.deepcopy(current_item))
 
             order = {'First Wort': 0, 'Boil': 1, 'Aroma': 2}
-            self.hops = sorted(self.hops, key=lambda k: (order[k['USE']], -k['TIME']))
+            self.hops.sort(key=lambda k: (order[k['USE']], -k['TIME']))
 
         # Parameters
         self.parameters['GRAIN_TEMP'] = round(float(xml_dict['RECIPE']['MASH']['GRAIN_TEMP']), 2)

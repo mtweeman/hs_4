@@ -10,6 +10,8 @@ class XmlListConfig(list):
                 # treat like list
                 elif element[0].tag == element[1].tag:
                     self.append(XmlListConfig(element))
+                else:
+                    self.append(XmlDictConfig(element))
             elif element.text:
                 text = element.text.strip()
                 if text:

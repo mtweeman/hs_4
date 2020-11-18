@@ -1,146 +1,96 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><RECIPES>
 <RECIPE>
- <NAME>#070 American Stout</NAME>
+ <NAME>#073 Kolsch</NAME>
  <VERSION>1</VERSION>
  <TYPE>All Grain</TYPE>
  <BREWER></BREWER>
  <ASST_BREWER></ASST_BREWER>
+ <EFFICIENCY>60.0000000</EFFICIENCY>
+ 
+ <DODANE>$dodane</DODANE>
  <BATCH_SIZE>21.0000000</BATCH_SIZE>
- <BOIL_SIZE>26.5416667</BOIL_SIZE>
  <BOIL_TIME>60.0000000</BOIL_TIME>
- <EFFICIENCY>67.0000000</EFFICIENCY>
+ <BOIL_SIZE>27.5833333</BOIL_SIZE>
+ <SPARGE_VOLUME>16.15 L</SPARGE_VOLUME>
+ <PRIMARY_TEMP>19.4444444</PRIMARY_TEMP>
+ <EVAP_RATE>1.8126888</EVAP_RATE>
+ <EQUIPMENT.TRUB_CHILLER_LOSS>5.0000000</EQUIPMENT.TRUB_CHILLER_LOSS>
+ <EQUIPMENT.LAUTER_DEADSPACE>0.0000000</EQUIPMENT.LAUTER_DEADSPACE>
+ <GRAIN_TEMP>22.2 C</GRAIN_TEMP>
+ <PRE_BOIL_OG>1.045 SG</PRE_BOIL_OG>
+ <EST_OG>1.048 SG</EST_OG>
+ <IBU>17.9 IBUs</IBU>
+ <EQUIPMENT.COOLING_LOSS_PCT>4.0000000</EQUIPMENT.COOLING_LOSS_PCT>
+ <EQUIPMENT.NAME>HS_3</EQUIPMENT.NAME>
+ <DODANE>$dodane</DODANE>
+
  <HOPS>
 <HOP>
- <NAME>Iunga 2018</NAME>
+ <NAME>TB Hallertau Tradition 2019</NAME>
  <VERSION>1</VERSION>
- <ORIGIN>Polska</ORIGIN>
- <ALPHA>11.0000000</ALPHA>
- <AMOUNT>0.0560000</AMOUNT>
+ <ORIGIN>Niemcy</ORIGIN>
+ <ALPHA>6.3000000</ALPHA>
+ <AMOUNT>0.0250000</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES></NOTES>
- <TYPE>Bittering</TYPE>
- <FORM>Pellet</FORM>
- <BETA>2.0000000</BETA>
- <HSI>15.0000000</HSI>
- <DISPLAY_AMOUNT>56.00 g</DISPLAY_AMOUNT>
- <INVENTORY>162.00 g</INVENTORY>
- <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
-</HOP>
-<HOP>
- <NAME>TB Centennial 2018</NAME>
- <VERSION>1</VERSION>
- <ORIGIN>USA</ORIGIN>
- <ALPHA>9.5000000</ALPHA>
- <AMOUNT>0.0300000</AMOUNT>
- <USE>Boil</USE>
- <TIME>5.0000000</TIME>
  <NOTES></NOTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>2.0000000</BETA>
  <HSI>15.0000000</HSI>
- <DISPLAY_AMOUNT>30.00 g</DISPLAY_AMOUNT>
- <INVENTORY>0.00 g</INVENTORY>
- <DISPLAY_TIME>5.0 min</DISPLAY_TIME>
+ <DISPLAY_AMOUNT>25.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>55.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
 </HOP>
 </HOPS>
 
  <FERMENTABLES>
 <FERMENTABLE>
- <NAME>Malteurop S&#322;&#243;d pilzne&#324;ski Mep@Pilsner</NAME>
+ <NAME>Marxam S&#322;&#243;d pilzne&#324;ski zero 3,6 EBC</NAME>
  <VERSION>1</VERSION>
  <TYPE>Grain</TYPE>
- <AMOUNT>6.3527020</AMOUNT>
- <YIELD>81.0000000</YIELD>
- <COLOR>4.0000001</COLOR>
+ <AMOUNT>5.2163772</AMOUNT>
+ <YIELD>80.0000000</YIELD>
+ <COLOR>3.6500000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Polska</ORIGIN>
- <SUPPLIER>Malteurop</SUPPLIER>
+ <SUPPLIER>Viking Malt</SUPPLIER>
  <NOTES></NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
- <MOISTURE>4.5000000</MOISTURE>
+ <MOISTURE>5.0000000</MOISTURE>
  <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
  <PROTEIN>11.5000000</PROTEIN>
  <MAX_IN_BATCH>100.0000000</MAX_IN_BATCH>
  <RECOMMEND_MASH>TRUE</RECOMMEND_MASH>
  <IBU_GAL_PER_LB>0.0000000</IBU_GAL_PER_LB>
- <DISPLAY_AMOUNT>6.35 kg</DISPLAY_AMOUNT>
- <INVENTORY>3.34 kg</INVENTORY>
- <POTENTIAL>1.0372600</POTENTIAL>
- <DISPLAY_COLOR>4.0 EBC</DISPLAY_COLOR>
+ <DISPLAY_AMOUNT>5.22 kg</DISPLAY_AMOUNT>
+ <INVENTORY>7.81 kg</INVENTORY>
+ <POTENTIAL>1.0368000</POTENTIAL>
+ <DISPLAY_COLOR>3.7 EBC</DISPLAY_COLOR>
  <EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
 </FERMENTABLE>
 <FERMENTABLE>
- <NAME>Tw&#243;j Browar Roasted Barley 1150 EBC</NAME>
+ <NAME>Weyermann S&#322;&#243;d Carahell 25 EBC</NAME>
  <VERSION>1</VERSION>
  <TYPE>Grain</TYPE>
- <AMOUNT>0.4203994</AMOUNT>
- <YIELD>65.0000000</YIELD>
- <COLOR>1150.0000000</COLOR>
+ <AMOUNT>0.2745462</AMOUNT>
+ <YIELD>74.0000000</YIELD>
+ <COLOR>24.9999999</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
- <ORIGIN>Belgia</ORIGIN>
- <SUPPLIER>Castlemalting</SUPPLIER>
+ <ORIGIN>Niemcy</ORIGIN>
+ <SUPPLIER>AlePiwo</SUPPLIER>
  <NOTES></NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
- <MOISTURE>4.5000000</MOISTURE>
+ <MOISTURE>9.0000000</MOISTURE>
  <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
  <PROTEIN>11.7000000</PROTEIN>
  <MAX_IN_BATCH>100.0000000</MAX_IN_BATCH>
  <RECOMMEND_MASH>TRUE</RECOMMEND_MASH>
  <IBU_GAL_PER_LB>0.0000000</IBU_GAL_PER_LB>
- <DISPLAY_AMOUNT>0.42 kg</DISPLAY_AMOUNT>
- <INVENTORY>0.19 kg</INVENTORY>
- <POTENTIAL>1.0299000</POTENTIAL>
- <DISPLAY_COLOR>1150.0 EBC</DISPLAY_COLOR>
- <EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
-</FERMENTABLE>
-<FERMENTABLE>
- <NAME>TB S&#322;&#243;d Chocolate 1200 EBC</NAME>
- <VERSION>1</VERSION>
- <TYPE>Grain</TYPE>
- <AMOUNT>0.3176351</AMOUNT>
- <YIELD>71.9000000</YIELD>
- <COLOR>1199.9999999</COLOR>
- <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
- <ORIGIN>Anglia</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons LTD</SUPPLIER>
- <NOTES></NOTES>
- <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
- <MOISTURE>4.2000000</MOISTURE>
- <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
- <PROTEIN>10.9400000</PROTEIN>
- <MAX_IN_BATCH>100.0000000</MAX_IN_BATCH>
- <RECOMMEND_MASH>TRUE</RECOMMEND_MASH>
- <IBU_GAL_PER_LB>0.0000000</IBU_GAL_PER_LB>
- <DISPLAY_AMOUNT>0.32 kg</DISPLAY_AMOUNT>
- <INVENTORY>0.00 kg</INVENTORY>
- <POTENTIAL>1.0330740</POTENTIAL>
- <DISPLAY_COLOR>1200.0 EBC</DISPLAY_COLOR>
- <EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
-</FERMENTABLE>
-<FERMENTABLE>
- <NAME>Tw&#243;j Browar Pale Crystal 90 EBC</NAME>
- <VERSION>1</VERSION>
- <TYPE>Grain</TYPE>
- <AMOUNT>0.3176351</AMOUNT>
- <YIELD>72.8000000</YIELD>
- <COLOR>75.0000000</COLOR>
- <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
- <ORIGIN>Anglia</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons LTD</SUPPLIER>
- <NOTES></NOTES>
- <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
- <MOISTURE>5.8000000</MOISTURE>
- <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
- <PROTEIN>11.3000000</PROTEIN>
- <MAX_IN_BATCH>100.0000000</MAX_IN_BATCH>
- <RECOMMEND_MASH>TRUE</RECOMMEND_MASH>
- <IBU_GAL_PER_LB>0.0000000</IBU_GAL_PER_LB>
- <DISPLAY_AMOUNT>0.32 kg</DISPLAY_AMOUNT>
- <INVENTORY>0.30 kg</INVENTORY>
- <POTENTIAL>1.0334880</POTENTIAL>
- <DISPLAY_COLOR>75.0 EBC</DISPLAY_COLOR>
+ <DISPLAY_AMOUNT>0.27 kg</DISPLAY_AMOUNT>
+ <INVENTORY>0.25 kg</INVENTORY>
+ <POTENTIAL>1.0340400</POTENTIAL>
+ <DISPLAY_COLOR>25.0 EBC</DISPLAY_COLOR>
  <EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
 </FERMENTABLE>
 </FERMENTABLES>
@@ -151,45 +101,30 @@
  <VERSION>1</VERSION>
  <TYPE>Water Agent</TYPE>
  <USE>Mash</USE>
- <AMOUNT>0.011598</AMOUNT>
+ <AMOUNT>0.008939</AMOUNT>
  <TIME>0.00</TIME>
  <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
  <USE_FOR>YOS</USE_FOR>
  <NOTES></NOTES>
- <DISPLAY_AMOUNT>11.60 g</DISPLAY_AMOUNT>
+ <DISPLAY_AMOUNT>8.94 g</DISPLAY_AMOUNT>
  <INVENTORY>1000.00 g</INVENTORY>
  <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
  <BATCH_SIZE>0.00 L</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Gypsum (Calcium Sulfate)</NAME>
- <VERSION>1</VERSION>
- <TYPE>Water Agent</TYPE>
- <USE>Mash</USE>
- <AMOUNT>0.008300</AMOUNT>
- <TIME>60.00</TIME>
- <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Water Agent</USE_FOR>
- <NOTES>Reduces PH of water for mashing and sparging.   Alters water profile -- used to harden soft water.  Use the BeerSmith Water Profile tool to determine amount to add.</NOTES>
- <DISPLAY_AMOUNT>8.30 g</DISPLAY_AMOUNT>
- <INVENTORY>100.00 g</INVENTORY>
- <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>21.92 L</BATCH_SIZE>
 </MISC>
 <MISC>
  <NAME>Phosphoric Acid 75%</NAME>
  <VERSION>1</VERSION>
  <TYPE>Water Agent</TYPE>
  <USE>Mash</USE>
- <AMOUNT>0.007000</AMOUNT>
- <TIME>60.00</TIME>
+ <AMOUNT>0.005000</AMOUNT>
+ <TIME>0.00</TIME>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Water Agent</USE_FOR>
  <NOTES>Multiply ml by 1.6954 to get grams at 20*C
 Used to lower the pH of the mash without altering the water profile.  Lower pH mashes generally improves head retention, increases extraction rate.</NOTES>
- <DISPLAY_AMOUNT>7.00 ml</DISPLAY_AMOUNT>
+ <DISPLAY_AMOUNT>5.00 ml</DISPLAY_AMOUNT>
  <INVENTORY>0.00 ml</INVENTORY>
- <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
  <BATCH_SIZE>18.93 L</BATCH_SIZE>
 </MISC>
 <MISC>
@@ -197,14 +132,14 @@ Used to lower the pH of the mash without altering the water profile.  Lower pH m
  <VERSION>1</VERSION>
  <TYPE>Water Agent</TYPE>
  <USE>Mash</USE>
- <AMOUNT>0.000877</AMOUNT>
- <TIME>7.00</TIME>
+ <AMOUNT>0.000678</AMOUNT>
+ <TIME>0.00</TIME>
  <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Fenton reactions</USE_FOR>
  <NOTES></NOTES>
- <DISPLAY_AMOUNT>0.88 g</DISPLAY_AMOUNT>
+ <DISPLAY_AMOUNT>0.68 g</DISPLAY_AMOUNT>
  <INVENTORY>500.00 g</INVENTORY>
- <DISPLAY_TIME>7.0 mins</DISPLAY_TIME>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
  <BATCH_SIZE>100.00 L</BATCH_SIZE>
 </MISC>
 <MISC>
@@ -212,27 +147,57 @@ Used to lower the pH of the mash without altering the water profile.  Lower pH m
  <VERSION>1</VERSION>
  <TYPE>Water Agent</TYPE>
  <USE>Mash</USE>
- <AMOUNT>0.000658</AMOUNT>
+ <AMOUNT>0.000508</AMOUNT>
  <TIME>0.00</TIME>
  <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Antioxident</USE_FOR>
  <NOTES></NOTES>
- <DISPLAY_AMOUNT>0.66 g</DISPLAY_AMOUNT>
+ <DISPLAY_AMOUNT>0.51 g</DISPLAY_AMOUNT>
  <INVENTORY>400.00 g</INVENTORY>
  <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
  <BATCH_SIZE>100.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Calcium Chloride</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.000504</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Water Agent</USE_FOR>
+ <NOTES>Alters water profile and pH of mash.  Use the BeerSmith Water Profile tool to determine amount to add.</NOTES>
+ <DISPLAY_AMOUNT>0.50 g</DISPLAY_AMOUNT>
+ <INVENTORY>440.05 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>16.94 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Salt</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.000314</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Water Agent</USE_FOR>
+ <NOTES>Table Salt (NaCl) may be used as a water mineral to adjust brewing water for mashing.</NOTES>
+ <DISPLAY_AMOUNT>0.31 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>16.94 L</BATCH_SIZE>
 </MISC>
 <MISC>
  <NAME>Sodium Metabisulfite</NAME>
  <VERSION>1</VERSION>
  <TYPE>Other</TYPE>
  <USE>Mash</USE>
- <AMOUNT>0.000660</AMOUNT>
+ <AMOUNT>0.000508</AMOUNT>
  <TIME>0.00</TIME>
  <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Preservative</USE_FOR>
  <NOTES>Sodium metabisulfite can be used in the same method/quantity as potasium metabisulfite, but it adds sodium ions.  Also sold as Campden tablets. Some wine makers prefer to use sodium for cleaning and the potassium for late fermentation additions.</NOTES>
- <DISPLAY_AMOUNT>0.66 g</DISPLAY_AMOUNT>
+ <DISPLAY_AMOUNT>0.51 g</DISPLAY_AMOUNT>
  <INVENTORY>500.00 g</INVENTORY>
  <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
  <BATCH_SIZE>0.00 L</BATCH_SIZE>
@@ -242,12 +207,12 @@ Used to lower the pH of the mash without altering the water profile.  Lower pH m
  <VERSION>1</VERSION>
  <TYPE>Other</TYPE>
  <USE></USE>
- <AMOUNT>0.000265</AMOUNT>
+ <AMOUNT>0.000276</AMOUNT>
  <TIME>0.00</TIME>
  <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Preservative</USE_FOR>
  <NOTES>Sodium metabisulfite can be used in the same method/quantity as potasium metabisulfite, but it adds sodium ions.  Also sold as Campden tablets. Some wine makers prefer to use sodium for cleaning and the potassium for late fermentation additions.</NOTES>
- <DISPLAY_AMOUNT>0.27 g</DISPLAY_AMOUNT>
+ <DISPLAY_AMOUNT>0.28 g</DISPLAY_AMOUNT>
  <INVENTORY>500.00 g</INVENTORY>
  <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
  <BATCH_SIZE>0.00 L</BATCH_SIZE>
@@ -257,30 +222,15 @@ Used to lower the pH of the mash without altering the water profile.  Lower pH m
  <VERSION>1</VERSION>
  <TYPE>Water Agent</TYPE>
  <USE></USE>
- <AMOUNT>0.014042</AMOUNT>
+ <AMOUNT>0.014554</AMOUNT>
  <TIME>0.00</TIME>
  <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
  <USE_FOR>YOS</USE_FOR>
  <NOTES></NOTES>
- <DISPLAY_AMOUNT>14.04 g</DISPLAY_AMOUNT>
+ <DISPLAY_AMOUNT>14.55 g</DISPLAY_AMOUNT>
  <INVENTORY>1000.00 g</INVENTORY>
  <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
  <BATCH_SIZE>0.00 L</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Gypsum (Calcium Sulfate)</NAME>
- <VERSION>1</VERSION>
- <TYPE>Water Agent</TYPE>
- <USE></USE>
- <AMOUNT>0.010000</AMOUNT>
- <TIME>60.00</TIME>
- <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Water Agent</USE_FOR>
- <NOTES>Reduces PH of water for mashing and sparging.   Alters water profile -- used to harden soft water.  Use the BeerSmith Water Profile tool to determine amount to add.</NOTES>
- <DISPLAY_AMOUNT>10.00 g</DISPLAY_AMOUNT>
- <INVENTORY>100.00 g</INVENTORY>
- <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>26.54 L</BATCH_SIZE>
 </MISC>
 <MISC>
  <NAME>Phosphoric Acid 75%</NAME>
@@ -288,14 +238,14 @@ Used to lower the pH of the mash without altering the water profile.  Lower pH m
  <TYPE>Water Agent</TYPE>
  <USE></USE>
  <AMOUNT>0.003000</AMOUNT>
- <TIME>60.00</TIME>
+ <TIME>0.00</TIME>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Water Agent</USE_FOR>
  <NOTES>Multiply ml by 1.6954 to get grams at 20*C
 Used to lower the pH of the mash without altering the water profile.  Lower pH mashes generally improves head retention, increases extraction rate.</NOTES>
  <DISPLAY_AMOUNT>3.00 ml</DISPLAY_AMOUNT>
  <INVENTORY>0.00 ml</INVENTORY>
- <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
  <BATCH_SIZE>18.93 L</BATCH_SIZE>
 </MISC>
 <MISC>
@@ -303,27 +253,57 @@ Used to lower the pH of the mash without altering the water profile.  Lower pH m
  <VERSION>1</VERSION>
  <TYPE>Water Agent</TYPE>
  <USE></USE>
- <AMOUNT>0.001062</AMOUNT>
- <TIME>7.00</TIME>
+ <AMOUNT>0.001103</AMOUNT>
+ <TIME>0.00</TIME>
  <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Fenton reactions</USE_FOR>
  <NOTES></NOTES>
- <DISPLAY_AMOUNT>1.06 g</DISPLAY_AMOUNT>
+ <DISPLAY_AMOUNT>1.10 g</DISPLAY_AMOUNT>
  <INVENTORY>500.00 g</INVENTORY>
- <DISPLAY_TIME>7.0 mins</DISPLAY_TIME>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
  <BATCH_SIZE>100.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Calcium Chloride</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE></USE>
+ <AMOUNT>0.000481</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Water Agent</USE_FOR>
+ <NOTES>Alters water profile and pH of mash.  Use the BeerSmith Water Profile tool to determine amount to add.</NOTES>
+ <DISPLAY_AMOUNT>0.48 g</DISPLAY_AMOUNT>
+ <INVENTORY>440.05 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>16.15 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Salt</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE></USE>
+ <AMOUNT>0.000299</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Water Agent</USE_FOR>
+ <NOTES>Table Salt (NaCl) may be used as a water mineral to adjust brewing water for mashing.</NOTES>
+ <DISPLAY_AMOUNT>0.30 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>16.15 L</BATCH_SIZE>
 </MISC>
 <MISC>
  <NAME>L-ascorbic Acid</NAME>
  <VERSION>1</VERSION>
  <TYPE>Water Agent</TYPE>
  <USE></USE>
- <AMOUNT>0.000265</AMOUNT>
+ <AMOUNT>0.000276</AMOUNT>
  <TIME>0.00</TIME>
  <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Antioxident</USE_FOR>
  <NOTES></NOTES>
- <DISPLAY_AMOUNT>0.27 g</DISPLAY_AMOUNT>
+ <DISPLAY_AMOUNT>0.28 g</DISPLAY_AMOUNT>
  <INVENTORY>400.00 g</INVENTORY>
  <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
  <BATCH_SIZE>100.00 L</BATCH_SIZE>
@@ -339,7 +319,7 @@ Used to lower the pH of the mash without altering the water profile.  Lower pH m
  <USE_FOR>Fenton reactions</USE_FOR>
  <NOTES></NOTES>
  <DISPLAY_AMOUNT>0.84 g</DISPLAY_AMOUNT>
- <INVENTORY>485.75 g</INVENTORY>
+ <INVENTORY>477.78 g</INVENTORY>
  <DISPLAY_TIME>7.0 mins</DISPLAY_TIME>
  <BATCH_SIZE>100.00 L</BATCH_SIZE>
 </MISC>
@@ -348,13 +328,13 @@ Used to lower the pH of the mash without altering the water profile.  Lower pH m
  <VERSION>1</VERSION>
  <TYPE>Fining</TYPE>
  <USE>Boil</USE>
- <AMOUNT>0.999994</AMOUNT>
+ <AMOUNT>0.001250</AMOUNT>
  <TIME>5.00</TIME>
- <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Clarity</USE_FOR>
  <NOTES>Aids in clearing yeast and chill haze.  Easy to use tablet form.</NOTES>
- <DISPLAY_AMOUNT>1.00 Items</DISPLAY_AMOUNT>
- <INVENTORY>34.00 Items</INVENTORY>
+ <DISPLAY_AMOUNT>1.25 g</DISPLAY_AMOUNT>
+ <INVENTORY>31.25 g</INVENTORY>
  <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
  <BATCH_SIZE>21.00 L</BATCH_SIZE>
 </MISC>
@@ -369,7 +349,7 @@ Used to lower the pH of the mash without altering the water profile.  Lower pH m
  <USE_FOR>Trub</USE_FOR>
  <NOTES></NOTES>
  <DISPLAY_AMOUNT>3.15 g</DISPLAY_AMOUNT>
- <INVENTORY>80.36 g</INVENTORY>
+ <INVENTORY>70.91 g</INVENTORY>
  <DISPLAY_TIME>3.0 mins</DISPLAY_TIME>
  <BATCH_SIZE>100.00 L</BATCH_SIZE>
 </MISC>
@@ -377,29 +357,28 @@ Used to lower the pH of the mash without altering the water profile.  Lower pH m
 
  <YEASTS>
 <YEAST>
- <NAME>Gor&#261;czka kalifornijska</NAME>
+ <NAME>Kolsch Yeast</NAME>
  <VERSION>1</VERSION>
  <TYPE>Ale</TYPE>
  <FORM>Liquid</FORM>
- <AMOUNT>0.0000000</AMOUNT>
+ <AMOUNT>0.1242088</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Fermentum Mobile</LABORATORY>
- <PRODUCT_ID>FM54</PRODUCT_ID>
- <MIN_TEMPERATURE>18.0000000</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>21.0000000</MAX_TEMPERATURE>
- <FLOCCULATION>Medium</FLOCCULATION>
- <ATTENUATION>79.5000000</ATTENUATION>
- <NOTES>szczep dedykowany do wytrawnych piw g&#243;rnej fermentacji w stylu west coast. Neutralny profil smakowy wsp&#243;&#322;graj&#261;cy z ameryka&#324;skimi chmielami, szybka praca i wysokie odfermentowanie, dobra flokulacja.
-Profil szczepu zbli&#380;ony do : WYEAST 1217-PC West Coast IPA&#8482;</NOTES>
- <BEST_FOR>West Coast IPA</BEST_FOR>
+ <LABORATORY>Wyeast Labs</LABORATORY>
+ <PRODUCT_ID>2565</PRODUCT_ID>
+ <MIN_TEMPERATURE>13.3333333</MIN_TEMPERATURE>
+ <MAX_TEMPERATURE>17.7777778</MAX_TEMPERATURE>
+ <FLOCCULATION>Low</FLOCCULATION>
+ <ATTENUATION>75.0000000</ATTENUATION>
+ <NOTES>Very malty flavor with mix of lager and ale character.  Crisp, clean finish.</NOTES>
+ <BEST_FOR>Kolsch, European Ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
- <TIMES_CULTURED>1</TIMES_CULTURED>
+ <TIMES_CULTURED>0</TIMES_CULTURED>
  <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
- <DISPLAY_AMOUNT>0.00 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>18.0 C</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>21.0 C</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>11 Aug 2020</CULTURE_DATE>
+ <DISPLAY_AMOUNT>124.21 ml</DISPLAY_AMOUNT>
+ <DISP_MIN_TEMP>13.3 C</DISP_MIN_TEMP>
+ <DISP_MAX_TEMP>17.8 C</DISP_MAX_TEMP>
+ <INVENTORY>1.0 pkg</INVENTORY>
+ <CULTURE_DATE>14 Jun 2003</CULTURE_DATE>
 </YEAST>
 </YEASTS>
 
@@ -407,7 +386,7 @@ Profil szczepu zbli&#380;ony do : WYEAST 1217-PC West Coast IPA&#8482;</NOTES>
 <WATER>
  <NAME>WRO_2020.II</NAME>
  <VERSION>1</VERSION>
- <AMOUNT>48.4607756</AMOUNT>
+ <AMOUNT>44.5200000</AMOUNT>
  <CALCIUM>58.0000000</CALCIUM>
  <BICARBONATE>0.0000000</BICARBONATE>
  <SULFATE>65.0000000</SULFATE>
@@ -416,74 +395,73 @@ Profil szczepu zbli&#380;ony do : WYEAST 1217-PC West Coast IPA&#8482;</NOTES>
  <MAGNESIUM>9.0000000</MAGNESIUM>
  <PH>7.0000000</PH>
  <NOTES></NOTES>
- <DISPLAY_AMOUNT>48.46 L</DISPLAY_AMOUNT>
+ <DISPLAY_AMOUNT>44.52 L</DISPLAY_AMOUNT>
 </WATER>
 </WATERS>
 
  <STYLE>
- <NAME>American Stout</NAME>
+ <NAME>K&#246;lsch</NAME>
  <VERSION>1</VERSION>
- <CATEGORY>American Porter and Stout</CATEGORY>
- <CATEGORY_NUMBER>20</CATEGORY_NUMBER>
+ <CATEGORY>Pale Bitter European Beer</CATEGORY>
+ <CATEGORY_NUMBER>5</CATEGORY_NUMBER>
  <STYLE_LETTER>B</STYLE_LETTER>
  <STYLE_GUIDE>BJCP 2015</STYLE_GUIDE>
  <TYPE>Ale</TYPE>
- <OG_MIN>1.0500000</OG_MIN>
- <OG_MAX>1.0750000</OG_MAX>
- <FG_MIN>1.0100000</FG_MIN>
- <FG_MAX>1.0220000</FG_MAX>
- <IBU_MIN>35.0000000</IBU_MIN>
- <IBU_MAX>75.0000000</IBU_MAX>
- <COLOR_MIN>59.1000000</COLOR_MIN>
- <COLOR_MAX>78.8000000</COLOR_MAX>
+ <OG_MIN>1.0440000</OG_MIN>
+ <OG_MAX>1.0500000</OG_MAX>
+ <FG_MIN>1.0070000</FG_MIN>
+ <FG_MAX>1.0110000</FG_MAX>
+ <IBU_MIN>18.0000000</IBU_MIN>
+ <IBU_MAX>30.0000000</IBU_MAX>
+ <COLOR_MIN>6.8950000</COLOR_MIN>
+ <COLOR_MAX>9.8500000</COLOR_MAX>
  <CARB_MIN>2.4000000</CARB_MIN>
- <CARB_MAX>3.0000000</CARB_MAX>
- <ABV_MAX>7.0000000</ABV_MAX>
- <ABV_MIN>5.0000000</ABV_MIN>
- <NOTES>A fairly strong, highly roasted, bitter, hoppy dark stout. Has the body and dark flavors typical of stouts with a more aggressive American hop character and bitterness. History: A modern craft beer and homebrew style that applied an aggressive American hoping regime to a strong traditional English or Irish stout. The homebrew version was previously known as West Coast Stout, which is a common naming scheme for a more highly-hopped beer. Style Comparison: Like a hoppy, bitter, strongly roasted Extra or Export Stout. Much more roast and body than a Black IPA. Bigger, stronger versions belong in the Russian Imperial Stout style. Stronger and more assertive, particularly in the dark malt/grain additions and hop character, than American Porter.</NOTES>
- <PROFILE>Aroma: Moderate to strong aroma of roasted malts, often having a roasted coffee or dark chocolate quality. Burnt or charcoal aromas are acceptable at low levels. Medium to very low hop aroma, often with a citrusy or resiny character. Medium to no esters. Light alcohol-derived aromatics are also optional. Appearance: Generally a jet black color, although some may appear very dark brown. Large, persistent head of light tan to light brown in color. Usually opaque. Flavor: Moderate to very high roasted malt flavors, often tasting of coffee, roasted coffee beans, dark or bittersweet chocolate. May have the flavor of slightly burnt coffee grounds, but this character should not be prominent. Low to medium malt sweetness, often with rich chocolate or caramel flavors. Medium to high bitterness. Low to high hop flavor, generally citrusy or resiny. Low to no esters. Medium to dry finish, occasionally with a lightly burnt quality. Alcohol flavors can be present up to medium levels, but smooth.
-Mouthfeel: Medium to full body. Can be somewhat creamy, particularly if a small amount of oats have been used to enhance mouthfeel. Can have a bit of roast-derived astringency, but this character should not be excessive. Medium-high to high carbonation. Light to moderately strong alcohol warmth, but smooth and not excessively hot. Comments: Breweries express individuality through varying the roasted malt profile, malt sweetness and flavor, and the amount of finishing hops used. Generally has bolder roasted malt flavors and hopping than other traditional stouts (except Imperial Stouts).</PROFILE>
- <INGREDIENTS>American base malts and yeast. Varied use of dark and roasted malts, as well as caramel-type malts. Adjuncts such as oatmeal may be present in low quantities. American hop varieties.</INGREDIENTS>
- <EXAMPLES>Avery Out of Bounds Stout, Deschutes Obsidian Stout, North Coast Old No. 38, Rogue Shakespeare Stout, Sierra Nevada Stout</EXAMPLES>
- <DISPLAY_OG_MIN>1.050 SG</DISPLAY_OG_MIN>
- <DISPLAY_OG_MAX>1.075 SG</DISPLAY_OG_MAX>
- <DISPLAY_FG_MIN>1.010 SG</DISPLAY_FG_MIN>
- <DISPLAY_FG_MAX>1.022 SG</DISPLAY_FG_MAX>
- <DISPLAY_COLOR_MIN>59.1 EBC</DISPLAY_COLOR_MIN>
- <DISPLAY_COLOR_MAX>78.8 EBC</DISPLAY_COLOR_MAX>
- <OG_RANGE>1,050-1,075 SG</OG_RANGE>
- <FG_RANGE>1,010-1,022 SG</FG_RANGE>
- <IBU_RANGE>35,0-75,0 IBUs</IBU_RANGE>
- <CARB_RANGE>2,40-3,00 Vols</CARB_RANGE>
- <COLOR_RANGE>59,1-78,8 EBC</COLOR_RANGE>
- <ABV_RANGE>5,00-7,00 %</ABV_RANGE>
+ <CARB_MAX>3.1000000</CARB_MAX>
+ <ABV_MAX>5.2000000</ABV_MAX>
+ <ABV_MIN>4.4000000</ABV_MIN>
+ <NOTES>A clean, crisp, delicately-balanced beer usually with a very subtle fruit and hop character. Subdued maltiness throughout leads into a pleasantly well-attenuated and refreshing finish. Freshness makes a huge difference with this beer, as the delicate character can fade quickly with age. Brilliant clarity is characteristic. History: Cologne, Germany (K&#246;ln) has a top-fermenting brewing tradition since the Middle Ages, but developed the beer now known as K&#246;lsch in the late 1800s to combat encroaching bottom-fermented pale lagers. K&#246;lsch is an appellation protected by the K&#246;lsch Konvention (1986), and is restricted to the 20 or so breweries in and around K&#246;ln. The Konvention simply defines the beer as a &#8220;light, highly attenuated, hop-accentuated, clear, top-fermenting Vollbier.&#8221;  Style Comparison: To the untrained taster, easily mistaken for a cream ale or somewhat subtle Pils.</NOTES>
+ <PROFILE>Aroma: Low to very low malt aroma, with a grainy-sweet character. A pleasant, subtle fruit aroma from fermentation (apple, cherry or pear) is acceptable, but not always present. A low floral, spicy or herbal hop aroma is optional but not out of style. Some yeast strains may give a slight winy or sulfury character (this characteristic is also optional, but not a fault). Overall, the intensity of aromatics is fairly subtle but generally balanced, clean, and fresh. Appearance: Very pale gold to light gold. Very clear (authentic commercial versions are filtered to a brilliant clarity). Has a delicate white head that may not persist. Flavor: Soft, rounded palate comprised of a delicate flavor balance between soft yet attenuated malt, an almost imperceptible fruity sweetness from fermentation, and a medium-low to medium bitterness with a delicate dryness and slight crispness in the finish (but no harsh aftertaste). The malt tends to be grainy-sweet, possibly with a very light bready or honey quality. The hop flavor is variable, and can range from low to moderately-high; most are medium-low to medium intensity and have a floral, spicy, or herbal character. May have a malty-sweet impression at the start, but this is not required. No noticeable residual sweetness. May have a slightly winy, minerally, or sulfury accent that accentuates the dryness and flavor balance. A slight wheat taste is rare but not a fault. Otherwise, very clean. Mouthfeel: Medium-light to medium body (most are medium-light). Medium to medium-high carbonation. Smooth and generally crisp and well-attenuated. Comments: Characterized in Germany as a top-fermented, lagered beer. Each K&#246;ln brewery produces a beer of different character, and each interprets the K&#246;lsch Konvention slightly differently. Allow for a range of variation within the style when judging. Note that drier versions may seem hoppier or more bitter than the IBU specifications might suggest. Due to its delicate flavor profile, K&#246;lsch tends to have a relatively short shelf-life; older examples and imports can easily show some oxidation defects. Served in K&#246;ln in a tall, narrow 200ml glass called a Stange.</PROFILE>
+ <INGREDIENTS>Traditional German hops (Hallertau, Tettnang, Spalt or Hersbrucker). German Pils or pale malt. Attenuative, clean ale yeast. Up to 20% wheat malt may be used, but this is quite rare in authentic versions. Current commercial practice is to ferment warm, cold condition for a short period of time, and serve young.</INGREDIENTS>
+ <EXAMPLES>Fr&#252;h K&#246;lsch, Gaffel K&#246;lsch, M&#252;hlen K&#246;lsch, Reissdorf K&#246;lsch, Sion K&#246;lsch, S&#252;nner K&#246;lsch</EXAMPLES>
+ <DISPLAY_OG_MIN>1.044 SG</DISPLAY_OG_MIN>
+ <DISPLAY_OG_MAX>1.050 SG</DISPLAY_OG_MAX>
+ <DISPLAY_FG_MIN>1.007 SG</DISPLAY_FG_MIN>
+ <DISPLAY_FG_MAX>1.011 SG</DISPLAY_FG_MAX>
+ <DISPLAY_COLOR_MIN>6.9 EBC</DISPLAY_COLOR_MIN>
+ <DISPLAY_COLOR_MAX>9.8 EBC</DISPLAY_COLOR_MAX>
+ <OG_RANGE>1,044-1,050 SG</OG_RANGE>
+ <FG_RANGE>1,007-1,011 SG</FG_RANGE>
+ <IBU_RANGE>18,0-30,0 IBUs</IBU_RANGE>
+ <CARB_RANGE>2,40-3,10 Vols</CARB_RANGE>
+ <COLOR_RANGE>6,9-9,8 EBC</COLOR_RANGE>
+ <ABV_RANGE>4,40-5,20 %</ABV_RANGE>
 </STYLE>
 
  <EQUIPMENT>
  <NAME>HS_3</NAME>
  <VERSION>1</VERSION>
- <BOIL_SIZE>26.5416667</BOIL_SIZE>
+ <BOIL_SIZE>27.5833333</BOIL_SIZE>
  <BATCH_SIZE>21.0000000</BATCH_SIZE>
  <TUN_VOLUME>49.9997118</TUN_VOLUME>
  <TUN_WEIGHT>7.9499949</TUN_WEIGHT>
  <TUN_SPECIFIC_HEAT>0.1200000</TUN_SPECIFIC_HEAT>
  <TOP_UP_WATER>0.0000000</TOP_UP_WATER>
- <TRUB_CHILLER_LOSS>4.0000000</TRUB_CHILLER_LOSS>
- <EVAP_RATE>1.8838305</EVAP_RATE>
+ <TRUB_CHILLER_LOSS>5.0000000</TRUB_CHILLER_LOSS>
+ <EVAP_RATE>1.8126888</EVAP_RATE>
  <BOIL_TIME>60.0000000</BOIL_TIME>
  <CALC_BOIL_VOLUME>TRUE</CALC_BOIL_VOLUME>
- <LAUTER_DEADSPACE>14.5000000</LAUTER_DEADSPACE>
+ <LAUTER_DEADSPACE>0.0000000</LAUTER_DEADSPACE>
  <TOP_UP_KETTLE>0.0000000</TOP_UP_KETTLE>
- <HOP_UTILIZATION>100.0000000</HOP_UTILIZATION>
+ <HOP_UTILIZATION>90.0000000</HOP_UTILIZATION>
  <COOLING_LOSS_PCT>4.0000000</COOLING_LOSS_PCT>
  <NOTES></NOTES>
- <DISPLAY_BOIL_SIZE>26.54 L</DISPLAY_BOIL_SIZE>
+ <DISPLAY_BOIL_SIZE>27.58 L</DISPLAY_BOIL_SIZE>
  <DISPLAY_BATCH_SIZE>21.00 L</DISPLAY_BATCH_SIZE>
  <DISPLAY_TUN_VOLUME>50.00 L</DISPLAY_TUN_VOLUME>
  <DISPLAY_TUN_WEIGHT>7.95 kg</DISPLAY_TUN_WEIGHT>
  <DISPLAY_TOP_UP_WATER>0.00 L</DISPLAY_TOP_UP_WATER>
- <DISPLAY_TRUB_CHILLER_LOSS>4.00 L</DISPLAY_TRUB_CHILLER_LOSS>
- <DISPLAY_LAUTER_DEADSPACE>14.50 L</DISPLAY_LAUTER_DEADSPACE>
+ <DISPLAY_TRUB_CHILLER_LOSS>5.00 L</DISPLAY_TRUB_CHILLER_LOSS>
+ <DISPLAY_LAUTER_DEADSPACE>0.00 L</DISPLAY_LAUTER_DEADSPACE>
  <DISPLAY_TOP_UP_KETTLE>0.00 L</DISPLAY_TOP_UP_KETTLE>
 </EQUIPMENT>
 
@@ -507,20 +485,20 @@ Mouthfeel: Medium to full body. Can be somewhat creamy, particularly if a small 
  <NAME>Mash In</NAME>
  <VERSION>1</VERSION>
  <TYPE>Infusion</TYPE>
- <INFUSE_AMOUNT>19.2617785</INFUSE_AMOUNT>
+ <INFUSE_AMOUNT>14.2764100</INFUSE_AMOUNT>
  <STEP_TIME>0.0000000</STEP_TIME>
  <STEP_TEMP>55.0000000</STEP_TEMP>
  <RAMP_TIME>0.0000000</RAMP_TIME>
  <END_TEMP>55.0000000</END_TEMP>
- <DESCRIPTION>Add 21,92 L of water at 60,2 C</DESCRIPTION>
+ <DESCRIPTION>Add 16,94 L of water at 60,0 C</DESCRIPTION>
  <WATER_GRAIN_RATIO>2,600 l/kg</WATER_GRAIN_RATIO>
  <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
- <INFUSE_TEMP>60.2 C</INFUSE_TEMP>
+ <INFUSE_TEMP>60.0 C</INFUSE_TEMP>
  <DISPLAY_STEP_TEMP>55.0 C</DISPLAY_STEP_TEMP>
- <DISPLAY_INFUSE_AMT>21.92 L</DISPLAY_INFUSE_AMT>
+ <DISPLAY_INFUSE_AMT>16.94 L</DISPLAY_INFUSE_AMT>
 </MASH_STEP>
 <MASH_STEP>
- <NAME>Mash Step</NAME>
+ <NAME>Beta 1</NAME>
  <VERSION>1</VERSION>
  <TYPE>Temperature</TYPE>
  <INFUSE_AMOUNT>0.0000000</INFUSE_AMOUNT>
@@ -529,14 +507,14 @@ Mouthfeel: Medium to full body. Can be somewhat creamy, particularly if a small 
  <RAMP_TIME>4.0000000</RAMP_TIME>
  <END_TEMP>62.0000000</END_TEMP>
  <DESCRIPTION>Heat to 62,0 C over 4 min</DESCRIPTION>
- <WATER_GRAIN_RATIO>2,959 l/kg</WATER_GRAIN_RATIO>
+ <WATER_GRAIN_RATIO>3,084 l/kg</WATER_GRAIN_RATIO>
  <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
  <INFUSE_TEMP>62.0 C</INFUSE_TEMP>
  <DISPLAY_STEP_TEMP>62.0 C</DISPLAY_STEP_TEMP>
  <DISPLAY_INFUSE_AMT>0.00 L</DISPLAY_INFUSE_AMT>
 </MASH_STEP>
 <MASH_STEP>
- <NAME>Mash Step</NAME>
+ <NAME>Beta 2</NAME>
  <VERSION>1</VERSION>
  <TYPE>Temperature</TYPE>
  <INFUSE_AMOUNT>0.0000000</INFUSE_AMOUNT>
@@ -545,14 +523,14 @@ Mouthfeel: Medium to full body. Can be somewhat creamy, particularly if a small 
  <RAMP_TIME>4.0000000</RAMP_TIME>
  <END_TEMP>64.0000000</END_TEMP>
  <DESCRIPTION>Heat to 64,0 C over 4 min</DESCRIPTION>
- <WATER_GRAIN_RATIO>2,959 l/kg</WATER_GRAIN_RATIO>
+ <WATER_GRAIN_RATIO>3,084 l/kg</WATER_GRAIN_RATIO>
  <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
  <INFUSE_TEMP>64.0 C</INFUSE_TEMP>
  <DISPLAY_STEP_TEMP>64.0 C</DISPLAY_STEP_TEMP>
  <DISPLAY_INFUSE_AMT>0.00 L</DISPLAY_INFUSE_AMT>
 </MASH_STEP>
 <MASH_STEP>
- <NAME>Mash Step</NAME>
+ <NAME>Beta 3</NAME>
  <VERSION>1</VERSION>
  <TYPE>Temperature</TYPE>
  <INFUSE_AMOUNT>0.0000000</INFUSE_AMOUNT>
@@ -561,14 +539,14 @@ Mouthfeel: Medium to full body. Can be somewhat creamy, particularly if a small 
  <RAMP_TIME>4.0000000</RAMP_TIME>
  <END_TEMP>67.0000000</END_TEMP>
  <DESCRIPTION>Heat to 67,0 C over 4 min</DESCRIPTION>
- <WATER_GRAIN_RATIO>2,959 l/kg</WATER_GRAIN_RATIO>
+ <WATER_GRAIN_RATIO>3,084 l/kg</WATER_GRAIN_RATIO>
  <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
  <INFUSE_TEMP>67.0 C</INFUSE_TEMP>
  <DISPLAY_STEP_TEMP>67.0 C</DISPLAY_STEP_TEMP>
  <DISPLAY_INFUSE_AMT>0.00 L</DISPLAY_INFUSE_AMT>
 </MASH_STEP>
 <MASH_STEP>
- <NAME>Mash Step</NAME>
+ <NAME>Alpha</NAME>
  <VERSION>1</VERSION>
  <TYPE>Temperature</TYPE>
  <INFUSE_AMOUNT>0.0000000</INFUSE_AMOUNT>
@@ -577,7 +555,7 @@ Mouthfeel: Medium to full body. Can be somewhat creamy, particularly if a small 
  <RAMP_TIME>4.0000000</RAMP_TIME>
  <END_TEMP>72.0000000</END_TEMP>
  <DESCRIPTION>Heat to 72,0 C over 4 min</DESCRIPTION>
- <WATER_GRAIN_RATIO>2,959 l/kg</WATER_GRAIN_RATIO>
+ <WATER_GRAIN_RATIO>3,084 l/kg</WATER_GRAIN_RATIO>
  <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
  <INFUSE_TEMP>72.0 C</INFUSE_TEMP>
  <DISPLAY_STEP_TEMP>72.0 C</DISPLAY_STEP_TEMP>
@@ -593,7 +571,7 @@ Mouthfeel: Medium to full body. Can be somewhat creamy, particularly if a small 
  <RAMP_TIME>4.0000000</RAMP_TIME>
  <END_TEMP>76.0000000</END_TEMP>
  <DESCRIPTION>Heat to 76,0 C over 4 min</DESCRIPTION>
- <WATER_GRAIN_RATIO>2,959 l/kg</WATER_GRAIN_RATIO>
+ <WATER_GRAIN_RATIO>3,084 l/kg</WATER_GRAIN_RATIO>
  <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
  <INFUSE_TEMP>76.0 C</INFUSE_TEMP>
  <DISPLAY_STEP_TEMP>76.0 C</DISPLAY_STEP_TEMP>
@@ -624,18 +602,18 @@ Mouthfeel: Medium to full body. Can be somewhat creamy, particularly if a small 
  <KEG_PRIMING_FACTOR>0.5000000</KEG_PRIMING_FACTOR>
  <CARBONATION_TEMP>21.1111111</CARBONATION_TEMP>
  <DISPLAY_CARB_TEMP>21.1 C</DISPLAY_CARB_TEMP>
- <DATE>13 Oct 2020</DATE>
- <EST_OG>1.072 SG</EST_OG>
- <EST_FG>1.014 SG</EST_FG>
- <EST_COLOR>93.4 EBC</EST_COLOR>
- <IBU>80.1 IBUs</IBU>
+ <DATE>18 Nov 2020</DATE>
+ <EST_OG>1.048 SG</EST_OG>
+ <EST_FG>1.011 SG</EST_FG>
+ <EST_COLOR>7.9 EBC</EST_COLOR>
+ <IBU>17.9 IBUs</IBU>
  <IBU_METHOD>Rager</IBU_METHOD>
- <EST_ABV>7.7 %</EST_ABV>
+ <EST_ABV>4.8 %</EST_ABV>
  <ABV>4.7 %</ABV>
- <ACTUAL_EFFICIENCY>38.6 %</ACTUAL_EFFICIENCY>
+ <ACTUAL_EFFICIENCY>51.8 %</ACTUAL_EFFICIENCY>
  <CALORIES>427.1 kcal/l</CALORIES>
  <DISPLAY_BATCH_SIZE>21.00 L</DISPLAY_BATCH_SIZE>
- <DISPLAY_BOIL_SIZE>26.54 L</DISPLAY_BOIL_SIZE>
+ <DISPLAY_BOIL_SIZE>27.58 L</DISPLAY_BOIL_SIZE>
  <DISPLAY_OG>1.046 SG</DISPLAY_OG>
  <DISPLAY_FG>1.010 SG</DISPLAY_FG>
  <DISPLAY_PRIMARY_TEMP>19.4 C</DISPLAY_PRIMARY_TEMP>

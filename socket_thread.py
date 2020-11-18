@@ -9,9 +9,10 @@ import socket
 
 class SocketThread(threading.Thread):
     """A class for socket thread"""
-    def __init__(self, ispindel_tab_gui):
+    def __init__(self, ispindel_tab_gui, fermentation_tab_gui):
         super().__init__(daemon=True)
         self.ispindel_tab_gui = ispindel_tab_gui
+        self.fermentation_tab_gui = fermentation_tab_gui
 
         # Create a TCP/IP socket
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -43,6 +44,7 @@ class SocketThread(threading.Thread):
                         socket_message = eval(socket_message)
                         socket_message = {k.lower(): v for k, v in socket_message.items()}
                         self.ispindel_tab_gui.update_parameters(socket_message)
+                        self.fermentation_tab_gui.update_parameters(socket_message)
                         break
             finally:
                 connection.close()

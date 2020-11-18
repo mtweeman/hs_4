@@ -158,7 +158,10 @@ class ISpindelTabGUI(Frame):
         self.b_generate_polynomial.bind('<Button-1>', self.generate_polynomial)
         self.b_confirm_settings.bind('<Button-1>', self.confirm_settings)
 
-    def resize_image(self, event):
+        # Initial resize for grabbing coordinates (crash if socket sends data before tab activation)
+        # TO BE CODED
+
+    def resize_image(self, event=None):
         width, height = event.width, event.height
 
         self.w_scale = width / self.img_ispindel.width

@@ -10,9 +10,11 @@ from PIL import Image
 from recipe_tab_gui import RecipeTabGUI
 from brewery_tab_gui import BreweryTabGUI
 from ispindel_tab_gui import ISpindelTabGUI
+from fermentation_tab_gui import FermentationTabGUI
 from recipe_parameters import RecipeParameters
 from brewery_parameters import BreweryParameters
 from ispindel_parameters import ISpindelParameters
+from fermentation_parameters import FermentationParameters
 from socket_thread import SocketThread
 from database import Database
 
@@ -25,6 +27,7 @@ title_str = 'Hajle Silesia Homebrewing System '
 recipe_parameters = RecipeParameters()
 brewery_parameters = BreweryParameters()
 ispindel_parameters = ISpindelParameters()
+fermentation_parameters = FermentationParameters()
 database = Database()
 
 # Window setup
@@ -44,14 +47,16 @@ tab_control.pack(fill='both', expand=1)
 ispindel_tab_gui = ISpindelTabGUI(tab_control, ispindel_parameters, database)
 recipe_tab_gui = RecipeTabGUI(tab_control, recipe_parameters)
 brewery_tab__gui = BreweryTabGUI(tab_control, brewery_parameters)
+fermentation_tab_gui = FermentationTabGUI(tab_control, fermentation_parameters, database)
 
-tabs = [ispindel_tab_gui,
+tabs = [fermentation_tab_gui,
         recipe_tab_gui,
         brewery_tab__gui,
+        ispindel_tab_gui,
         ]
 
 for tab in tabs:
     tab_control.add(tab, text=tab.name)
 
-socket_thread = SocketThread(ispindel_tab_gui)
+socket_thread = SocketThread(ispindel_tab_gui, fermentation_tab_gui)
 root.mainloop()
