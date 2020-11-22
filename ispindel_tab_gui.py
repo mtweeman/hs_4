@@ -270,6 +270,13 @@ class ISpindelTabGUI(Frame):
                 self.l_parameters_names[i].config(text=parameter_value_tuple[0].title())
             self.l_parameters_values[i].config(text=parameter_value_tuple[1])
 
+        result = self.database.get_ispindel_temperature_offset(self.parameters_values['name'])
+
+        if result:
+            self.e_temperature_offset.delete(0, END)
+            self.e_temperature_offset.insert(0, result)
+            self.e_temperature_offset.config(fg='#000000')
+
         self.l_status.config(text='Waiting for data acquisition')
 
     def entry_click(self, event):
@@ -310,4 +317,17 @@ class ISpindelTabGUI(Frame):
         self.ispindel_parameters.parameters['temperature_offset'] = float(self.e_temperature_offset.get())
         self.ispindel_parameters.parameters['battery_notification'] = False
 
-        self.database.fermentation_settings_execute(self.ispindel_parameters)
+        self.database.execute_fermentation_settings(self.ispindel_parameters)
+
+    def recipe_parameters_update(self, batch_number, og):
+        self.e_batch_number.delete(0, END)
+        self.e_batch_number.insert(0, batch_number)
+        self.e_batch_number.config(fg='#000000')
+
+        self.e_gravity_point_1.delete(0, END)
+        self.e_gravity_point_1.insert(0, '1.000')
+        self.e_gravity_point_1.config(fg='#000000')
+
+        self.e_gravity_point_2.delete(0, END)
+        self.e_gravity_point_2.insert(0, og)
+        self.e_gravity_point_2.config(fg='#000000')

@@ -1,6 +1,5 @@
 # Standard libraries
 from _collections import OrderedDict
-import datetime
 
 # Imported libraries
 
@@ -10,7 +9,7 @@ import datetime
 class FermentationParameters:
     """A class for 'Fermentation' tab parameters storage"""
     def __init__(self):
-        self.parameters = OrderedDict().fromkeys(['time',
+        self.parameters = OrderedDict().fromkeys(['measurement_time',
                                                   'name',
                                                   'angle',
                                                   'temperature',
@@ -20,3 +19,5 @@ class FermentationParameters:
                                                   'interval',
                                                   'rssi',
                                                   ])
+
+        self.record_flag = False

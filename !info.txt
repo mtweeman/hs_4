@@ -34,6 +34,17 @@ PARTIALLY TRANSPARENT LABELS ON THE BACKGROUND + CANVAS:
 
 https://stackoverflow.com/questions/48327765/draggable-tkinter-label-with-transparent-image-still-covers-image-from-parent-ca
 
+TKINTER PLOT
 
+https://www.geeksforgeeks.org/how-to-embed-matplotlib-charts-in-tkinter-gui/
 
+https://ishantheperson.github.io/posts/tkinter-matplotlib/
+
+https://www.geeksforgeeks.org/matplotlib-figure-figure-set_facecolor-in-python/
+
+https://stackoverflow.com/questions/8209568/how-do-i-draw-a-grid-onto-a-plot-in-python
+
+https://stackoverflow.com/questions/12913854/displaying-matplotlib-navigation-toolbar-in-tkinter-via-grid
+
+https://stackoverflow.com/questions/42961810/detect-dpi-scaling-factor-in-python-tkinter-application
 

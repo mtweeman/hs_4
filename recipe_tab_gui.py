@@ -14,13 +14,14 @@ from xml_list_config import *
 class RecipeTabGUI(Frame):
     """A class for 'Recipe' tab creation"""
 
-    def __init__(self, tab_control, recipe_parameters):
+    def __init__(self, tab_control, recipe_parameters, ispindel_tab_gui):
         super().__init__(tab_control)
         self.name = 'Recipe'
         self.style = ttk.Style()
         self.style.configure('TNotebook.Tab', font=('None', '14'))
         self.xml_filepath = ''
         self.recipe_parameters = recipe_parameters
+        self.ispindel_tab_gui = ispindel_tab_gui
 
         # Images for labels
         self.img_switch_on = Image.open('images/switch_on.png')
@@ -181,15 +182,16 @@ class RecipeTabGUI(Frame):
         recipe = element_tree.parse(xml_filepath).getroot()
         xml_dict = XmlDictConfig(recipe)
 
+        # Extract data for Recipe parameters
+        self.recipe_parameters.extract_xml_data(xml_dict)
+
         # Extract Recipe name
         self.l_recipe_name.config(text=xml_dict['RECIPE']['NAME'])
 
-        # entry_batch_number.delete(0, END)
-        # entry_batch_number.insert(0, str(int(xml_dict['RECIPE']['NAME'].split()[0][1:])))
-        # entry_batch_number.config(fg='black')
-
-        # Extract data for Recipe parameters
-        self.recipe_parameters.extract_xml_data(xml_dict)
+        # Extract parameters for 'iSpindel' tab
+        self.ispindel_tab_gui.recipe_parameters_update(str(int(xml_dict['RECIPE']['NAME'].split()[0][1:])),
+                                                       self.recipe_parameters.parameters['OG'],
+                                                       )
 
         # Prepare texts for GUI objects
         miscs_texts = {}

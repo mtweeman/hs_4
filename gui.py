@@ -39,15 +39,16 @@ root.minsize(image_brewery.width, image_brewery.height)
 root.state('zoomed')  # maximize window
 root.iconbitmap(icon)
 root.title(title_str + str(version))
+dpi = root.winfo_fpixels('1i')
 
 # Tabs setup
 tab_control = ttk.Notebook(root)
 tab_control.pack(fill='both', expand=1)
 
 ispindel_tab_gui = ISpindelTabGUI(tab_control, ispindel_parameters, database)
-recipe_tab_gui = RecipeTabGUI(tab_control, recipe_parameters)
+recipe_tab_gui = RecipeTabGUI(tab_control, recipe_parameters, ispindel_tab_gui)
 brewery_tab__gui = BreweryTabGUI(tab_control, brewery_parameters)
-fermentation_tab_gui = FermentationTabGUI(tab_control, fermentation_parameters, database)
+fermentation_tab_gui = FermentationTabGUI(tab_control, fermentation_parameters, database, dpi)
 
 tabs = [fermentation_tab_gui,
         recipe_tab_gui,

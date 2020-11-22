@@ -11,7 +11,7 @@ class ISpindelParameters:
     """A class for 'iSpindel' tab parameters storage"""
     def __init__(self):
         self.parameters = OrderedDict().fromkeys(['batch_number',
-                                                  'temperature_offset',
+                                                  'tempera  ture_offset',
                                                   'gravity_0',
                                                   'gravity_1',
                                                   'angle_0',
