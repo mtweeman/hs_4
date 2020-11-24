@@ -48,3 +48,5 @@ https://stackoverflow.com/questions/12913854/displaying-matplotlib-navigation-to
 
 https://stackoverflow.com/questions/42961810/detect-dpi-scaling-factor-in-python-tkinter-application
 
+https://stackoverflow.com/questions/9627686/plotting-dates-on-the-x-axis-with-pythons-matplotlib
+

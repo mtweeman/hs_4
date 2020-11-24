@@ -217,7 +217,7 @@ class RecipeTabGUI(Frame):
                     for key, val in current_item.items():
                         texts[i][key] += '\n' + str(val)
 
-        # Create text for parameters (dictionary)
+        # Create text from recipe parameters (dictionary)
         if self.recipe_parameters.parameters:
             for key, val in self.recipe_parameters.parameters.items():
                 parameters_texts['NAME'] += '\n' + key

@@ -1,7 +1,6 @@
 # Standard libraries
 import os
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+import datetime
 
 # Imported libraries
 import pyodbc as db
@@ -35,11 +34,13 @@ class Database:
         #     self.db_connection.execute(self.query)
         # DO NOT REMOVE
 
-    def execute_fermentation(self, fermentation_parameters):
+    def execute_fermentation(self, fermentation_parameters, batch_number):
         self.establish_connection()
 
+        fermentation = str(batch_number) + '_Ferm'
+
         # Prepare query for table creation
-        self.query = ("""CREATE TABLE 12_Ferm""" +
+        self.query = ("""CREATE TABLE """ + fermentation +
                       """(id AUTOINCREMENT PRIMARY KEY NOT NULL,""" +
                       """measurement_time DATETIME NOT NULL,""" +
                       """name VARCHAR(15) NOT NULL,""" +
@@ -52,11 +53,11 @@ class Database:
                       """rssi SHORT NOT NULL);""")
 
         # Check existence / create table
-        if not self.cursor.tables(table='12_Ferm', tableType='TABLE').fetchone():
+        if not self.cursor.tables(table=fermentation, tableType='TABLE').fetchone():
             self.cursor.execute(self.query)
 
         # Save new data
-        self.query = """INSERT INTO 12_Ferm ("""
+        self.query = """INSERT INTO """ + fermentation + """("""
 
         for key in fermentation_parameters.parameters:
             self.query += key + ','
@@ -119,19 +120,21 @@ class Database:
         y = []
 
         # Prepare query
-        self.query = """SELECT * FROM 12_Ferm;"""
-        if self.cursor.tables(table='12_Ferm', tableType='TABLE').fetchone():
-            self.cursor.execute(self.query)
+        self.query = """SELECT * FROM 73_Ferm ORDER BY id;"""
+        self.cursor.execute(self.query)
 
-        for row in self.cursor:
-            x.append(row.id)
+        for row in self.cursor.fetchall():
+            x.append(row.measurement_time)
             y.append(row.gravity)
 
         self.terminate_connection()
 
+        return x, y
+
     def get_ispindel_temperature_offset(self, ispindel_name):
         self.establish_connection()
 
+        # Prepare query
         self.query = """SELECT * FROM iSpindel_settings;"""
 
         if self.cursor.tables(table='iSpindel_settings', tableType='TABLE').fetchone():

@@ -301,16 +301,22 @@ class ISpindelTabGUI(Frame):
                     angle = self.parameters_values['angle']
                     self.ispindel_parameters.parameters['gravity_' + str(i)] = gravity
                     self.ispindel_parameters.parameters['angle_' + str(i)] = angle
-                    self.l_calibration_points[i].config(text='Gravity: ' + str(gravity) + ', angle: ' + str(angle))
+                    self.l_calibration_points[i].config(text='Gravity: ' + '%.3f' % gravity +
+                                                             ', angle: ' + '%.3f' % angle)
         except KeyError:
             pass
         except ValueError:
             pass
+        except TypeError:
+            pass
 
     def generate_polynomial(self, event):
-        self.ispindel_parameters.calculate_polynomial()
-        self.l_generate_polynomial.config(text='y = ' + str(round(self.ispindel_parameters.parameters['a'], 3)) +
-                                               'x + ' + str(round(self.ispindel_parameters.parameters['b'], 3)))
+        try:
+            self.ispindel_parameters.calculate_polynomial()
+            self.l_generate_polynomial.config(text='y = ' + str(round(self.ispindel_parameters.parameters['a'], 3)) +
+                                                   'x + ' + str(round(self.ispindel_parameters.parameters['b'], 3)))
+        except TypeError:
+            pass
 
     def confirm_settings(self, event):
         self.ispindel_parameters.parameters['batch_number'] = int(self.e_batch_number.get())

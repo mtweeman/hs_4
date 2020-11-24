@@ -1,121 +1,150 @@
 # Standard libraries
 from tkinter import *
 from tkinter import ttk
-import datetime
+import csv
 
 # Imported libraries
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
-
-# My libraries
+from PIL import Image, ImageTk
 
 
 class FermentationTabGUI(Frame):
     """A class for 'Fermentation' tab creation"""
-    def __init__(self, tab_control, fermentation_parameters, database, dpi):
+
+    def __init__(self, tab_control, fermentation_parameters):
         super().__init__(tab_control)
         self.name = 'Fermentation'
         self.style = ttk.Style()
         self.style.configure('TNotebook.Tab', font=('None', '14'))
         self.fermentation_parameters = fermentation_parameters
-        self.database = database
-        self.dpi = dpi
+
+        # Images for labels
+        self.img_fermentation = Image.open('images/ferm4.bmp')
+        self.img_switch_on = Image.open('images/switch_on.png')
+        self.img_switch_off = Image.open('images/switch_off.png')
+        self.img_button_on = Image.open('images/button_on.png')
+        self.img_button_off = Image.open('images/button_off.png')
+
+        self.img_switch_on = self.img_switch_on.resize((60, 38))
+        self.img_switch_off = self.img_switch_off.resize((60, 38))
+        self.img_button_on = self.img_button_on.resize((32, 32))
+        self.img_button_off = self.img_button_off.resize((32, 32))
+
+        self.img_fermentation_copy = self.img_fermentation.copy()
+        self.img_switch_on_copy = self.img_switch_on.copy()
+        self.img_switch_off_copy = self.img_switch_off.copy()
+        self.img_button_on_copy = self.img_button_on.copy()
+        self.img_button_off_copy = self.img_button_off.copy()
+
+        self.img_c_fermentation = ImageTk.PhotoImage(image=self.img_fermentation)
+        self.img_c_switch_on = ImageTk.PhotoImage(image=self.img_switch_on)
+        self.img_c_switch_off = ImageTk.PhotoImage(image=self.img_switch_off)
+        self.img_c_button_on = ImageTk.PhotoImage(image=self.img_button_on)
+        self.img_c_button_off = ImageTk.PhotoImage(image=self.img_button_off)
 
         # Names of GUI objects in the tab
-        self.f_parameters = Frame(self)
-        self.f_navigation_toolbar = Frame(self)
+        self.c_fermentation = Canvas(self)
 
-        self.b_start = Button(self.f_parameters, font=(None, 14), text='Start', anchor=W)
-        self.b_stop = Button(self.f_parameters, font=(None, 14), text='Stop', anchor=W)
+        self.c_items = {}
+        self.c_vessels = {}
 
-        self.l_parameters_names = []
-        self.l_parameters_values = []
+        # CATIA coordinates
+        self.fermentation_rect = (1776, 999)
+        filename = 'data/fermentation_coords.csv'
 
-        for i in range(len(self.fermentation_parameters.parameters)):
-            self.l_parameters_names.append(Label(self.f_parameters, font=(None, 14), text=''))
-            self.l_parameters_values.append(Label(self.f_parameters, font=(None, 14), text=''))
+        with open(filename) as f_obj:
+            reader = csv.reader(f_obj)
+            next(reader)
+
+            self.fermentation_coords = {}
+
+            for row in reader:
+                self.fermentation_coords[row[0]] = (int(row[1]), int(row[2]))
+
+        # Adding images to GUI objects
+        self.c_background = self.c_fermentation.create_image(0, 0, anchor=N + W, image=self.img_c_fermentation)
+
+        for key, value in self.fermentation_coords.items():
+            if 'fv' in key:
+                self.c_items[key] = self.c_fermentation.create_image(
+                    int(round(self.img_fermentation.width * (value[0] / self.fermentation_rect[0]), 0)),
+                    int(round(self.img_fermentation.height * (value[1] / self.fermentation_rect[1]), 0)),
+                    anchor=CENTER, image=self.img_c_switch_off,
+                    tags=key)
+                self.c_vessels[key] = self.c_fermentation.create_text(
+                    int(round(self.img_fermentation.width * (value[0] / self.fermentation_rect[0]), 0)),
+                    int(round(self.img_fermentation.height * (value[1] / self.fermentation_rect[1]) + 40, 0)),
+                    anchor=CENTER, font=(None, 14), text=key.replace('_', ' ').upper())
+            else:
+                self.c_items[key] = self.c_fermentation.create_image(
+                    int(round(self.img_fermentation.width * (value[0] / self.fermentation_rect[0]), 0)),
+                    int(round(self.img_fermentation.height * (value[1] / self.fermentation_rect[1]), 0)),
+                    anchor=CENTER, image=self.img_c_button_off,
+                    tags=key)
 
         # Adding GUI objects to the grid
-        self.f_parameters.grid(row=0, column=0, sticky=NSEW)
-
-        self.b_start.grid(row=0, column=0, sticky=NSEW)
-        self.b_stop.grid(row=1, column=0, sticky=NSEW)
-
-        for i in range(len(self.fermentation_parameters.parameters)):
-            self.l_parameters_names[i].grid(row=2 + i, column=0, sticky=W)
-            self.l_parameters_values[i].grid(row=2 + i, column=1, sticky=W)
-
-        # Setting rows and columns properties
-        for i in range(4):
-            self.columnconfigure(i, weight=1, uniform='column')
-
-        for i in range(2):
-            self.rowconfigure(i, weight=1, uniform='row')
-
-        for i in range(self.f_parameters.grid_size()[1]):
-            self.f_parameters.rowconfigure(i, weight=1, uniform='row')
+        self.c_fermentation.place(relwidth=1, relheight=1)
 
         # Adding commands to GUI objects
-        self.b_start.bind('<Button-1>', self.start)
-        self.b_stop.bind('<Button-1>', self.stop)
+        self.c_fermentation.bind('<Configure>', self.resize_image)
 
-    def start(self, event):
-        self.fermentation_parameters.record_flag = True
-        self.ferm_chart()
+        for key, value in self.fermentation_coords.items():
+            self.c_fermentation.tag_bind(self.c_items[key], '<Button-1>', lambda event, key=key: self.toggle_switch(key))
 
-    def stop(self, event):
-        self.fermentation_parameters.record_flag = False
+    def resize_image(self, event):
+        width, height = event.width, event.height
 
-    def update_parameters(self, socket_message):
-        # Extract needed parameters into 'FermentationParameters' instance variable
-        self.fermentation_parameters.parameters['measurement_time'] = datetime.datetime.now()
+        w_scale = width / self.img_fermentation.width
+        h_scale = height / self.img_fermentation.height
+
+        # Resizing images
+        # img_brewery
+        image = self.img_fermentation_copy.resize((width, height))
+        self.img_c_fermentation = ImageTk.PhotoImage(image)
+        self.c_fermentation.itemconfig(self.c_background, image=self.img_c_fermentation)
+
+        # img_switch_on
+        image = self.img_switch_on_copy.resize(
+            (int(round(w_scale * self.img_switch_on.width, 0)), int(round(h_scale * self.img_switch_on.height, 0))))
+        self.img_c_switch_on = ImageTk.PhotoImage(image)
+
+        # img_switch_off
+        image = self.img_switch_off_copy.resize(
+            (int(round(w_scale * self.img_switch_off.width, 0)), int(round(h_scale * self.img_switch_off.height, 0))))
+        self.img_c_switch_off = ImageTk.PhotoImage(image)
+
+        # img_button_on
+        image = self.img_button_on_copy.resize(
+            (int(round(w_scale * self.img_button_on.width, 0)), int(round(h_scale * self.img_button_on.height, 0))))
+        self.img_c_button_on = ImageTk.PhotoImage(image)
+
+        # img_button_off
+        image = self.img_button_off_copy.resize(
+            (int(round(w_scale * self.img_button_off.width, 0)), int(round(h_scale * self.img_button_off.height, 0))))
+        self.img_c_button_off = ImageTk.PhotoImage(image)
+
+        self.toggle_switch()
+
+        # Coordinates of GUI objects
+        for key, value in self.fermentation_coords.items():
+            self.c_fermentation.coords(self.c_items[key],
+                                  int(round(w_scale * self.img_fermentation.width * (value[0] / self.fermentation_rect[0]), 0)),
+                                  int(round(h_scale * self.img_fermentation.height * (value[1] / self.fermentation_rect[1]), 0)))
+            if 'fv' in key:
+                self.c_fermentation.coords(self.c_vessels[key],
+                                           int(round(w_scale * self.img_fermentation.width * (value[0] / self.fermentation_rect[0]), 0)),
+                                           int(round(h_scale * (self.img_fermentation.height * (value[1] / self.fermentation_rect[1]) + 40), 0)))
+
+    def toggle_switch(self, key=None):
+        self.fermentation_parameters.verify_parameters(key)
 
         for key, value in self.fermentation_parameters.parameters.items():
-            if key in socket_message.keys():
-                if key == 'angle' or key == 'battery' or key == 'temperature' or key == 'gravity':
-                    self.fermentation_parameters.parameters[key] = float(socket_message[key])
-                elif key == 'interval' or key == 'rssi':
-                    self.fermentation_parameters.parameters[key] = float(socket_message[key])
+            if 'fv' in key:
+                if self.fermentation_parameters.parameters[key]:
+                    self.c_fermentation.itemconfig(self.c_items[key], image=self.img_c_switch_on)
                 else:
-                    self.fermentation_parameters.parameters[key] = socket_message[key]
-
-        # Print socket data on the screen
-        for i, parameter_value_tuple in enumerate(self.fermentation_parameters.parameters.items()):
-            if parameter_value_tuple[0] == 'rssi':
-                self.l_parameters_names[i].config(text=parameter_value_tuple[0].upper())
+                    self.c_fermentation.itemconfig(self.c_items[key], image=self.img_c_switch_off)
             else:
-                self.l_parameters_names[i].config(text=parameter_value_tuple[0].title())
-
-            if parameter_value_tuple[0] == 'measurement_time':
-                self.l_parameters_values[i].config(text=parameter_value_tuple[1].strftime('%Y-%m-%d %H:%M:%S'))
-            else:
-                self.l_parameters_values[i].config(text=parameter_value_tuple[1])
-
-        # Save to database if record started
-        if self.fermentation_parameters.record_flag:
-            self.database.execute_fermentation(self.fermentation_parameters)
-
-    def ferm_chart(self):
-        # Names of figure objects in the tab
-        fig = Figure(figsize=(1, 1), dpi=self.dpi)
-        plot = fig.add_subplot(111)
-        canvas = FigureCanvasTkAgg(fig, master=self)
-        toolbar = NavigationToolbar2Tk(canvas, self.f_navigation_toolbar)
-
-        # Figure and plot settings
-        fig.set_facecolor('#f0f0f0')
-        plot.set_xlabel('X label', fontsize=14)
-        plot.set_ylabel('Y label', fontsize=14)
-        plot.grid()
-
-        # Plot data
-        y = [i ** 2 for i in range(101)]
-
-        plot.plot(y)
-
-        canvas.draw()
-        toolbar.update()
-
-        # Adding figure objects to the grid
-        canvas.get_tk_widget().grid(row=0, column=1, columnspan=3, sticky=NSEW)
-        self.f_navigation_toolbar.grid(row=1, column=1, sticky=N + W)
+                if self.fermentation_parameters.parameters[key]:
+                    self.c_fermentation.itemconfig(self.c_items[key], image=self.img_c_button_on)
+                else:
+                    self.c_fermentation.itemconfig(self.c_items[key], image=self.img_c_button_off)

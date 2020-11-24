@@ -38,10 +38,6 @@ class RecipeParameters:
         # Clear earlier records
         for element in self.lists:
             element.clear()
-        # self.miscs.clear()
-        # self.fermentables.clear()
-        # self.mash.clear()
-        # self.hops.clear()
 
         current_item = {}
 
@@ -60,9 +56,10 @@ class RecipeParameters:
                 current_item['TIME'] = datetime.timedelta(minutes=int(round(float(v['TIME']), 0)))
                 self.miscs.append(current_item.copy())
 
-                # if v['NAME'] == "Baker's Dry Yeast" and not self.recipe_parameters.user_parameters['yos']:
-                #     self.s_yos.config(image=self.img_l_switch_on)
-                #     self.recipe_parameters.user_parameters['yos'] = True
+                if v['NAME'] == "Baker's Dry Yeast" and not self.user_parameters['yos']:
+                    self.user_parameters['yos'] = True
+                    #     self.s_yos.config(image=self.img_l_switch_on)
+
 
             order = {'Mash': 0, 'Sparge': 1, 'Boil': 2}
             self.miscs.sort(key=lambda k: (order[k['USE']], -k['TIME']))
