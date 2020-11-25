@@ -39,17 +39,21 @@ class ISpindelTabGUI(Frame):
         # f_settings_parameters
         # f_settings
         self.entries_texts = ['Batch number',
+                              'Fermentation vessel',
                               'Temperature offset',
                               'Gravity 1',
                               'Gravity 2']
+
         self.e_batch_number = Entry(self.f_settings_parameters, font=(None, 14), fg='#c5c5c5')
         self.e_batch_number.insert(END, self.entries_texts[0])
+        self.e_fermentation_vessel = Entry(self.f_settings_parameters, font=(None, 14), fg='#c5c5c5')
+        self.e_fermentation_vessel.insert(END, self.entries_texts[1])
         self.e_temperature_offset = Entry(self.f_settings_parameters, font=(None, 14), fg='#c5c5c5')
-        self.e_temperature_offset.insert(END, self.entries_texts[1])
+        self.e_temperature_offset.insert(END, self.entries_texts[2])
         self.e_gravity_point_1 = Entry(self.f_settings_parameters, font=(None, 14), fg='#c5c5c5')
-        self.e_gravity_point_1.insert(END, self.entries_texts[2])
+        self.e_gravity_point_1.insert(END, self.entries_texts[3])
         self.e_gravity_point_2 = Entry(self.f_settings_parameters, font=(None, 14), fg='#c5c5c5')
-        self.e_gravity_point_2.insert(END, self.entries_texts[3])
+        self.e_gravity_point_2.insert(END, self.entries_texts[4])
         self.b_calibration_point_1 = Button(
             self.f_settings_parameters, font=(None, 14), text='Calibration point 1', anchor=W)
         self.l_calibration_point_1 = Label(
@@ -93,6 +97,7 @@ class ISpindelTabGUI(Frame):
 
         # Creating list with all entries for looping
         self.e_entries = [self.e_batch_number,
+                          self.e_fermentation_vessel,
                           self.e_temperature_offset,
                           self.e_gravity_point_1,
                           self.e_gravity_point_2,
@@ -119,16 +124,17 @@ class ISpindelTabGUI(Frame):
         # f_settings_parameters
         # f_settings
         self.e_batch_number.grid(row=0, column=0, sticky=NSEW)
-        self.e_temperature_offset.grid(row=1, column=0, sticky=NSEW)
-        self.e_gravity_point_1.grid(row=2, column=0, sticky=NSEW)
-        self.e_gravity_point_2.grid(row=3, column=0, sticky=NSEW)
-        self.b_calibration_point_1.grid(row=4, column=0, sticky=NSEW)
-        self.l_calibration_point_1.grid(row=4, column=1, sticky=W)
-        self.b_calibration_point_2.grid(row=5, column=0, sticky=NSEW)
-        self.l_calibration_point_2.grid(row=5, column=1, sticky=W)
-        self.b_generate_polynomial.grid(row=6, column=0, sticky=NSEW)
-        self.l_generate_polynomial.grid(row=6, column=1, sticky=W)
-        self.b_confirm_settings.grid(row=7, column=0, sticky=NSEW)
+        self.e_fermentation_vessel.grid(row=1, column=0, sticky=NSEW)
+        self.e_temperature_offset.grid(row=2, column=0, sticky=NSEW)
+        self.e_gravity_point_1.grid(row=3, column=0, sticky=NSEW)
+        self.e_gravity_point_2.grid(row=4, column=0, sticky=NSEW)
+        self.b_calibration_point_1.grid(row=5, column=0, sticky=NSEW)
+        self.l_calibration_point_1.grid(row=5, column=1, sticky=W)
+        self.b_calibration_point_2.grid(row=6, column=0, sticky=NSEW)
+        self.l_calibration_point_2.grid(row=6, column=1, sticky=W)
+        self.b_generate_polynomial.grid(row=7, column=0, sticky=NSEW)
+        self.l_generate_polynomial.grid(row=7, column=1, sticky=W)
+        self.b_confirm_settings.grid(row=8, column=0, sticky=NSEW)
 
         # f_parameters
         for i in range(len(self.parameters_values)):
@@ -147,6 +153,8 @@ class ISpindelTabGUI(Frame):
 
         self.e_batch_number.bind('<FocusIn>', self.entry_click)
         self.e_batch_number.bind('<FocusOut>', self.entry_unclick)
+        self.e_fermentation_vessel.bind('<FocusIn>', self.entry_click)
+        self.e_fermentation_vessel.bind('<FocusOut>', self.entry_unclick)
         self.e_temperature_offset.bind('<FocusIn>', self.entry_click)
         self.e_temperature_offset.bind('<FocusOut>', self.entry_unclick)
         self.e_gravity_point_1.bind('<FocusIn>', self.entry_click)
@@ -270,11 +278,11 @@ class ISpindelTabGUI(Frame):
                 self.l_parameters_names[i].config(text=parameter_value_tuple[0].title())
             self.l_parameters_values[i].config(text=parameter_value_tuple[1])
 
-        result = self.database.get_ispindel_temperature_offset(self.parameters_values['name'])
+        db_temperature_offset = self.database.get_ispindel_temperature_offset(self.parameters_values['name'])
 
-        if result:
+        if db_temperature_offset:
             self.e_temperature_offset.delete(0, END)
-            self.e_temperature_offset.insert(0, result)
+            self.e_temperature_offset.insert(0, db_temperature_offset)
             self.e_temperature_offset.config(fg='#000000')
 
         self.l_status.config(text='Waiting for data acquisition')
@@ -297,7 +305,7 @@ class ISpindelTabGUI(Frame):
         try:
             for i, element in enumerate(self.b_calibration_points):
                 if element == event.widget:
-                    gravity = float(self.e_entries[i + 2].get())
+                    gravity = float(self.e_entries[i + 3].get())
                     angle = self.parameters_values['angle']
                     self.ispindel_parameters.parameters['gravity_' + str(i)] = gravity
                     self.ispindel_parameters.parameters['angle_' + str(i)] = angle
@@ -320,6 +328,8 @@ class ISpindelTabGUI(Frame):
 
     def confirm_settings(self, event):
         self.ispindel_parameters.parameters['batch_number'] = int(self.e_batch_number.get())
+        self.ispindel_parameters.parameters['fermentation_vessel'] = self.e_fermentation_vessel.get()
+        self.ispindel_parameters.parameters['ispindel_name'] = self.parameters_values['name']
         self.ispindel_parameters.parameters['temperature_offset'] = float(self.e_temperature_offset.get())
         self.ispindel_parameters.parameters['battery_notification'] = False
 
@@ -337,3 +347,8 @@ class ISpindelTabGUI(Frame):
         self.e_gravity_point_2.delete(0, END)
         self.e_gravity_point_2.insert(0, og)
         self.e_gravity_point_2.config(fg='#000000')
+
+    def fermentation_vessel_update(self, fermentation_vessel):
+        self.e_fermentation_vessel.delete(0, END)
+        self.e_fermentation_vessel.insert(0, fermentation_vessel)
+        self.e_fermentation_vessel.config(fg='#000000')

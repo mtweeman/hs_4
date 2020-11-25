@@ -46,7 +46,7 @@ tab_control = ttk.Notebook(root)
 tab_control.pack(fill='both', expand=1)
 
 ispindel_tab_gui = ISpindelTabGUI(tab_control, ispindel_parameters, database)
-recipe_tab_gui = RecipeTabGUI(tab_control, recipe_parameters, ispindel_tab_gui)
+recipe_tab_gui = RecipeTabGUI(tab_control, recipe_parameters, ispindel_tab_gui, fermentation_parameters)
 brewery_tab__gui = BreweryTabGUI(tab_control, brewery_parameters)
 fermentation_tab_gui = FermentationTabGUI(tab_control, fermentation_parameters)
 # fermentation_tab_gui = FermentationTabGUI(tab_control, fermentation_parameters, ispindel_parameters, database, dpi)

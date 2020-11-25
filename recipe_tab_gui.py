@@ -14,7 +14,7 @@ from xml_list_config import *
 class RecipeTabGUI(Frame):
     """A class for 'Recipe' tab creation"""
 
-    def __init__(self, tab_control, recipe_parameters, ispindel_tab_gui):
+    def __init__(self, tab_control, recipe_parameters, ispindel_tab_gui, fermentation_parameters):
         super().__init__(tab_control)
         self.name = 'Recipe'
         self.style = ttk.Style()
@@ -22,6 +22,7 @@ class RecipeTabGUI(Frame):
         self.xml_filepath = ''
         self.recipe_parameters = recipe_parameters
         self.ispindel_tab_gui = ispindel_tab_gui
+        self.fermentation_parameters = fermentation_parameters
 
         # Images for labels
         self.img_switch_on = Image.open('images/switch_on.png')
@@ -47,13 +48,15 @@ class RecipeTabGUI(Frame):
         self.l_mlt_cip = Label(self.f_user_settings, font=(None, 14), text='MLT CIP')
         self.l_bk_rinse = Label(self.f_user_settings, font=(None, 14), text='BK rinse')
         self.l_bk_cip = Label(self.f_user_settings, font=(None, 14), text='BK CIP')
+        self.l_fv = Label(self.f_user_settings, font=(None, 14), text='FV')
         self.b_import_recipe = Button(self.f_user_settings, font=(None, 14), text='Import recipe',
                                       command=self.import_xml_recipe)
-        self.s_yos = Label(self.f_user_settings, borderwidth=0, image=self.img_l_switch_off)
-        self.s_mlt_rinse = Label(self.f_user_settings, borderwidth=0, image=self.img_l_switch_off)
-        self.s_mlt_cip = Label(self.f_user_settings, borderwidth=0, image=self.img_l_switch_off)
-        self.s_bk_rinse = Label(self.f_user_settings, borderwidth=0, image=self.img_l_switch_off)
-        self.s_bk_cip = Label(self.f_user_settings, borderwidth=0, image=self.img_l_switch_off)
+        self.s_yos = Label(self.f_user_settings, image=self.img_l_switch_off)
+        self.s_mlt_rinse = Label(self.f_user_settings, image=self.img_l_switch_off)
+        self.s_mlt_cip = Label(self.f_user_settings, image=self.img_l_switch_off)
+        self.s_bk_rinse = Label(self.f_user_settings, image=self.img_l_switch_off)
+        self.s_bk_cip = Label(self.f_user_settings, image=self.img_l_switch_off)
+        self.cb_fv = ttk.Combobox(self.f_user_settings, font=(None, 14), values=tuple(self.fermentation_parameters.parameters))
         self.l_recipe_name = Label(self.f_user_settings, font=(None, 20, 'bold'))
 
         # f_miscs
@@ -111,13 +114,15 @@ class RecipeTabGUI(Frame):
         self.l_mlt_cip.grid(row=0, column=3)
         self.l_bk_rinse.grid(row=0, column=4)
         self.l_bk_cip.grid(row=0, column=5)
+        self.l_fv.grid(row=0, column=6)
         self.b_import_recipe.grid(row=1, column=0)
         self.s_yos.grid(row=1, column=1)
         self.s_mlt_rinse.grid(row=1, column=2)
         self.s_mlt_cip.grid(row=1, column=3)
         self.s_bk_rinse.grid(row=1, column=4)
         self.s_bk_cip.grid(row=1, column=5)
-        self.l_recipe_name.grid(row=3, columnspan=6)
+        self.cb_fv.grid(row=1, column=6)
+        self.l_recipe_name.grid(row=3, columnspan=self.f_user_settings.grid_size()[0])
 
         # f_miscs
         self.l_miscs_name.grid(row=0, columnspan=4)
@@ -155,6 +160,7 @@ class RecipeTabGUI(Frame):
         self.s_mlt_cip.bind('<Button-1>', self.toggle_switch)
         self.s_bk_rinse.bind('<Button-1>', self.toggle_switch)
         self.s_bk_cip.bind('<Button-1>', self.toggle_switch)
+        self.cb_fv.bind('<FocusOut>', self.fermentation_vessel_change)
 
         # Setting rows and columns properties
         for i in range(1, 3):
@@ -280,3 +286,7 @@ class RecipeTabGUI(Frame):
                 toggle.config(image=self.img_l_switch_on)
             else:
                 toggle.config(image=self.img_l_switch_off)
+
+    def fermentation_vessel_change(self, event):
+        self.ispindel_tab_gui.fermentation_vessel_update(self.cb_fv.get())
+

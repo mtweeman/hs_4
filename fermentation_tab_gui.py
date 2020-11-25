@@ -45,7 +45,8 @@ class FermentationTabGUI(Frame):
         self.c_fermentation = Canvas(self)
 
         self.c_items = {}
-        self.c_vessels = {}
+        self.f_frames = {}
+        self.l_labels = {}
 
         # CATIA coordinates
         self.fermentation_rect = (1776, 999)
@@ -70,10 +71,8 @@ class FermentationTabGUI(Frame):
                     int(round(self.img_fermentation.height * (value[1] / self.fermentation_rect[1]), 0)),
                     anchor=CENTER, image=self.img_c_switch_off,
                     tags=key)
-                self.c_vessels[key] = self.c_fermentation.create_text(
-                    int(round(self.img_fermentation.width * (value[0] / self.fermentation_rect[0]), 0)),
-                    int(round(self.img_fermentation.height * (value[1] / self.fermentation_rect[1]) + 40, 0)),
-                    anchor=CENTER, font=(None, 14), text=key.replace('_', ' ').upper())
+                self.f_frames[key] = Frame(self)
+                self.l_labels[key] = Label(self.f_frames[key], font=(None, 14), text=key.replace('_', ' ').upper())
             else:
                 self.c_items[key] = self.c_fermentation.create_image(
                     int(round(self.img_fermentation.width * (value[0] / self.fermentation_rect[0]), 0)),
@@ -83,6 +82,13 @@ class FermentationTabGUI(Frame):
 
         # Adding GUI objects to the grid
         self.c_fermentation.place(relwidth=1, relheight=1)
+
+        for key, value in self.fermentation_coords.items():
+            if 'fv' in key:
+                self.f_frames[key].place(relx=(value[0] / self.fermentation_rect[0]),
+                                         rely=(value[1] / self.fermentation_rect[1]),
+                                         anchor=CENTER)
+                self.l_labels[key].grid(row=0, column=0)
 
         # Adding commands to GUI objects
         self.c_fermentation.bind('<Configure>', self.resize_image)
@@ -129,10 +135,6 @@ class FermentationTabGUI(Frame):
             self.c_fermentation.coords(self.c_items[key],
                                   int(round(w_scale * self.img_fermentation.width * (value[0] / self.fermentation_rect[0]), 0)),
                                   int(round(h_scale * self.img_fermentation.height * (value[1] / self.fermentation_rect[1]), 0)))
-            if 'fv' in key:
-                self.c_fermentation.coords(self.c_vessels[key],
-                                           int(round(w_scale * self.img_fermentation.width * (value[0] / self.fermentation_rect[0]), 0)),
-                                           int(round(h_scale * (self.img_fermentation.height * (value[1] / self.fermentation_rect[1]) + 40), 0)))
 
     def toggle_switch(self, key=None):
         self.fermentation_parameters.verify_parameters(key)
