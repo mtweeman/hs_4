@@ -85,64 +85,38 @@ class Database:
     def execute_fermentation_settings(self, ispindel_parameters):
         self.establish_connection()
 
-        # Prepare query for table creation
-        self.query = ("""CREATE TABLE Fermentation_settings""" +
-                      """(id AUTOINCREMENT PRIMARY KEY NOT NULL,""" +
-                      """batch_number LONG NOT NULL,""" +
-                      """fermentation_vessel VARCHAR(25) NOT NULL,""" +
-                      """ispindel_name VARCHAR(25) NOT NULL,""" +
-                      """temperature_offset DOUBLE NOT NULL,""" +
-                      """gravity_0 DOUBLE NOT NULL,""" +
-                      """gravity_1 DOUBLE NOT NULL, """ +
-                      """angle_0 DOUBLE NOT NULL,""" +
-                      """angle_1 DOUBLE NOT NULL,""" +
-                      """a DOUBLE NOT NULL,""" +
-                      """b DOUBLE NOT NULL,""" +
-                      """battery_notification BIT NOT NULL);""")
-
-        # Check existence / create table
-        if not self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
-            self.cursor.execute(self.query)
-
-        self.query = ("""INSERT INTO Fermentation_settings(""" +
-                      """batch_number,""" +
-                      """fermentation_vessel,""" +
-                      """ispindel_name,""" +
-                      """temperature_offset,""" +
-                      """gravity_0,""" +
-                      """gravity_1,""" +
-                      """angle_0,""" +
-                      """angle_1,""" +
-                      """a,""" +
-                      """b,""" +
-                      """battery_notification) VALUES (""" +
-                      """?,""" +
-                      """?,""" +
-                      """?,""" +
-                      """?,""" +
-                      """?,""" +
-                      """?,""" +
-                      """?,""" +
-                      """?,""" +
-                      """?,""" +
-                      """?,""" +
-                      """?);""")
+        # # Prepare query for table creation
+        # self.query = ("""CREATE TABLE Fermentation_settings""" +
+        #               """(id AUTOINCREMENT PRIMARY KEY NOT NULL,""" +
+        #               """batch_number LONG NOT NULL,""" +
+        #               """fermentation_vessel VARCHAR(25) NOT NULL,""" +
+        #               """ispindel_name VARCHAR(25) NOT NULL,""" +
+        #               """temperature_offset DOUBLE NOT NULL,""" +
+        #               """gravity_0 DOUBLE NOT NULL,""" +
+        #               """gravity_1 DOUBLE NOT NULL, """ +
+        #               """angle_0 DOUBLE NOT NULL,""" +
+        #               """angle_1 DOUBLE NOT NULL,""" +
+        #               """a DOUBLE NOT NULL,""" +
+        #               """b DOUBLE NOT NULL,""" +
+        #               """battery_notification BIT NOT NULL);""")
+        #
+        # # Check existence / create table
+        # if not self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
+        #     self.cursor.execute(self.query)
 
         # Save new data
-        # self.query = """INSERT INTO Fermentation_settings ("""
+        self.query = """INSERT INTO Fermentation_settings("""
 
-        # for key in ispindel_parameters.parameters:
-        #     self.query += key + ','
-        # self.query = self.query[:-1]
-        #
-        # self.query += """) VALUES ("""
-        #
-        # for value in ispindel_parameters.parameters.values():
-        #     self.query += str(value) + ','
-        #     print(type(value), value)
-        # self.query = self.query[:-1]
-        #
-        # self.query += """);"""
+        for key in ispindel_parameters.parameters:
+            self.query += key + ','
+        self.query = self.query[:-1]
+
+        self.query += """) VALUES ("""
+
+        for key in ispindel_parameters.parameters:
+            self.query += '?,'
+        self.query = self.query[:-1]
+        self.query += """);"""
 
         if self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
             self.cursor.execute(self.query, tuple(ispindel_parameters.parameters.values()))
@@ -190,3 +164,19 @@ class Database:
 
         self.terminate_connection()
         return row.temperature_offset
+
+    def get_ispindel_log(self, ispindel_name):
+        self.establish_connection()
+
+        # Prepare query
+        self.query = """SELECT * FROM iSpindel_settings;"""
+
+        if self.cursor.tables(table='iSpindel_settings', tableType='TABLE').fetchone():
+            self.cursor.execute(self.query)
+
+        for row in self.cursor:
+            if row.name == ispindel_name:
+                break
+
+        self.terminate_connection()
+        return row.log

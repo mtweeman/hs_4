@@ -10,12 +10,13 @@ from PIL import Image, ImageTk
 class FermentationTabGUI(Frame):
     """A class for 'Fermentation' tab creation"""
 
-    def __init__(self, tab_control, fermentation_parameters):
+    def __init__(self, tab_control, fermentation_parameters, database):
         super().__init__(tab_control)
         self.name = 'Fermentation'
         self.style = ttk.Style()
         self.style.configure('TNotebook.Tab', font=('None', '14'))
         self.fermentation_parameters = fermentation_parameters
+        self.database = database
 
         # Images for labels
         self.img_fermentation = Image.open('images/ferm4.bmp')
@@ -85,8 +86,8 @@ class FermentationTabGUI(Frame):
 
         for key, value in self.fermentation_coords.items():
             if 'fv' in key:
-                self.f_frames[key].place(relx=(value[0] / self.fermentation_rect[0]),
-                                         rely=(value[1] / self.fermentation_rect[1]),
+                self.f_frames[key].place(relx=value[0] / self.fermentation_rect[0],
+                                         rely=(value[1] + self.img_switch_on.height) / self.fermentation_rect[1],
                                          anchor=CENTER)
                 self.l_labels[key].grid(row=0, column=0)
 
@@ -150,3 +151,40 @@ class FermentationTabGUI(Frame):
                     self.c_fermentation.itemconfig(self.c_items[key], image=self.img_c_button_on)
                 else:
                     self.c_fermentation.itemconfig(self.c_items[key], image=self.img_c_button_off)
+
+    def update_parameters(self, socket_message):
+        # Check for data logging by iSpindel
+        db_log = self.database.get_ispindel_log(socket_message['name'])
+
+        if db_log:
+            print('zbieramy')
+
+        # # Extract needed parameters into 'FermentationParameters' instance variable
+        # self.fermentation_parameters.parameters['measurement_time'] = datetime.datetime.now()
+        #
+        # for key, value in self.fermentation_parameters.parameters.items():
+        #     if key in socket_message.keys():
+        #         if key == 'angle' or key == 'battery' or key == 'temperature' or key == 'gravity':
+        #             self.fermentation_parameters.parameters[key] = float(socket_message[key])
+        #         elif key == 'interval' or key == 'rssi':
+        #             self.fermentation_parameters.parameters[key] = float(socket_message[key])
+        #         else:
+        #             self.fermentation_parameters.parameters[key] = socket_message[key]
+        #
+        # # Print socket data on the screen
+        # for i, parameter_value_tuple in enumerate(self.fermentation_parameters.parameters.items()):
+        #     if parameter_value_tuple[0] == 'rssi':
+        #         self.l_parameters_names[i].config(text=parameter_value_tuple[0].upper())
+        #     else:
+        #         self.l_parameters_names[i].config(text=parameter_value_tuple[0].title())
+        #
+        #     if parameter_value_tuple[0] == 'measurement_time':
+        #         self.l_parameters_values[i].config(text=parameter_value_tuple[1].strftime('%Y-%m-%d %H:%M:%S'))
+        #     else:
+        #         self.l_parameters_values[i].config(text=parameter_value_tuple[1])
+        #
+        # # Save to database if record started
+        # if self.fermentation_parameters.record_flag:
+        #     self.database.execute_fermentation(self.fermentation_parameters,
+        #                                        self.ispindel_parameters.parameters['batch_number'],
+        #                                        )

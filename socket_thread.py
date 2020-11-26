@@ -44,7 +44,7 @@ class SocketThread(threading.Thread):
                         socket_message = eval(socket_message)
                         socket_message = {k.lower(): v for k, v in socket_message.items()}
                         self.ispindel_tab_gui.update_parameters(socket_message)
-                        # self.fermentation_tab_gui.update_parameters(socket_message)
+                        self.fermentation_tab_gui.update_parameters(socket_message)
                         break
             finally:
                 connection.close()
