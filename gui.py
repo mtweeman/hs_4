@@ -24,11 +24,11 @@ icon = 'images/icon.ico'
 image_brewery = Image.open('images/test7.bmp')
 title_str = 'Hajle Silesia Homebrewing System '
 
+database = Database()
 recipe_parameters = RecipeParameters()
 brewery_parameters = BreweryParameters()
 ispindel_parameters = ISpindelParameters()
-fermentation_parameters = FermentationParameters()
-database = Database()
+fermentation_parameters = FermentationParameters(database)
 
 # Window setup
 windll.shcore.SetProcessDpiAwareness(1)  # no blur of fonts - NOT WORKING
@@ -36,7 +36,8 @@ windll.shell32.SetCurrentProcessExplicitAppUserModelID('mycompany.myproduct.subp
 
 root = Tk()
 root.minsize(image_brewery.width, image_brewery.height)
-root.state('zoomed')  # maximize window
+root.state('zoomed')
+# root.wm_state('iconic')
 root.iconbitmap(icon)
 root.title(title_str + str(version))
 dpi = root.winfo_fpixels('1i')
@@ -45,16 +46,16 @@ dpi = root.winfo_fpixels('1i')
 tab_control = ttk.Notebook(root)
 tab_control.pack(fill='both', expand=1)
 
-myred = "#a2e5a1"
 style = ttk.Style()
-
-style.theme_create('tab_theme', settings={'TNotebook': {'configure': {'background': '#888888'}},
-                                          'TNotebook.Tab': {'configure': {'background': '#555555',
-                                                                          'foreground': 'white',
-                                                                          'padding': [5, 5]},
-                                                            'map': {'background': [('selected', '#ffffff')],
-                                                                    'foreground': [('selected', 'black')]}}})
-
+style.theme_create('tab_theme', parent='classic', settings={'TNotebook': {'configure': {'background': '#888888'}},
+                                                            'TNotebook.Tab': {'configure': {'background': '#555555',
+                                                                                            'foreground': 'white',
+                                                                                            'padding': [10, 10]},
+                                                                              'label': {'side': ''},
+                                                                              'map': {'background': [
+                                                                                  ('selected', '#ffffff')],
+                                                                                      'foreground': [
+                                                                                          ('selected', 'black')]}}})
 style.theme_use('tab_theme')
 
 ispindel_tab_gui = ISpindelTabGUI(tab_control, ispindel_parameters, database)

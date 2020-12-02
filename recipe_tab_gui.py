@@ -267,19 +267,23 @@ class RecipeTabGUI(Frame):
         self.f_mash.grid(row=2, column=0, sticky=NSEW)
         self.f_hops.grid(row=2, column=1, sticky=NSEW)
 
-    def toggle_switch(self, event):
-        caller = event.widget
+        # Update toggles (e.g. when YOS is True)
+        self.toggle_switch()
 
-        if caller == self.s_yos:
-            self.recipe_parameters.verify_user_parameters('yos')
-        elif caller == self.s_mlt_rinse:
-            self.recipe_parameters.verify_user_parameters('mlt_rinse')
-        elif caller == self.s_mlt_cip:
-            self.recipe_parameters.verify_user_parameters('mlt_cip')
-        elif caller == self.s_bk_rinse:
-            self.recipe_parameters.verify_user_parameters('bk_rinse')
-        elif caller == self.s_bk_cip:
-            self.recipe_parameters.verify_user_parameters('bk_cip')
+    def toggle_switch(self, event=None):
+        if event:
+            caller = event.widget
+
+            if caller == self.s_yos:
+                self.recipe_parameters.verify_user_parameters('yos')
+            elif caller == self.s_mlt_rinse:
+                self.recipe_parameters.verify_user_parameters('mlt_rinse')
+            elif caller == self.s_mlt_cip:
+                self.recipe_parameters.verify_user_parameters('mlt_cip')
+            elif caller == self.s_bk_rinse:
+                self.recipe_parameters.verify_user_parameters('bk_rinse')
+            elif caller == self.s_bk_cip:
+                self.recipe_parameters.verify_user_parameters('bk_cip')
 
         for i, toggle in enumerate(self.s_toggles):
             if list(self.recipe_parameters.user_parameters.items())[i][1]:

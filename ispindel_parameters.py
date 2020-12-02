@@ -21,6 +21,7 @@ class ISpindelParameters:
                                                   'a',
                                                   'b',
                                                   'battery_notification',
+                                                  'log'
                                                   ])
 
     def calculate_polynomial(self):

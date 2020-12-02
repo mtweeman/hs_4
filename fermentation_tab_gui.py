@@ -73,7 +73,7 @@ class FermentationTabGUI(Frame):
                     anchor=CENTER, image=self.img_c_switch_off,
                     tags=key)
                 self.f_frames[key] = Frame(self)
-                self.l_labels[key] = Label(self.f_frames[key], font=(None, 14), text=key.replace('_', ' ').upper())
+                self.l_labels[key] = Label(self.f_frames[key], fg='white', bg='#555555', font=(None, 14), text=key.replace('_', ' ').upper())
             else:
                 self.c_items[key] = self.c_fermentation.create_image(
                     int(round(self.img_fermentation.width * (value[0] / self.fermentation_rect[0]), 0)),
@@ -88,7 +88,7 @@ class FermentationTabGUI(Frame):
             if 'fv' in key:
                 self.f_frames[key].place(relx=value[0] / self.fermentation_rect[0],
                                          rely=(value[1] + self.img_switch_on.height) / self.fermentation_rect[1],
-                                         anchor=CENTER)
+                                         anchor=N)
                 self.l_labels[key].grid(row=0, column=0)
 
         # Adding commands to GUI objects
@@ -138,53 +138,44 @@ class FermentationTabGUI(Frame):
                                   int(round(h_scale * self.img_fermentation.height * (value[1] / self.fermentation_rect[1]), 0)))
 
     def toggle_switch(self, key=None):
-        self.fermentation_parameters.verify_parameters(key)
+        if key:
+            self.fermentation_parameters.verify_parameters(key)
 
-        for key, value in self.fermentation_parameters.parameters.items():
-            if 'fv' in key:
-                if self.fermentation_parameters.parameters[key]:
-                    self.c_fermentation.itemconfig(self.c_items[key], image=self.img_c_switch_on)
+        # Update images
+        for k in self.fermentation_parameters.parameters:
+            if 'fv' in k:
+                if self.fermentation_parameters.parameters[k]:
+                    self.c_fermentation.itemconfig(self.c_items[k], image=self.img_c_switch_on)
                 else:
-                    self.c_fermentation.itemconfig(self.c_items[key], image=self.img_c_switch_off)
+                    self.c_fermentation.itemconfig(self.c_items[k], image=self.img_c_switch_off)
             else:
-                if self.fermentation_parameters.parameters[key]:
-                    self.c_fermentation.itemconfig(self.c_items[key], image=self.img_c_button_on)
+                if self.fermentation_parameters.parameters[k]:
+                    self.c_fermentation.itemconfig(self.c_items[k], image=self.img_c_button_on)
                 else:
-                    self.c_fermentation.itemconfig(self.c_items[key], image=self.img_c_button_off)
+                    self.c_fermentation.itemconfig(self.c_items[k], image=self.img_c_button_off)
+
+        self.c_fermentation.update_idletasks()
+
+        # Update database
+        if key:
+            self.database.execute_fermentation_settings_log(key, self.fermentation_parameters.parameters[key])
+            if not self.fermentation_parameters.parameters[key]:
+                self.l_labels[key].config(text=key.replace('_', ' ').upper())
 
     def update_parameters(self, socket_message):
-        # Check for data logging by iSpindel
-        db_log = self.database.get_ispindel_log(socket_message['name'])
+        # Check for data logging by fermentation_vessel
+        result = self.database.get_fermentation_settings(socket_message['name'])
 
-        if db_log:
-            print('zbieramy')
+        if result:
+            # Calculate ravity basing on polynomial
+            socket_message['gravity'] = socket_message['angle'] * result[2] + result[3]
 
-        # # Extract needed parameters into 'FermentationParameters' instance variable
-        # self.fermentation_parameters.parameters['measurement_time'] = datetime.datetime.now()
-        #
-        # for key, value in self.fermentation_parameters.parameters.items():
-        #     if key in socket_message.keys():
-        #         if key == 'angle' or key == 'battery' or key == 'temperature' or key == 'gravity':
-        #             self.fermentation_parameters.parameters[key] = float(socket_message[key])
-        #         elif key == 'interval' or key == 'rssi':
-        #             self.fermentation_parameters.parameters[key] = float(socket_message[key])
-        #         else:
-        #             self.fermentation_parameters.parameters[key] = socket_message[key]
-        #
-        # # Print socket data on the screen
-        # for i, parameter_value_tuple in enumerate(self.fermentation_parameters.parameters.items()):
-        #     if parameter_value_tuple[0] == 'rssi':
-        #         self.l_parameters_names[i].config(text=parameter_value_tuple[0].upper())
-        #     else:
-        #         self.l_parameters_names[i].config(text=parameter_value_tuple[0].title())
-        #
-        #     if parameter_value_tuple[0] == 'measurement_time':
-        #         self.l_parameters_values[i].config(text=parameter_value_tuple[1].strftime('%Y-%m-%d %H:%M:%S'))
-        #     else:
-        #         self.l_parameters_values[i].config(text=parameter_value_tuple[1])
-        #
-        # # Save to database if record started
-        # if self.fermentation_parameters.record_flag:
-        #     self.database.execute_fermentation(self.fermentation_parameters,
-        #                                        self.ispindel_parameters.parameters['batch_number'],
-        #                                        )
+            # Print data on screen
+            self.l_labels[result[0]].config(text=result[0].replace('_', ' ').upper() + '\n' +
+                                                              'T: ' + '%.1f' % socket_message['temperature'] + '\n' +
+                                                              'SG: ' + '%.3f' % socket_message['gravity'])
+
+            # Save new iSpindel data to database
+            self.database.execute_fermentation(result[1], socket_message)
+
+

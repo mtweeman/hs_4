@@ -1,9 +1,9 @@
 # Standard libraries
 import os
-import datetime
 
 # Imported libraries
 import pyodbc as db
+
 
 # My libraries
 
@@ -34,7 +34,7 @@ class Database:
         #     self.db_connection.execute(self.query)
         # DO NOT REMOVE
 
-    def execute_fermentation(self, fermentation_parameters, batch_number):
+    def execute_fermentation(self, batch_number, socket_message):
         self.establish_connection()
 
         fermentation = str(batch_number) + '_Ferm'
@@ -43,7 +43,7 @@ class Database:
         self.query = ("""CREATE TABLE """ + fermentation +
                       """(id AUTOINCREMENT PRIMARY KEY NOT NULL,""" +
                       """measurement_time DATETIME NOT NULL,""" +
-                      """name VARCHAR(15) NOT NULL,""" +
+                      """name VARCHAR(11) NOT NULL,""" +
                       """angle DOUBLE NOT NULL,""" +
                       """temperature DOUBLE NOT NULL,""" +
                       """temp_units VARCHAR(1) NOT NULL, """ +
@@ -59,26 +59,19 @@ class Database:
         # Save new data
         self.query = """INSERT INTO """ + fermentation + """("""
 
-        for key in fermentation_parameters.parameters:
+        for key in socket_message:
             self.query += key + ','
         self.query = self.query[:-1]
 
         self.query += """) VALUES ("""
 
-        for key, value in fermentation_parameters.parameters.items():
-            if key == 'measurement_time':
-                self.query += "'" + value.strftime('%Y-%m-%d %H:%M:%S') + "',"
-            elif type(value) == str:
-                self.query += "'" + str(value) + "',"
-            else:
-                self.query += str(value) + ","
-
+        for key in socket_message:
+            self.query += '?,'
         self.query = self.query[:-1]
-
         self.query += """);"""
 
-        if self.cursor.tables(table='12_Ferm', tableType='TABLE').fetchone():
-            self.cursor.execute(self.query)
+        if self.cursor.tables(table=fermentation, tableType='TABLE').fetchone():
+            self.cursor.execute(self.query, tuple(socket_message.values()))
 
         self.terminate_connection()
 
@@ -153,30 +146,76 @@ class Database:
         self.establish_connection()
 
         # Prepare query
-        self.query = """SELECT * FROM iSpindel_settings;"""
+        self.query = ("""SELECT temperature_offset """ +
+                      """FROM iSpindel_settings """ +
+                      """WHERE name=?;""")
 
         if self.cursor.tables(table='iSpindel_settings', tableType='TABLE').fetchone():
-            self.cursor.execute(self.query)
+            self.cursor.execute(self.query, ispindel_name)
 
-        for row in self.cursor:
-            if row.name == ispindel_name:
-                break
+        temperature_offset = self.cursor.fetchone()
 
         self.terminate_connection()
-        return row.temperature_offset
 
-    def get_ispindel_log(self, ispindel_name):
+        if temperature_offset:
+            return temperature_offset[0]
+        else:
+            return None
+
+    def get_fermentation_settings(self, ispindel_name):
         self.establish_connection()
 
         # Prepare query
-        self.query = """SELECT * FROM iSpindel_settings;"""
+        self.query = ("""SELECT fermentation_vessel, batch_number, a, b """ +
+                      """FROM Fermentation_settings """ +
+                      """WHERE log=True AND ispindel_name=?;""")
 
-        if self.cursor.tables(table='iSpindel_settings', tableType='TABLE').fetchone():
-            self.cursor.execute(self.query)
+        if self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
+            self.cursor.execute(self.query, ispindel_name)
 
-        for row in self.cursor:
-            if row.name == ispindel_name:
-                break
+        result = self.cursor.fetchone()
 
         self.terminate_connection()
-        return row.log
+
+        if result:
+            return result
+        else:
+            return None
+
+    def execute_fermentation_settings_log(self, key, log):
+        self.establish_connection()
+
+        # Prepare query
+        self.query = ("""UPDATE Fermentation_settings """ +
+                      """SET log=? """ +
+                      """WHERE batch_number=(SELECT TOP 1 batch_number """ +
+                      """FROM Fermentation_settings """ +
+                      """WHERE fermentation_vessel=? """ +
+                      """ORDER BY batch_number DESC);""")
+
+        if self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
+            self.cursor.execute(self.query, log, key)
+
+        self.terminate_connection()
+
+    def get_fermentation_settings_log(self, fermentation_vessel):
+        self.establish_connection()
+
+        # Prepare query
+        self.query = ("""SELECT log """ +
+                      """FROM Fermentation_settings """ +
+                      """WHERE fermentation_vessel=? """ +
+                      """AND log=True """ +
+                      """ORDER BY batch_number DESC;""")
+
+        if self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
+            self.cursor.execute(self.query, fermentation_vessel)
+
+        fermentation_log = self.cursor.fetchone()
+
+        self.terminate_connection()
+
+        if fermentation_log:
+            return fermentation_log[0]
+        else:
+            return None
