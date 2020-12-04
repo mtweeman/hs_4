@@ -21,8 +21,8 @@ class ISpindelTabGUI(Frame):
         self.style.configure('TNotebook.Tab', font=('None', '14'))
         self.ispindel_parameters = ispindel_parameters
         self.database = database
-        self.w_scale = 0.0
-        self.h_scale = 0.0
+        self.w_scale = 1.0
+        self.h_scale = 1.0
 
         # Images for labels
         self.img_ispindel = Image.open('images/ispindel2.bmp')
@@ -202,15 +202,6 @@ class ISpindelTabGUI(Frame):
                                                                          self.ispindel_rect[0]) + 10), 0)),
                     int(round(self.h_scale * (self.img_ispindel.height * (int(ispindel_coord_tuple[1][1]) /
                                                                           self.ispindel_rect[1]) + 10), 0)))
-
-    # def button_switch(self, key=None):
-    #     self.brewery_parameters.verify_parameters(key)
-    #
-    #     for key, value in self.brewery_parameters.parameters.items():
-    #         if self.brewery_parameters.parameters[key]:
-    #             self.c_brewery.itemconfig(self.c_items[key], image=self.img_c_button_on)
-    #         else:
-    #             self.c_brewery.itemconfig(self.c_items[key], image=self.img_c_button_off)
 
     def update_parameters(self, socket_message):
         self.l_status.config(text='Data processing')

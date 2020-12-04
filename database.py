@@ -131,7 +131,7 @@ class Database:
         y = []
 
         # Prepare query
-        self.query = """SELECT * FROM 73_Ferm ORDER BY id;"""
+        self.query = """SELECT * FROM 78_Ferm ORDER BY id;"""
         self.cursor.execute(self.query)
 
         for row in self.cursor.fetchall():

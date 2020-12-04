@@ -50,6 +50,17 @@ https://stackoverflow.com/questions/42961810/detect-dpi-scaling-factor-in-python
 
 https://stackoverflow.com/questions/9627686/plotting-dates-on-the-x-axis-with-pythons-matplotlib
 
-OPEN WINDOWS STARTUP
+OPEN WINDOWS STARTUP:
 
 https://support.microsoft.com/en-us/windows/add-an-app-to-run-automatically-at-startup-in-windows-10-150da165-dcd9-7230-517b-cf3c295d89dd
+
+EXE ICON:
+
+pyinstaller --onefile -w gui.py --icon=images/icon.ico
+
+TAB COLOR:
+
+https://stackoverflow.com/questions/58664161/how-to-rotate-the-tabswith-text-by-90-in-notebook-widget-tkinter
+
+https://stackoverflow.com/questions/59523937/how-can-i-change-the-actual-background-of-tabs-in-tkinter-and-not-the-background
+
