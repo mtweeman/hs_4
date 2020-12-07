@@ -14,8 +14,6 @@ class GraphTabGUI(Frame):
     def __init__(self, tab_control, database, dpi):
         super().__init__(tab_control)
         self.name = 'Graph'
-        self.style = ttk.Style()
-        self.style.configure('TNotebook.Tab', font=('None', '14'))
         self.database = database
         self.dpi = dpi
         self.row_max = 2

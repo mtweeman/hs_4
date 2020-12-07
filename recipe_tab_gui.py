@@ -17,8 +17,6 @@ class RecipeTabGUI(Frame):
     def __init__(self, tab_control, recipe_parameters, ispindel_tab_gui, fermentation_parameters):
         super().__init__(tab_control)
         self.name = 'Recipe'
-        self.style = ttk.Style()
-        self.style.configure('TNotebook.Tab', font=('None', '14'))
         self.xml_filepath = ''
         self.recipe_parameters = recipe_parameters
         self.ispindel_tab_gui = ispindel_tab_gui
@@ -56,7 +54,9 @@ class RecipeTabGUI(Frame):
         self.s_mlt_cip = Label(self.f_user_settings, image=self.img_l_switch_off)
         self.s_bk_rinse = Label(self.f_user_settings, image=self.img_l_switch_off)
         self.s_bk_cip = Label(self.f_user_settings, image=self.img_l_switch_off)
-        self.cb_fv = ttk.Combobox(self.f_user_settings, font=(None, 14), values=tuple(self.fermentation_parameters.parameters))
+        self.cb_fv = ttk.Combobox(self.f_user_settings, font=(None, 14),
+                                  values=tuple(self.fermentation_parameters.parameters),
+                                  state='readonly')
         self.l_recipe_name = Label(self.f_user_settings, font=(None, 20, 'bold'))
 
         # f_miscs

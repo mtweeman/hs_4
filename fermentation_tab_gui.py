@@ -13,8 +13,6 @@ class FermentationTabGUI(Frame):
     def __init__(self, tab_control, fermentation_parameters, database):
         super().__init__(tab_control)
         self.name = 'Fermentation'
-        self.style = ttk.Style()
-        self.style.configure('TNotebook.Tab', font=('None', '14'))
         self.fermentation_parameters = fermentation_parameters
         self.database = database
 
@@ -167,7 +165,7 @@ class FermentationTabGUI(Frame):
         result = self.database.get_fermentation_settings(socket_message['name'])
 
         if result:
-            # Calculate ravity basing on polynomial
+            # Calculate gravity basing on polynomial
             socket_message['gravity'] = socket_message['angle'] * result[2] + result[3]
 
             # Print data on screen

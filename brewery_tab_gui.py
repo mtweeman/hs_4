@@ -13,8 +13,6 @@ class BreweryTabGUI(Frame):
     def __init__(self, tab_control, brewery_parameters):
         super().__init__(tab_control)
         self.name = 'Brewery'
-        self.style = ttk.Style()
-        self.style.configure('TNotebook.Tab', font=('None', '14'))
         self.brewery_parameters = brewery_parameters
 
         # Images for labels

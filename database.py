@@ -219,3 +219,59 @@ class Database:
             return fermentation_log[0]
         else:
             return None
+
+    def get_tables(self, table_type):
+        results = []
+
+        self.establish_connection()
+
+        for row in self.cursor.tables():
+            if '_' + table_type[:4] in row.table_name:
+                results.append(row.table_name)
+
+        self.terminate_connection()
+
+        if results:
+            return results
+        else:
+            return None
+
+    def get_columns(self, table):
+        self.establish_connection()
+
+        # Prepare query
+        self.query = ("""SELECT * """ +
+                      """FROM %s """ +
+                      """;""") % table
+
+        self.cursor.execute(self.query)
+
+        results = [result[0] for result in self.cursor.description]
+
+        self.terminate_connection()
+
+        if results:
+            return results
+        else:
+            return None
+
+    def get_column(self, table, column):
+        x, y = [], []
+        self.establish_connection()
+
+        # Prepare query
+        self.query = ("""SELECT measurement_time, %s """ +
+                      """FROM %s;""") % (column, table)
+
+        self.cursor.execute(self.query)
+
+        for result in  self.cursor:
+            x.append(result[0])
+            y.append(result[1])
+
+        self.terminate_connection()
+
+        if x:
+            return x, y
+        else:
+            return None

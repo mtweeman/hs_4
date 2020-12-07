@@ -13,5 +13,3 @@ class AddGraphTabGUI(Button):
     def __init__(self, tab_control1):
         super().__init__(tab_control1)
         self.name = '+'
-        self.style = ttk.Style()
-        self.style.configure('TNotebook.Tab', font=(None, 14))

@@ -60,12 +60,14 @@ style = ttk.Style()
 style.theme_create('tab_bar_theme', parent='classic', settings={'TNotebook': {'configure': {'background': '#888888'}},
                                                                 'TNotebook.Tab': {'configure': {'background': '#555555',
                                                                                                 'foreground': 'white',
-                                                                                                'padding': [10, 10]},
+                                                                                                'padding': [10, 10],
+                                                                                                'font': (None, 14)},
                                                                                   'label': {'side': ''},
                                                                                   'map': {'background': [
                                                                                       ('selected', '#ffffff')],
                                                                                       'foreground': [
-                                                                                          ('selected', 'black')]}}})
+                                                                                          ('selected', 'black')]}},
+                                                                'TCombobox': {'configure': {'arrowsize': 50}}})
 style.theme_use('tab_bar_theme')
 
 ispindel_tab_gui = ISpindelTabGUI(tab_control, ispindel_parameters, database)

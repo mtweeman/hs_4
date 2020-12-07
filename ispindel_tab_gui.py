@@ -17,8 +17,6 @@ class ISpindelTabGUI(Frame):
     def __init__(self, tab_control, ispindel_parameters, database):
         super().__init__(tab_control)
         self.name = 'iSpindel'
-        self.style = ttk.Style()
-        self.style.configure('TNotebook.Tab', font=('None', '14'))
         self.ispindel_parameters = ispindel_parameters
         self.database = database
         self.w_scale = 1.0

@@ -21,4 +21,9 @@ style.theme_use('tab_bar_theme')
 for i in range(6):
     tab_control.add(Frame(), text='Tab' + str(i))
 
+f_user_settings = Frame(tab_control)
+tab_control.add(f_user_settings)
+cb_fv = ttk.Combobox(f_user_settings, font=(None, 14), values=['0', '1'])
+cb_fv.pack()
+
 root.mainloop()
