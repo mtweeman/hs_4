@@ -19,6 +19,8 @@ class GraphGUI(Frame):
         self.database = database
         self.dpi = dpi
         self.remove_flag = False
+        self.ax1 = None
+        self.ax2 = None
 
         # Names of GUI objects in the tab
         self.f_toolbar = Frame(self)
@@ -33,7 +35,6 @@ class GraphGUI(Frame):
         self.cb_choice_3.set('Values 1')
         self.column_2 = StringVar()
         self.cb_choice_4 = ttk.Combobox(self.f_toolbar, font=(None, 14), state='readonly')
-        self.cb_choice_4.set('Values 2')
         self.l_button_off = Label(self.f_toolbar, font=(None, 14, 'bold'), fg='red', text='X')
         self.f_graph = Frame(self)
 
@@ -63,35 +64,38 @@ class GraphGUI(Frame):
         for i in range(1, self.f_toolbar.grid_size()[0] - 1):
             self.f_toolbar.columnconfigure(i, weight=1, uniform='column')
 
-        self.add_chart()
+    def add_plot(self, x, y, label):
+        if not self.ax1:
+            # Names of figure objects in the tab
+            self.fig = Figure(figsize=(3, 3), dpi=self.dpi)
 
-        # self.batch_number = self.database.get_tables()
-        # self.cb_choice_2['values'] = self.batch_number
+            self.canvas = FigureCanvasTkAgg(self.fig, master=self.f_graph)
+            self.toolbar = NavigationToolbar2Tk(self.canvas, self.f_navigation_toolbar)
 
-    def add_chart(self):
-        # Names of figure objects in the tab
-        self.fig = Figure(figsize=(3, 3), dpi=self.dpi)
-        self.ax1 = self.fig.add_subplot(111)
-        self.ax2 = self.ax1.twinx()
-        self.canvas = FigureCanvasTkAgg(self.fig, master=self.f_graph)
-        self.toolbar = NavigationToolbar2Tk(self.canvas, self.f_navigation_toolbar)
+            self.fig.set_facecolor('#f0f0f0')
 
-        # Figure and plot settings
-        self.fig.set_facecolor('#f0f0f0')
+            self.ax1 = self.fig.add_subplot(111)
+            self.line1, = self.ax1.plot(x, y, 'blue')
+
+            # Adding figure objects to the grid
+            self.canvas.get_tk_widget().pack(expand=1, fill=BOTH)
+        else:
+            self.ax2 = self.ax1.twinx()
+            self.line2, = self.ax2.plot(x, y, 'red')
+
+        # Figure settings
         self.fig.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
         self.fig.autofmt_xdate()
-        self.ax1.set_ylabel('Values 1', fontsize=10)
-        self.ax1.tick_params(axis=BOTH, labelsize=6)
-        self.ax1.grid() # siatka w tle wykresu
-        self.ax2.set_ylabel('Values 2', fontsize=10)
-        self.ax2.tick_params(axis=BOTH, labelsize=6)
-        self.ax2.grid()  # siatka w tle wykresu
+        self.fig.gca().set_ylabel(label)
+        if not self.ax2:
+            self.fig.gca().tick_params(axis=BOTH, labelsize=6)
+        else:
+            self.fig.gca().tick_params(axis=Y, labelsize=6)
+        self.fig.gca().autoscale(tight=True)
+        self.fig.gca().grid()  # siatka w tle wykresu
 
         self.canvas.draw()
         self.toolbar.update()
-
-        # Adding figure objects to the grid
-        self.canvas.get_tk_widget().pack(expand=1, fill=BOTH)
 
     def remove_frame(self, event):
         self.remove_flag = True
@@ -99,24 +103,58 @@ class GraphGUI(Frame):
 
     def load_tables(self, event):
         self.batch_number = self.database.get_tables(self.cb_choice_1.get())
+        self.cb_choice_2.set('Batch number')
         self.cb_choice_2['values'] = self.batch_number
 
-    def load_columns(self, event):
-        self.column_1 = self.database.get_columns(self.cb_choice_2.get())
-        self.column_2 = self.column_1.copy()
-        self.cb_choice_3['values'] = self.column_1
-        self.cb_choice_4['values'] = self.column_2
+    def load_columns(self, event=None):
+        if event:
+            self.column_1 = self.database.get_columns(self.cb_choice_2.get())
+            self.cb_choice_3.set('Values 1')
+            self.cb_choice_3['values'] = self.column_1
+            self.cb_choice_4.set('')
+            self.cb_choice_4['values'] = ''
+
+            if self.ax1:
+                self.update_plot('1')
+
+            if self.ax2:
+                self.update_plot('2')
+
+            if self.ax1 or self.ax2:
+                self.canvas.draw()
+        else:
+            self.column_2 = self.database.get_columns(self.cb_choice_2.get())
+            self.cb_choice_4.set('Values 2')
+            self.cb_choice_4['values'] = self.column_2
 
     def load_column(self, event):
         if event.widget == self.cb_choice_3:
             x, y = self.database.get_column(self.cb_choice_2.get(), self.cb_choice_3.get())
-            self.ax1.plot(x, y, 'blue')
-            self.fig.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
-            self.ax1.set_ylabel(self.cb_choice_3.get())
-            self.canvas.draw()
+            if not self.ax1:
+                self.add_plot(x, y, self.cb_choice_3.get())
+            else:
+                self.update_plot('1', x, y)
+
+            if not self.cb_choice_4['values']:
+                self.load_columns()
+
         elif event.widget == self.cb_choice_4:
             x, y = self.database.get_column(self.cb_choice_2.get(), self.cb_choice_4.get())
-            self.ax2.plot(x, y, 'red')
-            self.fig.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
+            if not self.ax2:
+                self.add_plot(x, y, self.cb_choice_4.get())
+            else:
+                self.update_plot('2', x, y)
+
+    def update_plot(self, plot, x=None, y=None):
+        if plot == '1':
+            self.line1.set_data(x, y)
+            self.ax1.set_ylabel(self.cb_choice_3.get())
+        elif plot == '2':
+            self.line2.set_data(x, y)
             self.ax2.set_ylabel(self.cb_choice_4.get())
-            self.canvas.draw()
+
+        for plt in self.fig.get_axes():
+            plt.relim()
+            plt.autoscale()
+
+        self.canvas.draw()

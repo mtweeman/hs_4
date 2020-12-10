@@ -64,3 +64,6 @@ https://stackoverflow.com/questions/58664161/how-to-rotate-the-tabswith-text-by-
 
 https://stackoverflow.com/questions/59523937/how-can-i-change-the-actual-background-of-tabs-in-tkinter-and-not-the-background
 
+PLOT NEW VALUES, CLA, CLF:
+
+https://stackoverflow.com/questions/4098131/how-to-update-a-plot-in-matplotlib
