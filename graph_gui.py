@@ -21,32 +21,38 @@ class GraphGUI(Frame):
         self.remove_flag = False
         self.ax1 = None
         self.ax2 = None
+        self.batch_number = ''
+        self.column_1 = ''
+        self.column_2 = ''
 
         # Names of GUI objects in the tab
         self.f_toolbar = Frame(self)
+        self.f_graph = Frame(self)
+
+        # f_toolbar
         self.f_navigation_toolbar = Frame(self.f_toolbar)
         self.cb_choice_1 = ttk.Combobox(self.f_toolbar, font=(None, 14), values=['Fermentation', 'Brewery'], state='readonly')
-        self.cb_choice_1.set('Fermentation/Brewery data')
-        self.batch_number = StringVar()
         self.cb_choice_2 = ttk.Combobox(self.f_toolbar, font=(None, 14), state='readonly')
-        self.cb_choice_2.set('Batch number')
-        self.column_1 = StringVar()
         self.cb_choice_3 = ttk.Combobox(self.f_toolbar, font=(None, 14), state='readonly')
-        self.cb_choice_3.set('Values 1')
-        self.column_2 = StringVar()
         self.cb_choice_4 = ttk.Combobox(self.f_toolbar, font=(None, 14), state='readonly')
         self.l_button_off = Label(self.f_toolbar, font=(None, 14, 'bold'), fg='red', text='X')
-        self.f_graph = Frame(self)
+
+        self.cb_choice_1.set('Fermentation/Brewery data')
+        self.cb_choice_2.set('Batch number')
+        self.cb_choice_3.set('Values 1')
+
 
         # Adding GUI objects to the grid
         self.f_toolbar.grid(row=0, column=0, sticky=NSEW)
+        self.f_graph.grid(row=1, column=0, sticky=NSEW)
+
+        # f_toolbar
         self.f_navigation_toolbar.grid(row=0, column=0)
         self.cb_choice_1.grid(row=0, column=1, sticky=W + E)
         self.cb_choice_2.grid(row=0, column=2, sticky=W + E)
         self.cb_choice_3.grid(row=0, column=3, sticky=W + E)
         self.cb_choice_4.grid(row=0, column=4, sticky=W + E)
         self.l_button_off.grid(row=0, column=5, sticky=E)
-        self.f_graph.grid(row=1, column=0, sticky=NSEW)
 
         # Adding commands to GUI objects
         self.cb_choice_1.bind('<<ComboboxSelected>>', self.load_tables)
@@ -92,7 +98,7 @@ class GraphGUI(Frame):
         else:
             self.fig.gca().tick_params(axis=Y, labelsize=6)
         self.fig.gca().autoscale(tight=True)
-        self.fig.gca().grid()  # siatka w tle wykresu
+        self.fig.gca().grid()
 
         self.canvas.draw()
         self.toolbar.update()
@@ -104,7 +110,18 @@ class GraphGUI(Frame):
     def load_tables(self, event):
         self.batch_number = self.database.get_tables(self.cb_choice_1.get())
         self.cb_choice_2.set('Batch number')
+        self.cb_choice_2['values'] = ''
         self.cb_choice_2['values'] = self.batch_number
+        self.cb_choice_3.set('Values 1')
+        self.cb_choice_3['values'] = ''
+        self.cb_choice_4.set('')
+        self.cb_choice_4['values'] = ''
+
+        if self.ax1:
+            self.update_plot('1')
+
+        if self.ax2:
+            self.update_plot('2')
 
     def load_columns(self, event=None):
         if event:
@@ -120,8 +137,6 @@ class GraphGUI(Frame):
             if self.ax2:
                 self.update_plot('2')
 
-            if self.ax1 or self.ax2:
-                self.canvas.draw()
         else:
             self.column_2 = self.database.get_columns(self.cb_choice_2.get())
             self.cb_choice_4.set('Values 2')
