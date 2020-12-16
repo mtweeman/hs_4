@@ -64,7 +64,7 @@ class FermentationTabGUI(Frame):
         self.c_background = self.c_fermentation.create_image(0, 0, anchor=N + W, image=self.img_c_fermentation)
 
         for key, value in self.fermentation_coords.items():
-            if 'fv' in key:
+            if 'fv' in key or 'master' in key:
                 self.c_items[key] = self.c_fermentation.create_image(
                     int(round(self.img_fermentation.width * (value[0] / self.fermentation_rect[0]), 0)),
                     int(round(self.img_fermentation.height * (value[1] / self.fermentation_rect[1]), 0)),
@@ -141,7 +141,7 @@ class FermentationTabGUI(Frame):
 
         # Update images
         for k in self.fermentation_parameters.parameters:
-            if 'fv' in k:
+            if 'fv' in k or 'master' in k:
                 if self.fermentation_parameters.parameters[k]:
                     self.c_fermentation.itemconfig(self.c_items[k], image=self.img_c_switch_on)
                 else:
@@ -154,26 +154,47 @@ class FermentationTabGUI(Frame):
 
         self.c_fermentation.update_idletasks()
 
-        # Update database
         if key:
-            self.database.execute_fermentation_settings_log(key, self.fermentation_parameters.parameters[key])
-            if not self.fermentation_parameters.parameters[key]:
-                self.l_labels[key].config(text=key.replace('_', ' ').upper())
+            # Update database
+            if 'fv' in key:
+                self.database.execute_fermentation_settings_log(key, self.fermentation_parameters.parameters[key])
+            elif 'master' in key:
+                if self.fermentation_parameters.parameters[key]:
+                    ispindel_name = self.database.get_fermentation_settings_ispindel_name(key.replace('master', 'fv'))
+                    self.database.execute_ispindel_settings_master(ispindel_name)
+                else:
+                    self.database.execute_ispindel_settings_master()
+
+            # Update data on screen
+            if 'fv' in key:
+                print(self.fermentation_parameters.parameters[key],
+                      self.fermentation_parameters.parameters[key.replace('fv', 'master')])
+                if (not self.fermentation_parameters.parameters[key] and
+                    not self.fermentation_parameters.parameters[key.replace('fv', 'master')]):
+                    self.l_labels[key].config(text=key.replace('_', ' ').upper())
+            elif 'master' in key:
+                print(self.fermentation_parameters.parameters[key],
+                      self.fermentation_parameters.parameters[key.replace('master', 'fv')])
+                if (not self.fermentation_parameters.parameters[key] and
+                    not self.fermentation_parameters.parameters[key.replace('master', 'fv')]):
+                    self.l_labels[key.replace('master', 'fv')].config(text=key.replace('master_', 'fv ').upper())
 
     def update_parameters(self, socket_message):
-        # Check for data logging by fermentation_vessel
-        result = self.database.get_fermentation_settings(socket_message['name'])
+        # Check for data logging by fermentation_vessel OR master for freezer
+        result = self.database.get_fermentation_settings(socket_message['name'], True)
+        if not result:
+            result = self.database.get_fermentation_settings(socket_message['name'], False)
 
         if result:
-            # Calculate gravity basing on polynomial
+            # Calculate gravity basing on polynomial and temperature with offset
             socket_message['gravity'] = socket_message['angle'] * result[2] + result[3]
+            socket_message['temperature'] = socket_message['temperature'] + result[4]
 
             # Print data on screen
             self.l_labels[result[0]].config(text=result[0].replace('_', ' ').upper() + '\n' +
-                                                              'T: ' + '%.1f' % socket_message['temperature'] + '\n' +
-                                                              'SG: ' + '%.3f' % socket_message['gravity'])
+                                                     'T: ' + '%.1f' % socket_message['temperature'] + '\n' +
+                                                     'SG: ' + '%.3f' % socket_message['gravity'])
 
-            # Save new iSpindel data to database
-            self.database.execute_fermentation(result[1], socket_message)
-
-
+            # Send to database if log
+            if result[5]:
+                self.database.execute_fermentation(result[1], socket_message)

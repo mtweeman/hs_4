@@ -267,7 +267,7 @@ class ISpindelTabGUI(Frame):
                 self.l_parameters_names[i].config(text=parameter_value_tuple[0].title())
             self.l_parameters_values[i].config(text=parameter_value_tuple[1])
 
-        db_temperature_offset = self.database.get_ispindel_temperature_offset(self.parameters_values['name'])
+        db_temperature_offset = self.database.get_ispindel_settings_temperature_offset(self.parameters_values['name'])
 
         if db_temperature_offset:
             self.e_temperature_offset.delete(0, END)
