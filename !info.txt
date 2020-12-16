@@ -67,3 +67,9 @@ https://stackoverflow.com/questions/59523937/how-can-i-change-the-actual-backgro
 PLOT NEW VALUES, CLA, CLF:
 
 https://stackoverflow.com/questions/4098131/how-to-update-a-plot-in-matplotlib
+
+TWINX + TOOLBAR WITH TWO Y AXES
+
+https://stackoverflow.com/questions/21583965/matplotlib-cursor-value-with-two-axes
+
+https://stackoverflow.com/questions/38258890/matplotlib-how-to-adjust-navigation-and-cursor-display

@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import ttk
 
 # Imported libraries
-from PIL import Image, ImageTk
+import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 import matplotlib.dates as mdates
@@ -40,7 +40,6 @@ class GraphGUI(Frame):
         self.cb_choice_1.set('Fermentation/Brewery data')
         self.cb_choice_2.set('Batch number')
         self.cb_choice_3.set('Values 1')
-
 
         # Adding GUI objects to the grid
         self.f_toolbar.grid(row=0, column=0, sticky=NSEW)
@@ -102,6 +101,18 @@ class GraphGUI(Frame):
 
         self.canvas.draw()
         self.toolbar.update()
+
+        # Adding commands to GUI objects
+        self.fig.canvas.mpl_connect('button_press_event', self.activate_other_plot)
+
+    def activate_other_plot(self, event):
+        if event.button == 1:
+            self.ax1.set_zorder(0)
+            if self.ax2:
+                self.ax2.set_zorder(-100)
+        elif self.ax2 and event.button == 3:
+            self.ax1.set_zorder(-100)
+            self.ax2.set_zorder(0)
 
     def remove_frame(self, event):
         self.remove_flag = True
