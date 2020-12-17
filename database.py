@@ -228,6 +228,28 @@ class Database:
 
         self.terminate_connection()
 
+    def get_fermentation_settings_batch_number(self, fermentation_vessel):
+        self.establish_connection()
+
+        # Prepare query
+        self.query = ("""SELECT batch_number """ +
+                      """FROM Fermentation_settings """ +
+                      """WHERE fermentation_vessel=? """ +
+                      """AND log=True """ +
+                      """ORDER BY batch_number DESC;""")
+
+        if self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
+            self.cursor.execute(self.query, fermentation_vessel)
+
+        batch_number = self.cursor.fetchone()
+
+        self.terminate_connection()
+
+        if batch_number:
+            return batch_number[0]
+        else:
+            return None
+
     def get_fermentation_settings_log(self, fermentation_vessel):
         self.establish_connection()
 

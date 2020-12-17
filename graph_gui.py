@@ -12,7 +12,7 @@ import matplotlib.dates as mdates
 
 
 class GraphGUI(Frame):
-    """A class for 'Graph' tab creation"""
+    """A class for 'Graph' creation"""
     def __init__(self, graph_tab_gui, database, dpi):
         super().__init__(graph_tab_gui)
         self.graph_tab_gui = graph_tab_gui

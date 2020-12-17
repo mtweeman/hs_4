@@ -73,7 +73,7 @@ style.theme_use('tab_bar_theme')
 ispindel_tab_gui = ISpindelTabGUI(tab_control, ispindel_parameters, database)
 recipe_tab_gui = RecipeTabGUI(tab_control, recipe_parameters, ispindel_tab_gui, fermentation_parameters)
 brewery_tab__gui = BreweryTabGUI(tab_control, brewery_parameters)
-fermentation_tab_gui = FermentationTabGUI(tab_control, fermentation_parameters, database)
+fermentation_tab_gui = FermentationTabGUI(tab_control, fermentation_parameters, database, dpi)
 graph_tab_gui = GraphTabGUI(tab_control, database, dpi)
 add_graph_tab_gui = AddGraphTabGUI(tab_control)
 
