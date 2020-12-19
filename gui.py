@@ -71,9 +71,10 @@ style.theme_create('tab_bar_theme', parent='classic', settings={'TNotebook': {'c
 style.theme_use('tab_bar_theme')
 
 ispindel_tab_gui = ISpindelTabGUI(tab_control, ispindel_parameters, database)
-recipe_tab_gui = RecipeTabGUI(tab_control, recipe_parameters, ispindel_tab_gui, fermentation_parameters)
+recipe_tab_gui = RecipeTabGUI(tab_control, recipe_parameters, ispindel_tab_gui, fermentation_parameters,
+                              ispindel_parameters)
 brewery_tab__gui = BreweryTabGUI(tab_control, brewery_parameters)
-fermentation_tab_gui = FermentationTabGUI(tab_control, fermentation_parameters, database)
+fermentation_tab_gui = FermentationTabGUI(tab_control, fermentation_parameters, database, dpi)
 graph_tab_gui = GraphTabGUI(tab_control, database, dpi)
 add_graph_tab_gui = AddGraphTabGUI(tab_control)
 
@@ -87,6 +88,11 @@ tabs = [graph_tab_gui,
 
 for tab in tabs:
     tab_control.add(tab, text=tab.name)
+
+# Initial tab selection for resize of ispindel_tab_gui
+# Selection of tab according to list
+tab_control.select(ispindel_tab_gui)
+tab_control.select(0)
 
 # tab_control.tab(add_graph_tab_gui)
 tab_control.bind('<ButtonRelease-1>', klik)

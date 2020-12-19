@@ -4,7 +4,6 @@ import os
 # Imported libraries
 import pyodbc as db
 
-
 # My libraries
 
 
@@ -43,13 +42,13 @@ class Database:
         self.query = ("""CREATE TABLE """ + fermentation +
                       """(id AUTOINCREMENT PRIMARY KEY NOT NULL,""" +
                       """measurement_time DATETIME NOT NULL,""" +
-                      """name VARCHAR(11) NOT NULL,""" +
+                      # """name VARCHAR(11) NOT NULL,""" +
                       """angle DOUBLE NOT NULL,""" +
                       """temperature DOUBLE NOT NULL,""" +
-                      """temp_units VARCHAR(1) NOT NULL, """ +
+                      # """temp_units VARCHAR(1) NOT NULL, """ +
                       """battery DOUBLE NOT NULL,""" +
                       """gravity DOUBLE NOT NULL,""" +
-                      """interval SHORT NOT NULL,""" +
+                      # """interval SHORT NOT NULL,""" +
                       """rssi SHORT NOT NULL);""")
 
         # Check existence / create table
@@ -154,7 +153,7 @@ class Database:
         self.establish_connection()
 
         # Prepare query
-        self.query = ("""SELECT fermentation_vessel, batch_number, a, b, temperature_offset, log """ +
+        self.query = ("""SELECT fermentation_vessel, batch_number, a, b, temperature_offset, log, batch_name """ +
                       """FROM Fermentation_settings """ +
                       """WHERE log=? AND ispindel_name=? """ +
                       """ORDER BY batch_number DESC;""")
@@ -227,6 +226,28 @@ class Database:
                 self.cursor.execute(self.query, ispindel_name)
 
         self.terminate_connection()
+
+    def get_fermentation_settings_batch_number(self, fermentation_vessel):
+        self.establish_connection()
+
+        # Prepare query
+        self.query = ("""SELECT batch_number """ +
+                      """FROM Fermentation_settings """ +
+                      """WHERE fermentation_vessel=? """ +
+                      """AND log=True """ +
+                      """ORDER BY batch_number DESC;""")
+
+        if self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
+            self.cursor.execute(self.query, fermentation_vessel)
+
+        batch_number = self.cursor.fetchone()
+
+        self.terminate_connection()
+
+        if batch_number:
+            return batch_number[0]
+        else:
+            return None
 
     def get_fermentation_settings_log(self, fermentation_vessel):
         self.establish_connection()

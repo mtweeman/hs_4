@@ -66,7 +66,13 @@ class SocketThread(threading.Thread):
                         self.socket_message['measurement_time'] = datetime.datetime.now()
 
                         self.ispindel_tab_gui.update_parameters(self.socket_message)
-                        self.fermentation_tab_gui.update_parameters(self.socket_message)
+
+                        socket_message_copy = self.socket_message.copy()
+                        del (socket_message_copy['temp_units'],
+                             socket_message_copy['interval'],
+                             )
+
+                        self.fermentation_tab_gui.update_parameters(socket_message_copy)
                         break
             finally:
                 connection.close()
