@@ -93,12 +93,19 @@ class FermentationTabGUI(Frame):
             if 'fv' in key:
                 self.f_frames[key].place(relx=value[0] / self.fermentation_rect[0],
                                          rely=(value[1] + self.img_switch_on.height) / self.fermentation_rect[1],
+                                         relwidth=0.1,
+                                         relheight=0.2,
                                          anchor=N)
                 self.l_labels[key].grid(row=0, column=0, sticky=NSEW)
-                self.f_sparklines[key].grid(row=1, column=0)
+                self.f_sparklines[key].grid(row=1, column=0, sticky=NSEW)
                 batch_number = self.database.get_fermentation_settings_batch_number(key)
                 if batch_number:
                     self.f_sparklines[key].update_sparklines(batch_number)
+
+        # Setting rows and columns properties
+        for k in self.f_frames:
+            self.f_frames[k].columnconfigure(0, weight=1)
+            self.f_frames[k].rowconfigure(1, weight=1)
 
         # Adding commands to GUI objects
         self.c_fermentation.bind('<Configure>', self.resize_image)
@@ -199,9 +206,13 @@ class FermentationTabGUI(Frame):
 
             # Print data on screen
             self.l_labels[result[0]].config(text=result[0].replace('_', ' ').upper() + '\n' +
-                                                     'T: ' + '%.1f' % socket_message['temperature'] + '\n' +
-                                                     'SG: ' + '%.3f' % socket_message['gravity'])
+                                                 result[6] + '\n' +
+                                                 'T: ' + '%.1f' % socket_message['temperature'] + '\n' +
+                                                 'SG: ' + '%.3f' % socket_message['gravity'])
 
-            # Send to database if log
+            # Send to database if log and update sparklines
+            del socket_message['name']
+
             if result[5]:
                 self.database.execute_fermentation(result[1], socket_message)
+                self.f_sparklines[result[0]].update_sparklines()

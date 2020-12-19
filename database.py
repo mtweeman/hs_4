@@ -43,13 +43,13 @@ class Database:
         self.query = ("""CREATE TABLE """ + fermentation +
                       """(id AUTOINCREMENT PRIMARY KEY NOT NULL,""" +
                       """measurement_time DATETIME NOT NULL,""" +
-                      """name VARCHAR(11) NOT NULL,""" +
+                      # """name VARCHAR(11) NOT NULL,""" +
                       """angle DOUBLE NOT NULL,""" +
                       """temperature DOUBLE NOT NULL,""" +
-                      """temp_units VARCHAR(1) NOT NULL, """ +
+                      # """temp_units VARCHAR(1) NOT NULL, """ +
                       """battery DOUBLE NOT NULL,""" +
                       """gravity DOUBLE NOT NULL,""" +
-                      """interval SHORT NOT NULL,""" +
+                      # """interval SHORT NOT NULL,""" +
                       """rssi SHORT NOT NULL);""")
 
         # Check existence / create table
@@ -154,7 +154,7 @@ class Database:
         self.establish_connection()
 
         # Prepare query
-        self.query = ("""SELECT fermentation_vessel, batch_number, a, b, temperature_offset, log """ +
+        self.query = ("""SELECT fermentation_vessel, batch_number, a, b, temperature_offset, log, batch_name """ +
                       """FROM Fermentation_settings """ +
                       """WHERE log=? AND ispindel_name=? """ +
                       """ORDER BY batch_number DESC;""")

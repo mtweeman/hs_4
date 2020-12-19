@@ -14,13 +14,14 @@ from xml_list_config import *
 class RecipeTabGUI(Frame):
     """A class for 'Recipe' tab creation"""
 
-    def __init__(self, tab_control, recipe_parameters, ispindel_tab_gui, fermentation_parameters):
+    def __init__(self, tab_control, recipe_parameters, ispindel_tab_gui, fermentation_parameters, ispindel_parameters):
         super().__init__(tab_control)
         self.name = 'Recipe'
         self.xml_filepath = ''
         self.recipe_parameters = recipe_parameters
         self.ispindel_tab_gui = ispindel_tab_gui
         self.fermentation_parameters = fermentation_parameters
+        self.ispindel_parameters = ispindel_parameters
 
         # Images for labels
         self.img_switch_on = Image.open('images/switch_on.png')
@@ -55,7 +56,7 @@ class RecipeTabGUI(Frame):
         self.s_bk_rinse = Label(self.f_user_settings, image=self.img_l_switch_off)
         self.s_bk_cip = Label(self.f_user_settings, image=self.img_l_switch_off)
         self.cb_fv = ttk.Combobox(self.f_user_settings, font=(None, 14),
-                                  values=tuple(self.fermentation_parameters.parameters),
+                                  values=tuple(self.fermentation_parameters.fv_parameters),
                                   state='readonly')
         self.l_recipe_name = Label(self.f_user_settings, font=(None, 20, 'bold'))
 
@@ -198,6 +199,8 @@ class RecipeTabGUI(Frame):
         self.ispindel_tab_gui.recipe_parameters_update(str(int(xml_dict['RECIPE']['NAME'].split()[0][1:])),
                                                        self.recipe_parameters.parameters['OG'],
                                                        )
+        self.ispindel_parameters.parameters['batch_name'] =\
+            xml_dict['RECIPE']['NAME'].strip(xml_dict['RECIPE']['NAME'].split()[0] + ' ')
 
         # Prepare texts for GUI objects
         miscs_texts = {}

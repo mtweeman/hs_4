@@ -276,6 +276,12 @@ class ISpindelTabGUI(Frame):
 
         self.l_status.config(text='Waiting for data acquisition')
 
+        # Extract additional parameters into 'ISpindelParameters' instance variable
+        if 'temp_units' in socket_message:
+            self.ispindel_parameters.parameters['temp_units'] = socket_message['temp_units']
+        if 'interval' in socket_message:
+            self.ispindel_parameters.parameters['interval'] = int(socket_message['interval'])
+
     def entry_click(self, event):
         """Hide entry default text when focused"""
         for i, element in enumerate(self.e_entries):

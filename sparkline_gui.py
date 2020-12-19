@@ -5,7 +5,6 @@ from tkinter import *
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
 
-
 # My libraries
 
 
@@ -24,7 +23,7 @@ class SparklinesGUI(Frame):
 
     def add_sparklines(self):
         # Names of figure objects in the tab
-        self.fig = Figure(figsize=(1.8, 1), dpi=self.dpi)
+        self.fig = Figure(figsize=(1, 1), dpi=self.dpi)
         self.fig.subplots_adjust(left=0, right=1, bottom=0, top=1)
 
         self.canvas = FigureCanvasTkAgg(self.fig, master=self)
@@ -49,6 +48,7 @@ class SparklinesGUI(Frame):
     def update_sparklines(self, batch_number=None):
         if batch_number:
             self.batch_number = str(batch_number) + '_Ferm'
+
         x1, y1 = self.database.get_column(self.batch_number, 'gravity')
         x2, y2 = self.database.get_column(self.batch_number, 'temperature')
         self.line1.set_data(x1, y1)
@@ -58,4 +58,4 @@ class SparklinesGUI(Frame):
             plt.relim()
             plt.autoscale()
 
-        self.canvas.draw()
+        self.canvas.draw_idle()

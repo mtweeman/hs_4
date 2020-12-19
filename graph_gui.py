@@ -72,7 +72,7 @@ class GraphGUI(Frame):
     def add_plot(self, x, y, label):
         if not self.ax1:
             # Names of figure objects in the tab
-            self.fig = Figure(figsize=(3, 3), dpi=self.dpi)
+            self.fig = Figure(figsize=(1, 1), dpi=self.dpi)
 
             self.canvas = FigureCanvasTkAgg(self.fig, master=self.f_graph)
             self.toolbar = NavigationToolbar2Tk(self.canvas, self.f_navigation_toolbar)
