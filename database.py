@@ -4,7 +4,6 @@ import os
 # Imported libraries
 import pyodbc as db
 
-
 # My libraries
 
 

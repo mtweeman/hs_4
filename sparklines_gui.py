@@ -59,3 +59,9 @@ class SparklinesGUI(Frame):
             plt.autoscale()
 
         self.canvas.draw_idle()
+
+    def clear_sparklines(self):
+        self.line1.set_data(0, 0)
+        self.line2.set_data(0, 0)
+
+        self.canvas.draw_idle()

@@ -7,7 +7,7 @@ import csv
 from PIL import Image, ImageTk
 
 # My libraries
-from sparkline_gui import SparklinesGUI
+from sparklines_gui import SparklinesGUI
 
 class FermentationTabGUI(Frame):
     """A class for 'Fermentation' tab creation"""
@@ -188,10 +188,12 @@ class FermentationTabGUI(Frame):
                 if (not self.fermentation_parameters.parameters[key] and
                     not self.fermentation_parameters.parameters[key.replace('fv', 'master')]):
                     self.l_labels[key].config(text=key.replace('_', ' ').upper())
+                    self.f_sparklines[key].clear_sparklines()
             elif 'master' in key:
                 if (not self.fermentation_parameters.parameters[key] and
                     not self.fermentation_parameters.parameters[key.replace('master', 'fv')]):
                     self.l_labels[key.replace('master', 'fv')].config(text=key.replace('master_', 'fv ').upper())
+                    self.f_sparklines[key.replace('master', 'fv')].clear_sparklines()
 
     def update_parameters(self, socket_message):
         # Check for data logging by fermentation_vessel OR master for freezer
