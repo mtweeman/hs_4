@@ -89,6 +89,11 @@ tabs = [graph_tab_gui,
 for tab in tabs:
     tab_control.add(tab, text=tab.name)
 
+# Initial tab selection for resize of ispindel_tab_gui
+# Selection of tab according to list
+tab_control.select(ispindel_tab_gui)
+tab_control.select(0)
+
 # tab_control.tab(add_graph_tab_gui)
 tab_control.bind('<ButtonRelease-1>', klik)
 
