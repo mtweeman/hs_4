@@ -61,7 +61,7 @@ class RecipeParameters:
                     #     self.s_yos.config(image=self.img_l_switch_on)
 
 
-            order = {'Mash': 0, 'Sparge': 1, 'Boil': 2}
+            order = {'Mash': 0, 'Sparge': 1, 'Boil': 2, 'Primary': 3, 'Secondary': 4, 'Bottling': 5}
             self.miscs.sort(key=lambda k: (order[k['USE']], -k['TIME']))
 
         # Fermentables
@@ -81,7 +81,7 @@ class RecipeParameters:
                     self.parameters['GRAINS_WEIGHT'] += current_item['AMOUNT']
 
             self.parameters['GRAINS_WEIGHT'] = round(self.parameters['GRAINS_WEIGHT'], 2)
-            self.fermentables.sort(key=lambda k: (-k['AMOUNT']))
+            self.fermentables.sort(key=lambda k: -k['AMOUNT'])
 
         # Mash
         current_item.clear()
@@ -105,7 +105,7 @@ class RecipeParameters:
                 xml_dict['RECIPE']['HOPS']['HOP'] = list([xml_dict['RECIPE']['HOPS']['HOP']])
 
             for v in xml_dict['RECIPE']['HOPS']['HOP']:
-                if v['USE'] == 'First Wort' or v['USE'] == 'Boil' or v['USE'] == 'Aroma':
+                if v['USE'] == 'Mash' or v['USE'] == 'First Wort' or v['USE'] == 'Boil' or v['USE'] == 'Aroma':
                     current_item['NAME'] = v['NAME']
                     current_item['USE'] = v['USE']
                     current_item['AMOUNT'] = int(round(1e3 * float(v['AMOUNT']), 0))
@@ -113,7 +113,7 @@ class RecipeParameters:
                     self.parameters['HOPS_WEIGHT'] += current_item['AMOUNT']
                     self.hops.append(copy.deepcopy(current_item))
 
-            order = {'First Wort': 0, 'Boil': 1, 'Aroma': 2}
+            order = {'Mash': 0, 'First Wort': 1, 'Boil': 2, 'Aroma': 3}
             self.hops.sort(key=lambda k: (order[k['USE']], -k['TIME']))
 
         # Parameters
@@ -146,7 +146,7 @@ class RecipeParameters:
                   (1 - self.parameters['COOLING_SHRINKAGE_PERCENTAGE'] / 100), 2)
 
         self.parameters['BATCH_VOLUME'] = round(float(xml_dict['RECIPE']['BATCH_SIZE']), 2)
-        self.parameters['FERMENTATION_TEMP'] = int(round(float(xml_dict['RECIPE']['PRIMARY_TEMP']), 0))
+        self.parameters['FERMENTATION_TEMP'] = round(float(xml_dict['RECIPE']['PRIMARY_TEMP']), 1)
         self.parameters['OG'] = round(float(xml_dict['RECIPE']['EST_OG'].split()[0]), 3)
         self.parameters['IBU'] = round(float(xml_dict['RECIPE']['IBU'].split()[0]), 1)
 

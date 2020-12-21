@@ -323,6 +323,7 @@ class Database:
         self.terminate_connection()
 
         if results:
+            results.pop(0)
             return results
         else:
             return None
@@ -335,15 +336,19 @@ class Database:
         self.query = ("""SELECT measurement_time, %s """ +
                       """FROM %s;""") % (column, table)
 
-        self.cursor.execute(self.query)
+        if self.cursor.tables(table=table, tableType='TABLE').fetchone():
+            self.cursor.execute(self.query)
 
-        for result in self.cursor:
-            x.append(result[0])
-            y.append(result[1])
+        results = self.cursor.fetchall()
+
+        if results:
+            for result in results:
+                x.append(result[0])
+                y.append(result[1])
 
         self.terminate_connection()
 
         if x:
             return x, y
         else:
-            return None
+            return 0, 0
