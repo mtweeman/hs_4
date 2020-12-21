@@ -1,14 +1,15 @@
 # Standard libraries
 from tkinter import *
-from tkinter import ttk
 import csv
 
 # Imported libraries
 from PIL import Image, ImageTk
 
+# My libraries
+
 
 class BreweryTabGUI(Frame):
-    """A class for 'Brewery' tab creation"""
+    """A class for Brewery tab creation"""
 
     def __init__(self, tab_control, brewery_parameters):
         super().__init__(tab_control)
@@ -30,11 +31,9 @@ class BreweryTabGUI(Frame):
 
         # Names of GUI objects in the tab
         self.c_brewery = Canvas(self)
-
         self.c_items = {}
 
-        # CATIA coordinates
-        self.brewery_rect = (2160, 1215)
+        # CATIA coordinates for GUI elements
         filename = 'data/brewery_coords.csv'
 
         with open(filename) as f_obj:
@@ -44,7 +43,10 @@ class BreweryTabGUI(Frame):
             self.brewery_coords = {}
 
             for row in reader:
-                self.brewery_coords[row[0]] = (int(row[1]), int(row[2]))
+                if row[0] == 'rect':
+                    self.brewery_rect = (int(row[1]), int(row[2]))
+                else:
+                    self.brewery_coords[row[0]] = (int(row[1]), int(row[2]))
 
         # Adding images to GUI objects
         self.c_background = self.c_brewery.create_image(0, 0, anchor=N + W, image=self.img_c_brewery)
@@ -53,8 +55,7 @@ class BreweryTabGUI(Frame):
             self.c_items[key] = self.c_brewery.create_image(
                 int(round(self.img_brewery.width * (value[0] / self.brewery_rect[0]), 0)),
                 int(round(self.img_brewery.height * (value[1] / self.brewery_rect[1]), 0)),
-                anchor=CENTER, image=self.img_c_button_off,
-                tags=key)
+                anchor=CENTER, image=self.img_c_button_off)
 
         # Adding GUI objects to the grid
         self.c_brewery.place(relwidth=1, relheight=1)
@@ -62,10 +63,11 @@ class BreweryTabGUI(Frame):
         # Adding commands to GUI objects
         self.c_brewery.bind('<Configure>', self.resize_image)
 
-        for key, value in self.brewery_coords.items():
-            self.c_brewery.tag_bind(self.c_items[key], '<Button-1>', lambda event, key=key: self.button_switch(key))
+        for k, v in self.brewery_coords.items():
+            self.c_brewery.tag_bind(self.c_items[k], '<Button-1>', lambda event, key=k: self.button_switch(key))
 
     def resize_image(self, event):
+        # Getting scale
         width, height = event.width, event.height
 
         w_scale = width / self.img_brewery.width
@@ -75,7 +77,6 @@ class BreweryTabGUI(Frame):
         # img_brewery
         image = self.img_brewery_copy.resize((width, height))
         self.img_c_brewery = ImageTk.PhotoImage(image)
-        self.c_brewery.itemconfig(self.c_background, image=self.img_c_brewery)
 
         # img_button_on
         image = self.img_button_on_copy.resize(
@@ -87,19 +88,23 @@ class BreweryTabGUI(Frame):
             (int(round(w_scale * self.img_button_off.width, 0)), int(round(h_scale * self.img_button_off.height, 0))))
         self.img_c_button_off = ImageTk.PhotoImage(image)
 
-        self.button_switch()
+        # Update canvas
+        self.c_brewery.itemconfig(self.c_background, image=self.img_c_brewery)
+        self.update_buttons()
 
         # Coordinates of GUI objects
-        for key, value in self.brewery_coords.items():
-            self.c_brewery.coords(self.c_items[key],
-                                  int(round(w_scale * self.img_brewery.width * (value[0] / self.brewery_rect[0]), 0)),
-                                  int(round(h_scale * self.img_brewery.height * (value[1] / self.brewery_rect[1]), 0)))
+        for k, v in self.brewery_coords.items():
+            self.c_brewery.coords(self.c_items[k],
+                                  int(round(w_scale * self.img_brewery.width * (v[0] / self.brewery_rect[0]), 0)),
+                                  int(round(h_scale * self.img_brewery.height * (v[1] / self.brewery_rect[1]), 0)))
 
-    def button_switch(self, key=None):
+    def button_switch(self, key):
         self.brewery_parameters.verify_parameters(key)
+        self.update_buttons()
 
-        for key, value in self.brewery_parameters.parameters.items():
-            if self.brewery_parameters.parameters[key]:
-                self.c_brewery.itemconfig(self.c_items[key], image=self.img_c_button_on)
+    def update_buttons(self):
+        for k in self.c_items:
+            if self.brewery_parameters.parameters[k]:
+                self.c_brewery.itemconfig(self.c_items[k], image=self.img_c_button_on)
             else:
-                self.c_brewery.itemconfig(self.c_items[key], image=self.img_c_button_off)
+                self.c_brewery.itemconfig(self.c_items[k], image=self.img_c_button_off)

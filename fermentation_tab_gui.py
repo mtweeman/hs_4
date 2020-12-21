@@ -1,6 +1,5 @@
 # Standard libraries
 from tkinter import *
-from tkinter import ttk
 import csv
 
 # Imported libraries
@@ -52,7 +51,6 @@ class FermentationTabGUI(Frame):
         self.f_sparklines = {}
 
         # CATIA coordinates
-        self.fermentation_rect = (1776, 999)
         filename = 'data/fermentation_coords.csv'
 
         with open(filename) as f_obj:
@@ -62,7 +60,10 @@ class FermentationTabGUI(Frame):
             self.fermentation_coords = {}
 
             for row in reader:
-                self.fermentation_coords[row[0]] = (int(row[1]), int(row[2]))
+                if row[0] == 'rect':
+                    self.fermentation_rect = (int(row[1]), int(row[2]))
+                else:
+                    self.fermentation_coords[row[0]] = (int(row[1]), int(row[2]))
 
         # Adding images to GUI objects
         self.c_background = self.c_fermentation.create_image(0, 0, anchor=N + W, image=self.img_c_fermentation)

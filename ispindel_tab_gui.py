@@ -81,7 +81,6 @@ class ISpindelTabGUI(Frame):
         self.c_lines = {}
 
         # CATIA coordinates
-        self.ispindel_rect = (400, 225)
         filename = 'data/ispindel_coords.csv'
 
         with open(filename) as f_obj:
@@ -91,7 +90,10 @@ class ISpindelTabGUI(Frame):
             self.ispindel_coords = {}
 
             for row in reader:
-                self.ispindel_coords[row[0]] = (int(row[1]), int(row[2]))
+                if row[0] == 'rect':
+                    self.ispindel_rect = (int(row[1]), int(row[2]))
+                else:
+                    self.ispindel_coords[row[0]] = (int(row[1]), int(row[2]))
 
         # Creating list with all entries for looping
         self.e_entries = [self.e_batch_number,

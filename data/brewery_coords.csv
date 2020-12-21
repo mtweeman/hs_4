@@ -1,4 +1,4 @@
-﻿name,X,Y
+﻿Name,X,Y
 Pump_1,432,1022
 Pump_2,1092,891
 Pump_3,1767,891
@@ -19,3 +19,4 @@ Pump_3_RIMS,1585,817
 HLT_drain,1695,599
 BK_CIP,532,31
 MLT_CIP,1092,31
+rect,2160,1215

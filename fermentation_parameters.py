@@ -43,7 +43,8 @@ class FermentationParameters:
             next(reader)
 
             for row in reader:
-                self.parameters[row[0]] = False
+                if row[0] != 'rect':
+                    self.parameters[row[0]] = False
 
     def verify_parameters(self, key):
         if 'master' in key:
