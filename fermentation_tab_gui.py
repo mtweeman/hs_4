@@ -176,6 +176,9 @@ class FermentationTabGUI(Frame):
             # Update database
             if 'fv' in key:
                 self.database.execute_fermentation_settings_log(key, self.fermentation_parameters.parameters[key])
+                batch_number = self.database.get_fermentation_settings_batch_number(key)
+                if batch_number:
+                    self.f_sparklines[key].update_sparklines(batch_number)
             elif 'master' in key:
                 if self.fermentation_parameters.parameters[key]:
                     ispindel_name = self.database.get_fermentation_settings_ispindel_name(key.replace('master', 'fv'))

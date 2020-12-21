@@ -13,6 +13,7 @@ class ISpindelParameters:
         self.parameters = OrderedDict().fromkeys(['batch_number',
                                                   'batch_name',
                                                   'fermentation_vessel',
+                                                  'fermentation_program',
                                                   'ispindel_name',
                                                   'temperature_offset',
                                                   'temp_units',
