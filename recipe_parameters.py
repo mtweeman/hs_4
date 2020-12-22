@@ -1,5 +1,4 @@
 # Standard libraries
-import copy
 import datetime
 from _collections import OrderedDict
 
@@ -10,7 +9,7 @@ import xml_list_config
 
 
 class RecipeParameters:
-    """A class for 'Recipe' tab parameters storage"""
+    """A class for Recipe tab parameters storage"""
 
     def __init__(self):
         # Lists and dictionaries for XML parameters
@@ -35,17 +34,21 @@ class RecipeParameters:
                       ]
 
     def extract_xml_data(self, xml_dict):
-        # Clear earlier records
-        for element in self.lists:
-            element.clear()
-
         current_item = {}
 
+        # Clear earlier values
+        for element in self.lists:
+            if element:
+                element.clear()
+
+        # Extract data from XML file
         # Miscs
         if 'MISCS' in xml_dict['RECIPE']:
+            # Convert to list if dict
             if isinstance(xml_dict['RECIPE']['MISCS']['MISC'], xml_list_config.XmlDictConfig):
                 xml_dict['RECIPE']['MISCS']['MISC'] = list([xml_dict['RECIPE']['MISCS']['MISC']])
 
+            # Extract data
             for v in xml_dict['RECIPE']['MISCS']['MISC']:
                 current_item['NAME'] = v['NAME']
                 if v['USE']:
@@ -56,11 +59,11 @@ class RecipeParameters:
                 current_item['TIME'] = datetime.timedelta(minutes=int(round(float(v['TIME']), 0)))
                 self.miscs.append(current_item.copy())
 
+                # Turn on YOS when Baker's Dry Yeast found
                 if v['NAME'] == "Baker's Dry Yeast" and not self.user_parameters['yos']:
                     self.user_parameters['yos'] = True
-                    #     self.s_yos.config(image=self.img_l_switch_on)
 
-
+            # Sort
             order = {'Mash': 0, 'Sparge': 1, 'Boil': 2, 'Primary': 3, 'Secondary': 4, 'Bottling': 5}
             self.miscs.sort(key=lambda k: (order[k['USE']], -k['TIME']))
 
@@ -69,14 +72,18 @@ class RecipeParameters:
         self.parameters['GRAINS_WEIGHT'] = 0.0
 
         if 'FERMENTABLES' in xml_dict['RECIPE']:
+            # Convert to list if dict
             if isinstance(xml_dict['RECIPE']['FERMENTABLES']['FERMENTABLE'], xml_list_config.XmlDictConfig):
-                xml_dict['RECIPE']['FERMENTABLES']['FERMENTABLE'] = list([xml_dict['RECIPE']['FERMENTABLES']['FERMENTABLE']])
+                xml_dict['RECIPE']['FERMENTABLES']['FERMENTABLE'] =\
+                    list([xml_dict['RECIPE']['FERMENTABLES']['FERMENTABLE']])
 
+            # Extract data
             for v in xml_dict['RECIPE']['FERMENTABLES']['FERMENTABLE']:
                 current_item['NAME'] = v['NAME']
                 current_item['AMOUNT'] = round(float(v['AMOUNT']), 2)
-                self.fermentables.append(copy.deepcopy(current_item))
+                self.fermentables.append(current_item.copy())
 
+                # Count total amount of grain
                 if v['TYPE'] == 'Grain':
                     self.parameters['GRAINS_WEIGHT'] += current_item['AMOUNT']
 
@@ -87,20 +94,24 @@ class RecipeParameters:
         current_item.clear()
 
         if 'MASH_STEPS' in xml_dict['RECIPE']['MASH']:
+            # Convert to list if dict
             if isinstance(xml_dict['RECIPE']['MASH']['MASH_STEPS']['MASH_STEP'], xml_list_config.XmlDictConfig):
-                xml_dict['RECIPE']['MASH']['MASH_STEPS']['MASH_STEP'] = list([xml_dict['RECIPE']['MASH']['MASH_STEPS']['MASH_STEP']])
+                xml_dict['RECIPE']['MASH']['MASH_STEPS']['MASH_STEP'] =\
+                    list([xml_dict['RECIPE']['MASH']['MASH_STEPS']['MASH_STEP']])
 
+            # Extract data
             for v in xml_dict['RECIPE']['MASH']['MASH_STEPS']['MASH_STEP']:
                 current_item['NAME'] = v['NAME']
                 current_item['STEP_TIME'] = datetime.timedelta(minutes=int(round(float(v['STEP_TIME']), 0)))
                 current_item['STEP_TEMP'] = int(round(float(v['STEP_TEMP']), 0))
-                self.mash.append(copy.deepcopy(current_item))
+                self.mash.append(current_item.copy())
 
         # Hops
         current_item.clear()
         self.parameters['HOPS_WEIGHT'] = 0
 
         if 'HOPS' in xml_dict['RECIPE']:
+            # Convert to list if dict
             if isinstance(xml_dict['RECIPE']['HOPS']['HOP'], xml_list_config.XmlDictConfig):
                 xml_dict['RECIPE']['HOPS']['HOP'] = list([xml_dict['RECIPE']['HOPS']['HOP']])
 
@@ -111,7 +122,7 @@ class RecipeParameters:
                     current_item['AMOUNT'] = int(round(1e3 * float(v['AMOUNT']), 0))
                     current_item['TIME'] = datetime.timedelta(minutes=int(round(float(v['TIME']), 0)))
                     self.parameters['HOPS_WEIGHT'] += current_item['AMOUNT']
-                    self.hops.append(copy.deepcopy(current_item))
+                    self.hops.append(current_item.copy())
 
             order = {'Mash': 0, 'First Wort': 1, 'Boil': 2, 'Aroma': 3}
             self.hops.sort(key=lambda k: (order[k['USE']], -k['TIME']))
@@ -150,27 +161,29 @@ class RecipeParameters:
         self.parameters['OG'] = round(float(xml_dict['RECIPE']['EST_OG'].split()[0]), 3)
         self.parameters['IBU'] = round(float(xml_dict['RECIPE']['IBU'].split()[0]), 1)
 
+        self.parameters['recipe_name'] = xml_dict['RECIPE']['NAME']
+        self.parameters['equipment_name'] = xml_dict['RECIPE']['EQUIPMENT.NAME']
+        self.parameters['mash_program'] = xml_dict['RECIPE']['MASH']['NAME']
+
     def verify_user_parameters(self, key):
+        # Check if set of parameters is allowed
         if key == 'yos':
-            if not self.user_parameters[key]:
-                self.user_parameters[key] = True
-            else:
-                self.user_parameters[key] = False
+            self.user_parameters[key] = not self.user_parameters[key]
         elif key == 'mlt_rinse' or key == 'bk_rinse':
             if not self.user_parameters[key]:
                 self.user_parameters[key] = True
             else:
-                if key == 'mlt_rinse':
+                if key == 'mlt_rinse' and self.user_parameters['mlt_cip']:
                     self.user_parameters['mlt_cip'] = False
-                elif key == 'bk_rinse':
+                elif key == 'bk_rinse' and self.user_parameters['bk_cip']:
                     self.user_parameters['bk_cip'] = False
                 self.user_parameters[key] = False
         elif key == 'mlt_cip' or key == 'bk_cip':
-            if not self.user_parameters[key]:
-                if key == 'mlt_cip':
+            if self.user_parameters[key]:
+                self.user_parameters[key] = False
+            else:
+                if key == 'mlt_cip' and not self.user_parameters['mlt_rinse']:
                     self.user_parameters['mlt_rinse'] = True
-                elif key == 'bk_cip':
+                elif key == 'bk_cip' and not self.user_parameters['bk_rinse']:
                     self.user_parameters['bk_rinse'] = True
                 self.user_parameters[key] = True
-            else:
-                self.user_parameters[key] = False

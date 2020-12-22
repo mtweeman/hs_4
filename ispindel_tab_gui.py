@@ -333,20 +333,30 @@ class ISpindelTabGUI(Frame):
 
         self.database.execute_fermentation_settings(self.ispindel_parameters)
 
-    def recipe_parameters_update(self, batch_number, og):
-        self.e_batch_number.delete(0, END)
-        self.e_batch_number.insert(0, batch_number)
-        self.e_batch_number.config(fg='#000000')
+    def external_parameters_update(self, batch_number=None, og=None, batch_name=None, fermentation_vessel=None,
+                                   fermentation_program=None):
+        if batch_number:
+            self.e_batch_number.delete(0, END)
+            self.e_batch_number.insert(0, batch_number)
+            self.e_batch_number.config(fg='#000000')
 
-        self.e_gravity_point_1.delete(0, END)
-        self.e_gravity_point_1.insert(0, '1.000')
-        self.e_gravity_point_1.config(fg='#000000')
+        if og:
+            self.e_gravity_point_1.delete(0, END)
+            self.e_gravity_point_1.insert(0, '1.000')
+            self.e_gravity_point_1.config(fg='#000000')
 
-        self.e_gravity_point_2.delete(0, END)
-        self.e_gravity_point_2.insert(0, og)
-        self.e_gravity_point_2.config(fg='#000000')
+            self.e_gravity_point_2.delete(0, END)
+            self.e_gravity_point_2.insert(0, og)
+            self.e_gravity_point_2.config(fg='#000000')
 
-    def fermentation_vessel_update(self, fermentation_vessel):
-        self.e_fermentation_vessel.delete(0, END)
-        self.e_fermentation_vessel.insert(0, fermentation_vessel)
-        self.e_fermentation_vessel.config(fg='#000000')
+        if batch_name:
+            self.ispindel_parameters.parameters['batch_name'] = batch_name
+
+        if fermentation_vessel:
+            self.e_fermentation_vessel.delete(0, END)
+            self.e_fermentation_vessel.insert(0, fermentation_vessel)
+            self.e_fermentation_vessel.config(fg='#000000')
+            self.ispindel_parameters.parameters['fermentation_vessel'] = fermentation_vessel
+
+        if fermentation_program:
+            self.ispindel_parameters.parameters['fermentation_program'] = fermentation_program

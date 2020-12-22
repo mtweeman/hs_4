@@ -12,7 +12,7 @@ from xml_list_config import *
 
 
 class RecipeTabGUI(Frame):
-    """A class for 'Recipe' tab creation"""
+    """A class for Recipe tab creation"""
 
     def __init__(self, tab_control, recipe_parameters, ispindel_tab_gui, fermentation_parameters, ispindel_parameters,
                  database):
@@ -53,11 +53,11 @@ class RecipeTabGUI(Frame):
         self.l_fermentation_program = Label(self.f_user_settings, font=(None, 14), text='Fermentation program')
         self.b_import_recipe = Button(self.f_user_settings, font=(None, 14), text='Import recipe',
                                       command=self.import_xml_recipe)
-        self.s_yos = Label(self.f_user_settings, image=self.img_l_switch_off)
-        self.s_mlt_rinse = Label(self.f_user_settings, image=self.img_l_switch_off)
-        self.s_mlt_cip = Label(self.f_user_settings, image=self.img_l_switch_off)
-        self.s_bk_rinse = Label(self.f_user_settings, image=self.img_l_switch_off)
-        self.s_bk_cip = Label(self.f_user_settings, image=self.img_l_switch_off)
+        self.t_yos = Label(self.f_user_settings, image=self.img_l_switch_off)
+        self.t_mlt_rinse = Label(self.f_user_settings, image=self.img_l_switch_off)
+        self.t_mlt_cip = Label(self.f_user_settings, image=self.img_l_switch_off)
+        self.t_bk_rinse = Label(self.f_user_settings, image=self.img_l_switch_off)
+        self.t_bk_cip = Label(self.f_user_settings, image=self.img_l_switch_off)
         self.cb_fv = ttk.Combobox(self.f_user_settings, font=(None, 14),
                                   values=tuple(self.fermentation_parameters.fv_parameters),
                                   state='readonly')
@@ -105,11 +105,11 @@ class RecipeTabGUI(Frame):
                          ]
 
         # Creatiing list with all toggles for looping
-        self.s_toggles = [self.s_yos,
-                          self.s_mlt_rinse,
-                          self.s_mlt_cip,
-                          self.s_bk_rinse,
-                          self.s_bk_cip,
+        self.t_toggles = [self.t_yos,
+                          self.t_mlt_rinse,
+                          self.t_mlt_cip,
+                          self.t_bk_rinse,
+                          self.t_bk_cip,
                           ]
 
         # Adding GUI objects to the grid
@@ -124,11 +124,11 @@ class RecipeTabGUI(Frame):
         self.l_fv.grid(row=0, column=6)
         self.l_fermentation_program.grid(row=0, column=7)
         self.b_import_recipe.grid(row=1, column=0)
-        self.s_yos.grid(row=1, column=1)
-        self.s_mlt_rinse.grid(row=1, column=2)
-        self.s_mlt_cip.grid(row=1, column=3)
-        self.s_bk_rinse.grid(row=1, column=4)
-        self.s_bk_cip.grid(row=1, column=5)
+        self.t_yos.grid(row=1, column=1)
+        self.t_mlt_rinse.grid(row=1, column=2)
+        self.t_mlt_cip.grid(row=1, column=3)
+        self.t_bk_rinse.grid(row=1, column=4)
+        self.t_bk_cip.grid(row=1, column=5)
         self.cb_fv.grid(row=1, column=6)
         self.cb_fermentation_program.grid(row=1, column=7)
         self.l_recipe_name.grid(row=3, columnspan=self.f_user_settings.grid_size()[0])
@@ -164,13 +164,17 @@ class RecipeTabGUI(Frame):
         self.l_hop_time.grid(row=1, column=3, sticky=W)
 
         # Adding commands to GUI objects
-        self.s_yos.bind('<Button-1>', self.toggle_switch)
-        self.s_mlt_rinse.bind('<Button-1>', self.toggle_switch)
-        self.s_mlt_cip.bind('<Button-1>', self.toggle_switch)
-        self.s_bk_rinse.bind('<Button-1>', self.toggle_switch)
-        self.s_bk_cip.bind('<Button-1>', self.toggle_switch)
-        self.cb_fv.bind('<FocusOut>', self.fermentation_vessel_change)
-        self.cb_fermentation_program.bind('<FocusOut>', self.fermentation_program_change)
+        self.t_yos.bind('<Button-1>', lambda event, key='yos': self.toggle_switch(key))
+        self.t_mlt_rinse.bind('<Button-1>', lambda event, key='mlt_rinse': self.toggle_switch(key))
+        self.t_mlt_cip.bind('<Button-1>', lambda event, key='mlt_cip': self.toggle_switch(key))
+        self.t_bk_rinse.bind('<Button-1>', lambda event, key='bk_rinse': self.toggle_switch(key))
+        self.t_bk_cip.bind('<Button-1>', lambda event, key='bk_cip': self.toggle_switch(key))
+        self.cb_fv.bind('<<ComboboxSelected>>',
+                        lambda event: self.ispindel_tab_gui.external_parameters_update(
+                            fermentation_vessel=self.cb_fv.get()))
+        self.cb_fermentation_program.bind('<<ComboboxSelected>>',
+                                          lambda event: self.ispindel_tab_gui.external_parameters_update(
+                                              fermentation_program=self.cb_fermentation_program.get()))
 
         # Setting rows and columns properties
         for i in range(1, 3):
@@ -192,25 +196,23 @@ class RecipeTabGUI(Frame):
             for i in range(f.grid_size()[0]-1):
                 ttk.Separator(f, orient=VERTICAL).grid(row=1, column=i, padx=20, sticky=N+S+E)
 
-    def import_xml_recipe(self):
+    def extract_xml_data(self):
         # Open XML file
         xml_filepath = filedialog.askopenfilename()
         recipe = element_tree.parse(xml_filepath).getroot()
         xml_dict = XmlDictConfig(recipe)
 
-        # Extract data for Recipe parameters
+        # Extract data for recipe_parameters
         self.recipe_parameters.extract_xml_data(xml_dict)
 
-        # Extract Recipe name
-        self.l_recipe_name.config(text=xml_dict['RECIPE']['NAME'])
+        # Extract parameters for ispindel_tab_gui
+        self.ispindel_tab_gui.external_parameters_update(
+            batch_number=int(xml_dict['RECIPE']['NAME'].split()[0][1:]),
+            og=self.recipe_parameters.parameters['OG'],
+            batch_name=xml_dict['RECIPE']['NAME'].strip(xml_dict['RECIPE']['NAME'].split()[0] + ' '),
+        )
 
-        # Extract parameters for 'iSpindel' tab
-        self.ispindel_tab_gui.recipe_parameters_update(str(int(xml_dict['RECIPE']['NAME'].split()[0][1:])),
-                                                       self.recipe_parameters.parameters['OG'],
-                                                       )
-        self.ispindel_parameters.parameters['batch_name'] =\
-            xml_dict['RECIPE']['NAME'].strip(xml_dict['RECIPE']['NAME'].split()[0] + ' ')
-
+    def print_parameters(self):
         # Prepare texts for GUI objects
         miscs_texts = {}
         fermentables_texts = {}
@@ -228,20 +230,23 @@ class RecipeTabGUI(Frame):
         # Create text from recipe parameters (lists)
         for i, current_list in enumerate(self.recipe_parameters.lists):
             if current_list:
-                for current_item in current_list:
+                for current_dict in current_list:
                     if not texts[i]:
-                        for element in current_item:
-                            texts[i][element] = element
-                    for key, val in current_item.items():
-                        texts[i][key] += '\n' + str(val)
+                        for k in current_dict:
+                            texts[i][k] = k
+                    for k, v in current_dict.items():
+                        texts[i][k] += '\n' + str(v)
 
         # Create text from recipe parameters (dictionary)
         if self.recipe_parameters.parameters:
-            for key, val in self.recipe_parameters.parameters.items():
-                parameters_texts['NAME'] += '\n' + key
-                parameters_texts['VALUE'] += '\n' + str(val)
+            for k, v in self.recipe_parameters.parameters.items():
+                if k != 'recipe_name' and k != 'equipment_name' and k != 'mash_program':
+                    parameters_texts['NAME'] += '\n' + k
+                    parameters_texts['VALUE'] += '\n' + str(v)
 
         # Adding texts to GUI objects
+        self.l_recipe_name.config(text=self.recipe_parameters.parameters['recipe_name'])
+
         # f_miscs
         self.l_miscs_name.config(text='Minerals & Boil additions')
         self.l_misc_name.config(text=miscs_texts['NAME'])
@@ -255,12 +260,13 @@ class RecipeTabGUI(Frame):
         self.l_fermentable_amount.config(text=fermentables_texts['AMOUNT'])
 
         # f_parameters
-        self.l_parameters_name.config(text='Parameters, equipment: ' + xml_dict['RECIPE']['EQUIPMENT.NAME'])
+        self.l_parameters_name.config(text='Parameters, equipment: ' +
+                                           self.recipe_parameters.parameters['equipment_name'])
         self.l_parameter_name.config(text=parameters_texts['NAME'])
         self.l_parameter_value.config(text=parameters_texts['VALUE'])
 
         # f_mash
-        self.l_mash_name.config(text='Mash program: ' + xml_dict['RECIPE']['MASH']['NAME'])
+        self.l_mash_name.config(text='Mash program: ' + self.recipe_parameters.parameters['mash_program'])
         self.l_mash_step_name.config(text=mash_texts['NAME'])
         self.l_mash_step_time.config(text=mash_texts['STEP_TIME'])
         self.l_mash_step_temp.config(text=mash_texts['STEP_TEMP'])
@@ -279,33 +285,18 @@ class RecipeTabGUI(Frame):
         self.f_mash.grid(row=2, column=0, sticky=NSEW)
         self.f_hops.grid(row=2, column=1, sticky=NSEW)
 
-        # Update toggles (e.g. when YOS is True)
-        self.toggle_switch()
+    def import_xml_recipe(self):
+        self.extract_xml_data()
+        self.print_parameters()
+        self.update_toggles()
 
-    def toggle_switch(self, event=None):
-        if event:
-            caller = event.widget
-
-            if caller == self.s_yos:
-                self.recipe_parameters.verify_user_parameters('yos')
-            elif caller == self.s_mlt_rinse:
-                self.recipe_parameters.verify_user_parameters('mlt_rinse')
-            elif caller == self.s_mlt_cip:
-                self.recipe_parameters.verify_user_parameters('mlt_cip')
-            elif caller == self.s_bk_rinse:
-                self.recipe_parameters.verify_user_parameters('bk_rinse')
-            elif caller == self.s_bk_cip:
-                self.recipe_parameters.verify_user_parameters('bk_cip')
-
-        for i, toggle in enumerate(self.s_toggles):
+    def update_toggles(self):
+        for i, toggle in enumerate(self.t_toggles):
             if list(self.recipe_parameters.user_parameters.items())[i][1]:
                 toggle.config(image=self.img_l_switch_on)
             else:
                 toggle.config(image=self.img_l_switch_off)
 
-    def fermentation_vessel_change(self, event):
-        self.ispindel_tab_gui.fermentation_vessel_update(self.cb_fv.get())
-
-    def fermentation_program_change(self, event):
-        self.ispindel_parameters.parameters['fermentation_program'] = self.cb_fermentation_program.get()
-
+    def toggle_switch(self, key):
+        self.recipe_parameters.verify_user_parameters(key)
+        self.update_toggles()

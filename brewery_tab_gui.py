@@ -51,10 +51,10 @@ class BreweryTabGUI(Frame):
         # Adding images to GUI objects
         self.c_background = self.c_brewery.create_image(0, 0, anchor=N + W, image=self.img_c_brewery)
 
-        for key, value in self.brewery_coords.items():
-            self.c_items[key] = self.c_brewery.create_image(
-                int(round(self.img_brewery.width * (value[0] / self.brewery_rect[0]), 0)),
-                int(round(self.img_brewery.height * (value[1] / self.brewery_rect[1]), 0)),
+        for k, v in self.brewery_coords.items():
+            self.c_items[k] = self.c_brewery.create_image(
+                int(round(self.img_brewery.width * (v[0] / self.brewery_rect[0]), 0)),
+                int(round(self.img_brewery.height * (v[1] / self.brewery_rect[1]), 0)),
                 anchor=CENTER, image=self.img_c_button_off)
 
         # Adding GUI objects to the grid
@@ -88,11 +88,11 @@ class BreweryTabGUI(Frame):
             (int(round(w_scale * self.img_button_off.width, 0)), int(round(h_scale * self.img_button_off.height, 0))))
         self.img_c_button_off = ImageTk.PhotoImage(image)
 
-        # Update canvas
+        # Updating canvas
         self.c_brewery.itemconfig(self.c_background, image=self.img_c_brewery)
         self.update_buttons()
 
-        # Coordinates of GUI objects
+        # Updating coordinates of GUI objects
         for k, v in self.brewery_coords.items():
             self.c_brewery.coords(self.c_items[k],
                                   int(round(w_scale * self.img_brewery.width * (v[0] / self.brewery_rect[0]), 0)),

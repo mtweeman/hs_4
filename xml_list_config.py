@@ -33,7 +33,7 @@ class XmlDictConfig(dict):
 
     And then use xmldict for what it is... a dict.
     '''
-    def __init__(self, parent_element):
+    def __init__(self, parent_element) -> object:
         if parent_element.items():
             self.update(dict(parent_element.items()))
         for element in parent_element:
