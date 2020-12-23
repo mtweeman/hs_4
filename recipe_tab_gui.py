@@ -200,7 +200,7 @@ class RecipeTabGUI(Frame):
         recipe = element_tree.parse(xml_filepath).getroot()
         xml_dict = XmlDictConfig(recipe)
 
-        # Extract data for recipe_parameters
+        # Extract parameters for recipe_parameters
         self.recipe_parameters.extract_xml_data(xml_dict)
 
         # Extract parameters for ispindel_tab_gui

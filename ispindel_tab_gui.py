@@ -57,7 +57,8 @@ class ISpindelTabGUI(Frame):
                               'Fermentation vessel',
                               'Temperature offset',
                               'Gravity 1',
-                              'Gravity 2']
+                              'Gravity 2',
+                              ]
 
         self.e_batch_number = Entry(self.f_settings_parameters, font=(None, 14), fg='#c5c5c5')
         self.e_batch_number.insert(END, self.entries_texts[0])
@@ -85,7 +86,13 @@ class ISpindelTabGUI(Frame):
             self.f_settings_parameters, font=(None, 14), text='Confirm settings', anchor=W)
 
         # f_parameters
-        self.parameters_values = OrderedDict.fromkeys(['measurement_time', 'angle', 'rssi', 'name', 'battery', 'temperature'])
+        self.parameters_values = OrderedDict.fromkeys(['measurement_time',
+                                                       'angle',
+                                                       'rssi',
+                                                       'name',
+                                                       'battery',
+                                                       'temperature',
+                                                       ])
         self.l_parameters_names = []
         self.l_parameters_values = []
 
@@ -188,6 +195,7 @@ class ISpindelTabGUI(Frame):
                                                                      self.ispindel_rect[1]), 0)),
                 self.w_scale * self.img_ispindel.width / 3,
                 self.l_parameters_names[i + 1].winfo_y() + self.l_parameters_names[i + 1].winfo_height() / 2)
+
             self.c_ispindel.coords(
                 self.c_dots[ispindel_coord_tuple[0]],
                 int(round(self.w_scale * (self.img_ispindel.width * (ispindel_coord_tuple[1][0] /
@@ -281,6 +289,7 @@ class ISpindelTabGUI(Frame):
             if entry == event.widget and entry.get() == self.entries_texts[i]:
                 entry.delete(0, END)
                 entry.config(fg='#000000')
+                break
 
     def entry_unclick(self, event):
         """Show entry default text when unfocused and left empty"""
@@ -288,17 +297,19 @@ class ISpindelTabGUI(Frame):
             if entry == event.widget and not entry.get():
                 entry.insert(END, self.entries_texts[i])
                 entry.config(fg='#c5c5c5')
+                break
 
     def save_calibration_point(self, event):
         try:
             for i, button in enumerate(self.b_calibration_points):
-                if button == event.widget:
+                if button == event.widget and self.e_entries[i + 3].get() and self.parameters_values['angle']:
                     gravity = float(self.e_entries[i + 3].get())
                     angle = self.parameters_values['angle']
                     self.ispindel_parameters.parameters['gravity_' + str(i)] = gravity
                     self.ispindel_parameters.parameters['angle_' + str(i)] = angle
                     self.l_calibration_points[i].config(text='Gravity: ' + '%.3f' % gravity +
                                                              ', angle: ' + '%.3f' % angle)
+                    break
         except KeyError:
             pass
         except ValueError:
@@ -307,22 +318,26 @@ class ISpindelTabGUI(Frame):
             pass
 
     def generate_polynomial(self, event):
-        try:
-            self.ispindel_parameters.calculate_polynomial()
-            self.l_generate_polynomial.config(text='y = ' + str(round(self.ispindel_parameters.parameters['a'], 3)) +
-                                                   'x + ' + str(round(self.ispindel_parameters.parameters['b'], 3)))
-        except TypeError:
-            pass
+        self.ispindel_parameters.calculate_polynomial()
+        self.l_generate_polynomial.config(text='y = ' + str(round(self.ispindel_parameters.parameters['a'], 3)) +
+                                               'x + ' + str(round(self.ispindel_parameters.parameters['b'], 3)))
 
     def confirm_settings(self, event):
-        self.ispindel_parameters.parameters['batch_number'] = int(self.e_batch_number.get())
-        self.ispindel_parameters.parameters['fermentation_vessel'] = self.e_fermentation_vessel.get()
-        self.ispindel_parameters.parameters['ispindel_name'] = self.parameters_values['name']
-        self.ispindel_parameters.parameters['temperature_offset'] = float(self.e_temperature_offset.get())
-        self.ispindel_parameters.parameters['battery_notification'] = False
-        self.ispindel_parameters.parameters['log'] = False
+        try:
+            self.ispindel_parameters.parameters['batch_number'] = int(self.e_batch_number.get())
+            self.ispindel_parameters.parameters['fermentation_vessel'] = self.e_fermentation_vessel.get()
+            self.ispindel_parameters.parameters['ispindel_name'] = self.parameters_values['name']
+            self.ispindel_parameters.parameters['temperature_offset'] = float(self.e_temperature_offset.get())
+            self.ispindel_parameters.parameters['battery_notification'] = False
+            self.ispindel_parameters.parameters['log'] = False
 
-        self.database.execute_fermentation_settings(self.ispindel_parameters)
+            self.database.execute_fermentation_settings(self.ispindel_parameters)
+        except KeyError:
+            pass
+        except ValueError:
+            pass
+        except TypeError:
+            pass
 
     def external_parameters_update(self, batch_number=None, og=None, batch_name=None, fermentation_vessel=None,
                                    fermentation_program=None):

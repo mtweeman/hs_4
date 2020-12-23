@@ -3,7 +3,6 @@ from tkinter import *
 from tkinter import ttk
 
 # Imported libraries
-import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 import matplotlib.dates as mdates
@@ -12,7 +11,7 @@ import matplotlib.dates as mdates
 
 
 class GraphGUI(Frame):
-    """A class for 'Graph' creation"""
+    """A class for Graph creation"""
     def __init__(self, graph_tab_gui, database, dpi):
         super().__init__(graph_tab_gui)
         self.graph_tab_gui = graph_tab_gui

@@ -28,13 +28,10 @@ class ISpindelParameters:
                                                   ])
 
     def calculate_polynomial(self):
-        try:
-            self.parameters['a'] = (self.parameters['gravity_0'] - self.parameters['gravity_1']) / \
-                                   (self.parameters['angle_0'] - self.parameters['angle_1'])
-            self.parameters['b'] = self.parameters['gravity_0'] - self.parameters['a'] * self.parameters['angle_0']
-        except KeyError:
-            pass
-        except ValueError:
-            pass
-        except ZeroDivisionError:
-            pass
+        if (self.parameters['gravity_0'] and self.parameters['gravity_1'] and
+                self.parameters['angle_0'] and self.parameters['angle_1'] and
+                self.parameters['angle_0'] != self.parameters['angle_1']):
+                    self.parameters['a'] = (self.parameters['gravity_0'] - self.parameters['gravity_1']) / \
+                                           (self.parameters['angle_0'] - self.parameters['angle_1'])
+                    self.parameters['b'] = self.parameters['gravity_0'] -\
+                                           self.parameters['a'] * self.parameters['angle_0']

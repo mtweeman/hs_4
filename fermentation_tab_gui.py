@@ -199,7 +199,7 @@ class FermentationTabGUI(Frame):
                     self.l_labels[key.replace('master', 'fv')].config(text=key.replace('master_', 'fv ').upper())
                     self.f_sparklines[key.replace('master', 'fv')].clear_sparklines()
 
-    def update_parameters(self, socket_message):
+    def socket_parameters_update(self, socket_message):
         # Check for data logging by fermentation_vessel OR master for freezer
         result = self.database.get_fermentation_settings(socket_message['name'], True)
         if not result:

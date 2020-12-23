@@ -58,9 +58,9 @@ class SocketThread(threading.Thread):
                         socket_message = {k.lower(): v for k, v in socket_message.items()}
 
                         # Remove unnecessary keys
-                        for key in self.socket_message:
-                            if key != 'measurement_time' and key != 'gravity':
-                                self.socket_message[key] = socket_message[key]
+                        for k in self.socket_message:
+                            if k != 'measurement_time' and k != 'gravity':
+                                self.socket_message[k] = socket_message[k]
 
                         # Add measurement date and time
                         self.socket_message['measurement_time'] = datetime.datetime.now()
@@ -72,7 +72,7 @@ class SocketThread(threading.Thread):
                              socket_message_copy['interval'],
                              )
 
-                        self.fermentation_tab_gui.update_parameters(socket_message_copy)
+                        self.fermentation_tab_gui.socket_parameters_update(socket_message_copy)
                         break
             finally:
                 connection.close()
