@@ -8,7 +8,6 @@ import csv
 
 class BreweryParameters:
     """A class for Brewery tab parameters storage"""
-
     def __init__(self):
         self.parameters = {}
         self.extract_csv_data()

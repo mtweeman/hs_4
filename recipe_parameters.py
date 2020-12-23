@@ -10,7 +10,6 @@ import xml_list_config
 
 class RecipeParameters:
     """A class for Recipe tab parameters storage"""
-
     def __init__(self):
         # Lists and dictionaries for XML parameters
         self.miscs = []

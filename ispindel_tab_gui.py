@@ -1,6 +1,5 @@
 # Standard libraries
 from tkinter import *
-from tkinter import ttk
 import csv
 import datetime
 from _collections import OrderedDict
@@ -12,8 +11,7 @@ from PIL import Image, ImageTk
 
 
 class ISpindelTabGUI(Frame):
-    """A class for 'iSpindel' tab creation"""
-
+    """A class for iSpindel tab creation"""
     def __init__(self, tab_control, ispindel_parameters, database):
         super().__init__(tab_control)
         self.name = 'iSpindel'
@@ -27,12 +25,31 @@ class ISpindelTabGUI(Frame):
         self.img_ispindel_copy = self.img_ispindel.copy()
         self.img_c_ispindel = ImageTk.PhotoImage(image=self.img_ispindel)
 
+        # CATIA coordinates for GUI objects
+        filename = 'data/ispindel_coords.csv'
+
+        with open(filename) as f_obj:
+            reader = csv.reader(f_obj)
+            next(reader)
+
+            self.ispindel_coords = {}
+
+            for row in reader:
+                if row[0] == 'rect':
+                    self.ispindel_rect = (int(row[1]), int(row[2]))
+                else:
+                    self.ispindel_coords[row[0]] = (int(row[1]), int(row[2]))
+
         # Names of GUI objects in the tab
         self.c_ispindel = Canvas(self)
-
         self.f_settings_parameters = Frame(self)
-
         self.l_status = Label(self, font=(None, 14), text='Waiting for data acquisition')
+
+        # c_ispindel
+        self.c_dots = {}
+        self.c_lines = {}
+
+        self.c_background = self.c_ispindel.create_image(0, 0, anchor=N + W, image=self.img_c_ispindel)
 
         # f_settings_parameters
         # f_settings
@@ -68,7 +85,7 @@ class ISpindelTabGUI(Frame):
             self.f_settings_parameters, font=(None, 14), text='Confirm settings', anchor=W)
 
         # f_parameters
-        self.parameters_values = OrderedDict.fromkeys(['time', 'angle', 'rssi', 'name', 'battery', 'temperature'])
+        self.parameters_values = OrderedDict.fromkeys(['measurement_time', 'angle', 'rssi', 'name', 'battery', 'temperature'])
         self.l_parameters_names = []
         self.l_parameters_values = []
 
@@ -76,26 +93,7 @@ class ISpindelTabGUI(Frame):
             self.l_parameters_names.append(Label(self.f_settings_parameters, font=(None, 14), text=''))
             self.l_parameters_values.append(Label(self.f_settings_parameters, font=(None, 14), text=''))
 
-        # self.c_items = {}
-        self.c_dots = {}
-        self.c_lines = {}
-
-        # CATIA coordinates
-        filename = 'data/ispindel_coords.csv'
-
-        with open(filename) as f_obj:
-            reader = csv.reader(f_obj)
-            next(reader)
-
-            self.ispindel_coords = {}
-
-            for row in reader:
-                if row[0] == 'rect':
-                    self.ispindel_rect = (int(row[1]), int(row[2]))
-                else:
-                    self.ispindel_coords[row[0]] = (int(row[1]), int(row[2]))
-
-        # Creating list with all entries for looping
+        # Creating lists for looping
         self.e_entries = [self.e_batch_number,
                           self.e_fermentation_vessel,
                           self.e_temperature_offset,
@@ -111,14 +109,9 @@ class ISpindelTabGUI(Frame):
                                      self.l_calibration_point_2,
                                      ]
 
-        # Adding images to GUI objects
-        self.c_background = self.c_ispindel.create_image(0, 0, anchor=N + W, image=self.img_c_ispindel)
-
         # Adding GUI objects to the grid
         self.c_ispindel.place(relwidth=1, relheight=1)
-
         self.f_settings_parameters.grid(row=0, column=1, sticky=NSEW)
-
         self.l_status.grid(row=0, column=0, sticky=N + W)
 
         # f_settings_parameters
@@ -141,13 +134,6 @@ class ISpindelTabGUI(Frame):
             self.l_parameters_names[i].grid(row=9 + i, column=0, sticky=W)
             self.l_parameters_values[i].grid(row=9 + i, column=1, sticky=W)
 
-        # Setting rows and columns properties
-        for i in range(3):
-            self.columnconfigure(i, weight=1, uniform='column')
-
-        for i in range(self.f_settings_parameters.grid_size()[1]):
-            self.f_settings_parameters.rowconfigure(i, weight=1, uniform='row')
-
         # Adding commands to GUI objects
         self.c_ispindel.bind('<Configure>', self.resize_image)
 
@@ -166,10 +152,15 @@ class ISpindelTabGUI(Frame):
         self.b_generate_polynomial.bind('<Button-1>', self.generate_polynomial)
         self.b_confirm_settings.bind('<Button-1>', self.confirm_settings)
 
-        # Initial resize for grabbing coordinates (crash if socket sends data before tab activation)
-        # TO BE CODED
+        # Setting rows and columns properties
+        for i in range(3):
+            self.columnconfigure(i, weight=1, uniform='column')
+
+        for i in range(self.f_settings_parameters.grid_size()[1]):
+            self.f_settings_parameters.rowconfigure(i, weight=1, uniform='row')
 
     def resize_image(self, event=None):
+        # Getting scale
         width, height = event.width, event.height
 
         self.w_scale = width / self.img_ispindel.width
@@ -179,50 +170,54 @@ class ISpindelTabGUI(Frame):
         # img_ispindel
         image = self.img_ispindel_copy.resize((width, height))
         self.img_c_ispindel = ImageTk.PhotoImage(image)
+
+        # Updating canvas
         self.c_ispindel.itemconfig(self.c_background, image=self.img_c_ispindel)
 
-        # Coordinates of GUI objects
+        # Updating coordinates of GUI objects
         if self.c_dots and self.c_lines:
-            for i, ispindel_coord_tuple in enumerate(self.ispindel_coords.items()):
-                self.c_ispindel.coords(
-                    self.c_lines[ispindel_coord_tuple[0]],
-                    int(round(self.w_scale * self.img_ispindel.width * (int(ispindel_coord_tuple[1][0]) /
-                                                                        self.ispindel_rect[0]), 0)),
-                    int(round(self.h_scale * self.img_ispindel.height * (int(ispindel_coord_tuple[1][1]) /
-                                                                         self.ispindel_rect[1]), 0)),
-                    self.w_scale * self.img_ispindel.width / 3,
-                    self.l_parameters_names[i + 1].winfo_y() + self.l_parameters_names[i + 1].winfo_height() / 2)
-                self.c_ispindel.coords(
-                    self.c_dots[ispindel_coord_tuple[0]],
-                    int(round(self.w_scale * (self.img_ispindel.width * (int(ispindel_coord_tuple[1][0]) /
-                                                                         self.ispindel_rect[0]) - 10), 0)),
-                    int(round(self.h_scale * (self.img_ispindel.height * (int(ispindel_coord_tuple[1][1]) /
-                                                                          self.ispindel_rect[1]) - 10), 0)),
-                    int(round(self.w_scale * (self.img_ispindel.width * (int(ispindel_coord_tuple[1][0]) /
-                                                                         self.ispindel_rect[0]) + 10), 0)),
-                    int(round(self.h_scale * (self.img_ispindel.height * (int(ispindel_coord_tuple[1][1]) /
-                                                                          self.ispindel_rect[1]) + 10), 0)))
+            self.update_coordinates_of_dynamic_gui_objects()
 
-    def update_parameters(self, socket_message):
+    def update_coordinates_of_dynamic_gui_objects(self):
+        for i, ispindel_coord_tuple in enumerate(self.ispindel_coords.items()):
+            self.c_ispindel.coords(
+                self.c_lines[ispindel_coord_tuple[0]],
+                int(round(self.w_scale * self.img_ispindel.width * (ispindel_coord_tuple[1][0] /
+                                                                    self.ispindel_rect[0]), 0)),
+                int(round(self.h_scale * self.img_ispindel.height * (ispindel_coord_tuple[1][1] /
+                                                                     self.ispindel_rect[1]), 0)),
+                self.w_scale * self.img_ispindel.width / 3,
+                self.l_parameters_names[i + 1].winfo_y() + self.l_parameters_names[i + 1].winfo_height() / 2)
+            self.c_ispindel.coords(
+                self.c_dots[ispindel_coord_tuple[0]],
+                int(round(self.w_scale * (self.img_ispindel.width * (ispindel_coord_tuple[1][0] /
+                                                                     self.ispindel_rect[0]) - 10), 0)),
+                int(round(self.h_scale * (self.img_ispindel.height * (ispindel_coord_tuple[1][1] /
+                                                                      self.ispindel_rect[1]) - 10), 0)),
+                int(round(self.w_scale * (self.img_ispindel.width * (ispindel_coord_tuple[1][0] /
+                                                                     self.ispindel_rect[0]) + 10), 0)),
+                int(round(self.h_scale * (self.img_ispindel.height * (ispindel_coord_tuple[1][1] /
+                                                                      self.ispindel_rect[1]) + 10), 0)))
+
+    def socket_parameters_update(self, socket_message):
         self.l_status.config(text='Data processing')
 
-        # Draw dots and lines
-        for key, value in self.ispindel_coords.items():
-            self.c_ispindel.delete(key)
+        # Create dynamic GUI objects (dots, lines)
+        if not self.c_dots and not self.c_lines:
+            for k, v in self.ispindel_coords.items():
+                self.c_dots[k] = self.c_ispindel.create_oval(
+                    int(round(self.w_scale * (self.img_ispindel.width * (v[0] / self.ispindel_rect[0]) - 10), 0)),
+                    int(round(self.h_scale * (self.img_ispindel.height * (v[1] / self.ispindel_rect[1]) - 10), 0)),
+                    int(round(self.w_scale * (self.img_ispindel.width * (v[0] / self.ispindel_rect[0]) + 10), 0)),
+                    int(round(self.h_scale * (self.img_ispindel.height * (v[1] / self.ispindel_rect[1]) + 10), 0)),
+                    fill='black')
 
-            self.c_dots[key] = self.c_ispindel.create_oval(
-                int(round(self.w_scale * (self.img_ispindel.width * (value[0] / self.ispindel_rect[0]) - 10), 0)),
-                int(round(self.h_scale * (self.img_ispindel.height * (value[1] / self.ispindel_rect[1]) - 10), 0)),
-                int(round(self.w_scale * (self.img_ispindel.width * (value[0] / self.ispindel_rect[0]) + 10), 0)),
-                int(round(self.h_scale * (self.img_ispindel.height * (value[1] / self.ispindel_rect[1]) + 10), 0)),
-                fill='black', tags=key)
-
-            self.c_lines[key] = self.c_ispindel.create_line(
-                int(round(self.w_scale * self.img_ispindel.width * (value[0] / self.ispindel_rect[0]), 0)),
-                int(round(self.h_scale * self.img_ispindel.height * (value[1] / self.ispindel_rect[1]), 0)),
-                int(round(self.w_scale * self.img_ispindel.width * (value[0] / self.ispindel_rect[0]), 0)),
-                int(round(self.h_scale * self.img_ispindel.height * (value[1] / self.ispindel_rect[1]), 0)),
-                width=2, tags=key)
+                self.c_lines[k] = self.c_ispindel.create_line(
+                    int(round(self.w_scale * self.img_ispindel.width * (v[0] / self.ispindel_rect[0]), 0)),
+                    int(round(self.h_scale * self.img_ispindel.height * (v[1] / self.ispindel_rect[1]), 0)),
+                    int(round(self.w_scale * self.img_ispindel.width * (v[0] / self.ispindel_rect[0]), 0)),
+                    int(round(self.h_scale * self.img_ispindel.height * (v[1] / self.ispindel_rect[1]), 0)),
+                    width=2)
 
         # Draw lines in realtime
         difference = 1
@@ -231,9 +226,9 @@ class ISpindelTabGUI(Frame):
 
         while (stop - datetime.datetime.now()).total_seconds() >= 0:
             for i, ispindel_coord_tuple in enumerate(self.ispindel_coords.items()):
-                xa = int(round(self.w_scale * (self.img_ispindel.width * (int(ispindel_coord_tuple[1][0]) /
+                xa = int(round(self.w_scale * (self.img_ispindel.width * (ispindel_coord_tuple[1][0] /
                                                                           self.ispindel_rect[0])), 0))
-                ya = int(round(self.h_scale * (self.img_ispindel.height * (int(ispindel_coord_tuple[1][1]) /
+                ya = int(round(self.h_scale * (self.img_ispindel.height * (ispindel_coord_tuple[1][1] /
                                                                            self.ispindel_rect[1])), 0))
                 xb = self.w_scale * self.img_ispindel.width / 3
                 yb = self.l_parameters_names[i + 1].winfo_y() + self.l_parameters_names[i + 1].winfo_height() / 2
@@ -242,24 +237,28 @@ class ISpindelTabGUI(Frame):
                 x = xa + (xb - xa) * (1 - (stop - datetime.datetime.now()).total_seconds() / difference)
                 y = a * x + b
 
-                self.c_ispindel.coords(self.c_lines[ispindel_coord_tuple[0]],
-                    int(round(self.w_scale * self.img_ispindel.width * (int(ispindel_coord_tuple[1][0]) /
-                                                                        self.ispindel_rect[0]), 0)),
-                    int(round(self.h_scale * self.img_ispindel.height * (int(ispindel_coord_tuple[1][1]) /
-                                                                         self.ispindel_rect[1]), 0)),
-                    x, y)
+                self.c_ispindel.coords(self.c_lines[ispindel_coord_tuple[0]], xa, ya, x, y)
 
             self.c_ispindel.update_idletasks()
 
-        # Extract needed parameters into 'iSpindelTabGUI' instance variable
-        self.parameters_values['time'] = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S')
+        # Extract parameters (only to screen - there can be many socket readings, but not all end as parameters value)
+        for k in self.parameters_values:
+            if k in socket_message:
+                self.parameters_values[k] = socket_message[k]
 
-        for key, value in self.parameters_values.items():
-            if key in socket_message.keys():
-                if key == 'angle' or key == 'battery' or key == 'temperature':
-                    self.parameters_values[key] = float(socket_message[key])
-                else:
-                    self.parameters_values[key] = socket_message[key]
+        # Extract parameters (to ispindel_parameters, not displayed on screen - saved for each socket reading)
+        if 'temp_units' in socket_message:
+            self.ispindel_parameters.parameters['temp_units'] = socket_message['temp_units']
+        if 'interval' in socket_message:
+            self.ispindel_parameters.parameters['interval'] = socket_message['interval']
+
+        # Get temperature offset for iSpindel
+        temperature_offset = self.database.get_ispindel_settings_temperature_offset(self.parameters_values['name'])
+
+        if temperature_offset:
+            self.e_temperature_offset.delete(0, END)
+            self.e_temperature_offset.insert(0, temperature_offset)
+            self.e_temperature_offset.config(fg='#000000')
 
         # Print socket data on the screen
         for i, parameter_value_tuple in enumerate(self.parameters_values.items()):
@@ -267,41 +266,33 @@ class ISpindelTabGUI(Frame):
                 self.l_parameters_names[i].config(text=parameter_value_tuple[0].upper())
             else:
                 self.l_parameters_names[i].config(text=parameter_value_tuple[0].title())
-            self.l_parameters_values[i].config(text=parameter_value_tuple[1])
 
-        db_temperature_offset = self.database.get_ispindel_settings_temperature_offset(self.parameters_values['name'])
-
-        if db_temperature_offset:
-            self.e_temperature_offset.delete(0, END)
-            self.e_temperature_offset.insert(0, db_temperature_offset)
-            self.e_temperature_offset.config(fg='#000000')
+            if parameter_value_tuple[0] == 'measurement_time':
+                self.l_parameters_values[i].config(text=datetime.datetime.strftime(parameter_value_tuple[1],
+                                                                                   '%Y-%m-%d %H:%M:%S'))
+            else:
+                self.l_parameters_values[i].config(text=parameter_value_tuple[1])
 
         self.l_status.config(text='Waiting for data acquisition')
 
-        # Extract additional parameters into 'ISpindelParameters' instance variable
-        if 'temp_units' in socket_message:
-            self.ispindel_parameters.parameters['temp_units'] = socket_message['temp_units']
-        if 'interval' in socket_message:
-            self.ispindel_parameters.parameters['interval'] = int(socket_message['interval'])
-
     def entry_click(self, event):
         """Hide entry default text when focused"""
-        for i, element in enumerate(self.e_entries):
-            if element == event.widget and element.get() == self.entries_texts[i]:
-                element.delete(0, END)
-                element.config(fg='#000000')
+        for i, entry in enumerate(self.e_entries):
+            if entry == event.widget and entry.get() == self.entries_texts[i]:
+                entry.delete(0, END)
+                entry.config(fg='#000000')
 
     def entry_unclick(self, event):
         """Show entry default text when unfocused and left empty"""
-        for i, element in enumerate(self.e_entries):
-            if element == event.widget and not element.get():
-                element.insert(END, self.entries_texts[i])
-                element.config(fg='#c5c5c5')
+        for i, entry in enumerate(self.e_entries):
+            if entry == event.widget and not entry.get():
+                entry.insert(END, self.entries_texts[i])
+                entry.config(fg='#c5c5c5')
 
     def save_calibration_point(self, event):
         try:
-            for i, element in enumerate(self.b_calibration_points):
-                if element == event.widget:
+            for i, button in enumerate(self.b_calibration_points):
+                if button == event.widget:
                     gravity = float(self.e_entries[i + 3].get())
                     angle = self.parameters_values['angle']
                     self.ispindel_parameters.parameters['gravity_' + str(i)] = gravity

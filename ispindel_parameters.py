@@ -3,12 +3,11 @@ from _collections import OrderedDict
 
 # Imported libraries
 
-
 # My libraries
 
 
 class ISpindelParameters:
-    """A class for 'iSpindel' tab parameters storage"""
+    """A class for iSpindel tab parameters storage"""
     def __init__(self):
         self.parameters = OrderedDict().fromkeys(['batch_number',
                                                   'batch_name',

@@ -10,11 +10,12 @@ from PIL import Image, ImageTk
 
 class BreweryTabGUI(Frame):
     """A class for Brewery tab creation"""
-
     def __init__(self, tab_control, brewery_parameters):
         super().__init__(tab_control)
         self.name = 'Brewery'
         self.brewery_parameters = brewery_parameters
+        self.w_scale = 1.0
+        self.h_scale = 1.0
 
         # Images for labels
         self.img_brewery = Image.open('images/test7.bmp')
@@ -29,11 +30,7 @@ class BreweryTabGUI(Frame):
         self.img_c_button_on = ImageTk.PhotoImage(image=self.img_button_on)
         self.img_c_button_off = ImageTk.PhotoImage(image=self.img_button_off)
 
-        # Names of GUI objects in the tab
-        self.c_brewery = Canvas(self)
-        self.c_items = {}
-
-        # CATIA coordinates for GUI elements
+        # CATIA coordinates for GUI objects
         filename = 'data/brewery_coords.csv'
 
         with open(filename) as f_obj:
@@ -48,13 +45,17 @@ class BreweryTabGUI(Frame):
                 else:
                     self.brewery_coords[row[0]] = (int(row[1]), int(row[2]))
 
-        # Adding images to GUI objects
+        # Names of GUI objects in the tab
+        self.c_brewery = Canvas(self)
+
+        # c_brewery
+        self.c_items = {}
         self.c_background = self.c_brewery.create_image(0, 0, anchor=N + W, image=self.img_c_brewery)
 
         for k, v in self.brewery_coords.items():
             self.c_items[k] = self.c_brewery.create_image(
-                int(round(self.img_brewery.width * (v[0] / self.brewery_rect[0]), 0)),
-                int(round(self.img_brewery.height * (v[1] / self.brewery_rect[1]), 0)),
+                int(round(self.w_scale * self.img_brewery.width * (v[0] / self.brewery_rect[0]), 0)),
+                int(round(self.h_scale * self.img_brewery.height * (v[1] / self.brewery_rect[1]), 0)),
                 anchor=CENTER, image=self.img_c_button_off)
 
         # Adding GUI objects to the grid
@@ -70,8 +71,8 @@ class BreweryTabGUI(Frame):
         # Getting scale
         width, height = event.width, event.height
 
-        w_scale = width / self.img_brewery.width
-        h_scale = height / self.img_brewery.height
+        self.w_scale = width / self.img_brewery.width
+        self.h_scale = height / self.img_brewery.height
 
         # Resizing images
         # img_brewery
@@ -79,13 +80,13 @@ class BreweryTabGUI(Frame):
         self.img_c_brewery = ImageTk.PhotoImage(image)
 
         # img_button_on
-        image = self.img_button_on_copy.resize(
-            (int(round(w_scale * self.img_button_on.width, 0)), int(round(h_scale * self.img_button_on.height, 0))))
+        image = self.img_button_on_copy.resize((int(round(self.w_scale * self.img_button_on.width, 0)),
+                                                int(round(self.h_scale * self.img_button_on.height, 0))))
         self.img_c_button_on = ImageTk.PhotoImage(image)
 
         # img_button_off
-        image = self.img_button_off_copy.resize(
-            (int(round(w_scale * self.img_button_off.width, 0)), int(round(h_scale * self.img_button_off.height, 0))))
+        image = self.img_button_off_copy.resize((int(round(self.w_scale * self.img_button_off.width, 0)),
+                                                 int(round(self.h_scale * self.img_button_off.height, 0))))
         self.img_c_button_off = ImageTk.PhotoImage(image)
 
         # Updating canvas
@@ -95,8 +96,8 @@ class BreweryTabGUI(Frame):
         # Updating coordinates of GUI objects
         for k, v in self.brewery_coords.items():
             self.c_brewery.coords(self.c_items[k],
-                                  int(round(w_scale * self.img_brewery.width * (v[0] / self.brewery_rect[0]), 0)),
-                                  int(round(h_scale * self.img_brewery.height * (v[1] / self.brewery_rect[1]), 0)))
+                                  int(round(self.w_scale * self.img_brewery.width * (v[0] / self.brewery_rect[0]), 0)),
+                                  int(round(self.h_scale * self.img_brewery.height * (v[1] / self.brewery_rect[1]), 0)))
 
     def button_switch(self, key):
         self.brewery_parameters.verify_parameters(key)

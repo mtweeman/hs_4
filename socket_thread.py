@@ -65,7 +65,7 @@ class SocketThread(threading.Thread):
                         # Add measurement date and time
                         self.socket_message['measurement_time'] = datetime.datetime.now()
 
-                        self.ispindel_tab_gui.update_parameters(self.socket_message)
+                        self.ispindel_tab_gui.socket_parameters_update(self.socket_message)
 
                         socket_message_copy = self.socket_message.copy()
                         del (socket_message_copy['temp_units'],

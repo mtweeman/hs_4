@@ -13,7 +13,6 @@ from xml_list_config import *
 
 class RecipeTabGUI(Frame):
     """A class for Recipe tab creation"""
-
     def __init__(self, tab_control, recipe_parameters, ispindel_tab_gui, fermentation_parameters, ispindel_parameters,
                  database):
         super().__init__(tab_control)
@@ -96,7 +95,7 @@ class RecipeTabGUI(Frame):
         self.l_hop_amount = Label(self.f_hops, font=(None, 14), text='', justify=LEFT)
         self.l_hop_time = Label(self.f_hops, font=(None, 14), text='', justify=LEFT)
 
-        # Creating list with all frames for looping
+        # Creating lists for looping
         self.f_frames = [self.f_miscs,
                          self.f_fermentables,
                          self.f_parameters,
@@ -104,7 +103,6 @@ class RecipeTabGUI(Frame):
                          self.f_hops,
                          ]
 
-        # Creatiing list with all toggles for looping
         self.t_toggles = [self.t_yos,
                           self.t_mlt_rinse,
                           self.t_mlt_cip,
@@ -227,7 +225,7 @@ class RecipeTabGUI(Frame):
                  hops_texts,
                  ]
 
-        # Create text from recipe parameters (lists)
+        # Creating text from recipe parameters (lists)
         for i, current_list in enumerate(self.recipe_parameters.lists):
             if current_list:
                 for current_dict in current_list:
