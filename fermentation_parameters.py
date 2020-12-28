@@ -1,15 +1,13 @@
 # Standard libraries
 
-
 # Imported libraries
-
 
 # My libraries
 import csv
 
 
 class FermentationParameters:
-    """A class for 'Fermentation' tab parameters storage"""
+    """A class for Fermentation tab parameters storage"""
 
     def __init__(self, database):
         self.parameters = {}

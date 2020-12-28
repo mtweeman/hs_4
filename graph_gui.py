@@ -30,15 +30,27 @@ class GraphGUI(Frame):
 
         # f_toolbar
         self.f_navigation_toolbar = Frame(self.f_toolbar)
-        self.cb_choice_1 = ttk.Combobox(self.f_toolbar, font=(None, 14), values=['Fermentation', 'Brewery'], state='readonly')
+        self.cb_choice_0 = ttk.Combobox(self.f_toolbar, font=(None, 14), values=['Fermentation', 'Brewery'], state='readonly')
+        self.cb_choice_1 = ttk.Combobox(self.f_toolbar, font=(None, 14), state='readonly')
         self.cb_choice_2 = ttk.Combobox(self.f_toolbar, font=(None, 14), state='readonly')
         self.cb_choice_3 = ttk.Combobox(self.f_toolbar, font=(None, 14), state='readonly')
-        self.cb_choice_4 = ttk.Combobox(self.f_toolbar, font=(None, 14), state='readonly')
         self.l_button_off = Label(self.f_toolbar, font=(None, 14, 'bold'), fg='red', text='X')
 
-        self.cb_choice_1.set('Fermentation/Brewery data')
-        self.cb_choice_2.set('Batch number')
-        self.cb_choice_3.set('Values 1')
+        # Creating lists for looping
+        self.cb_choices = [self.cb_choice_0,
+                           self.cb_choice_1,
+                           self.cb_choice_2,
+                           self.cb_choice_3,
+                           ]
+
+        self.cb_texts = ['Fermentation/Brewery data',
+                         'Batch number',
+                         'Values 1',
+                         'Values 2',
+                         ]
+
+        for i in range(len(self.cb_texts) - 1):
+            self.cb_choices[i].set(self.cb_texts[i])
 
         # Adding GUI objects to the grid
         self.f_toolbar.grid(row=0, column=0, sticky=NSEW)
@@ -46,17 +58,17 @@ class GraphGUI(Frame):
 
         # f_toolbar
         self.f_navigation_toolbar.grid(row=0, column=0)
-        self.cb_choice_1.grid(row=0, column=1, sticky=W + E)
-        self.cb_choice_2.grid(row=0, column=2, sticky=W + E)
-        self.cb_choice_3.grid(row=0, column=3, sticky=W + E)
-        self.cb_choice_4.grid(row=0, column=4, sticky=W + E)
+        self.cb_choice_0.grid(row=0, column=1, sticky=W + E)
+        self.cb_choice_1.grid(row=0, column=2, sticky=W + E)
+        self.cb_choice_2.grid(row=0, column=3, sticky=W + E)
+        self.cb_choice_3.grid(row=0, column=4, sticky=W + E)
         self.l_button_off.grid(row=0, column=5, sticky=E)
 
         # Adding commands to GUI objects
-        self.cb_choice_1.bind('<<ComboboxSelected>>', self.load_tables)
-        self.cb_choice_2.bind('<<ComboboxSelected>>', self.load_columns)
+        self.cb_choice_0.bind('<<ComboboxSelected>>', self.load_tables)
+        self.cb_choice_1.bind('<<ComboboxSelected>>', self.load_columns)
+        self.cb_choice_2.bind('<<ComboboxSelected>>', self.load_column)
         self.cb_choice_3.bind('<<ComboboxSelected>>', self.load_column)
-        self.cb_choice_4.bind('<<ComboboxSelected>>', self.load_column)
         self.l_button_off.bind('<Button-1>', self.remove_frame)
 
         # Setting rows and columns properties
@@ -109,7 +121,7 @@ class GraphGUI(Frame):
             self.ax1.set_zorder(0)
             if self.ax2:
                 self.ax2.set_zorder(-100)
-        elif self.ax2 and event.button == 3:
+        elif event.button == 3 and self.ax2:
             self.ax1.set_zorder(-100)
             self.ax2.set_zorder(0)
 
@@ -117,16 +129,37 @@ class GraphGUI(Frame):
         self.remove_flag = True
         self.graph_tab_gui.remove_graph()
 
-    def load_tables(self, event):
-        self.batch_number = self.database.get_tables(self.cb_choice_1.get())
-        self.cb_choice_2.set('Batch number')
-        self.cb_choice_2['values'] = ''
-        self.cb_choice_2['values'] = self.batch_number
-        self.cb_choice_3.set('Values 1')
-        self.cb_choice_3['values'] = ''
-        self.cb_choice_4.set('')
-        self.cb_choice_4['values'] = ''
+    def set_texts_and_choices(self, start, choices):
+        for i in range(start, len(self.cb_texts)):
+            # Set displayed text
+            # i < len(self.cb_text) is passed by all values except maximum self.cb_choices index
+            # i == start condition is passed even by maximum self.cb_choices index
+            if i < len(self.cb_texts) - 1 or i == start:
+                if self.cb_choices[i].get() != self.cb_texts[i]:
+                    self.cb_choices[i].set(self.cb_texts[i])
+            else:
+                if self.cb_choices[i].get():
+                    self.cb_choices[i].set('')
 
+            # Set values for choices
+            if i == start:
+                if choices:
+                    self.cb_choices[i]['values'] = choices
+                else:
+                    if self.cb_choices[i]['values']:
+                        self.cb_choices[i]['values'] = ''
+            else:
+                if self.cb_choices[i]['values']:
+                    self.cb_choices[i]['values'] = ''
+
+    def load_tables(self, event):
+        # Load tables
+        self.batch_number = self.database.get_tables(self.cb_choice_0.get())
+
+        # Set texts and choices for choices to be made (load_tables is for cb_choice_0, therefore value is for 1)
+        self.set_texts_and_choices(1, self.batch_number)
+
+        # Update plots
         if self.ax1:
             self.update_plot('1')
 
@@ -135,48 +168,51 @@ class GraphGUI(Frame):
 
     def load_columns(self, event=None):
         if event:
-            self.column_1 = self.database.get_columns(self.cb_choice_2.get())
-            self.cb_choice_3.set('Values 1')
-            self.cb_choice_3['values'] = self.column_1
-            self.cb_choice_4.set('')
-            self.cb_choice_4['values'] = ''
+            # Load columns
+            self.column_1 = self.database.get_columns(self.cb_choice_1.get())
 
+            # Set texts and choices for choices to be made (load_columns is for cb_choice_1, therefore value is for 2)
+            self.set_texts_and_choices(2, self.column_1)
+
+            # Update plots
             if self.ax1:
                 self.update_plot('1')
 
             if self.ax2:
                 self.update_plot('2')
-
         else:
-            self.column_2 = self.database.get_columns(self.cb_choice_2.get())
-            self.cb_choice_4.set('Values 2')
-            self.cb_choice_4['values'] = self.column_2
+            # Load columns
+            self.column_2 = self.database.get_columns(self.cb_choice_1.get())
+
+            # Set texts and choices for choices to be made (load_columns is for cb_choice_1, therefore value is for 3)
+            self.set_texts_and_choices(3, self.column_2)
 
     def load_column(self, event):
-        if event.widget == self.cb_choice_3:
-            x, y = self.database.get_column(self.cb_choice_2.get(), self.cb_choice_3.get())
+        if event.widget == self.cb_choice_2:
+            x, y = self.database.get_column(self.cb_choice_1.get(), self.cb_choice_2.get())
             if not self.ax1:
-                self.add_plot(x, y, self.cb_choice_3.get())
+                self.add_plot(x, y, self.cb_choice_2.get())
             else:
                 self.update_plot('1', x, y)
 
-            if not self.cb_choice_4['values']:
+            # Values only reloaded when load_columns executed as it can result in different set of columns
+            if not self.cb_choice_3['values']:
                 self.load_columns()
 
-        elif event.widget == self.cb_choice_4:
-            x, y = self.database.get_column(self.cb_choice_2.get(), self.cb_choice_4.get())
+        elif event.widget == self.cb_choice_3:
+            x, y = self.database.get_column(self.cb_choice_1.get(), self.cb_choice_3.get())
             if not self.ax2:
-                self.add_plot(x, y, self.cb_choice_4.get())
+                self.add_plot(x, y, self.cb_choice_3.get())
             else:
                 self.update_plot('2', x, y)
 
     def update_plot(self, plot, x=None, y=None):
         if plot == '1':
             self.line1.set_data(x, y)
-            self.ax1.set_ylabel(self.cb_choice_3.get())
+            self.ax1.set_ylabel(self.cb_choice_2.get())
         elif plot == '2':
             self.line2.set_data(x, y)
-            self.ax2.set_ylabel(self.cb_choice_4.get())
+            self.ax2.set_ylabel(self.cb_choice_3.get())
 
         for plt in self.fig.get_axes():
             plt.relim()

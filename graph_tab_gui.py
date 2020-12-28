@@ -14,7 +14,7 @@ class GraphTabGUI(Frame):
         self.name = 'Graph'
         self.database = database
         self.dpi = dpi
-        self.columns_max_quantity = 2
+        self.columns_max_quantity = 3
         self.rows_max_index = 0
         self.columns_max_index = 0
         self.graphs = []
