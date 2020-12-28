@@ -50,7 +50,7 @@ class SocketThread(threading.Thread):
                 while True:
                     self.socket_data = connection.recv(200).decode('utf-8')
 
-                    # Extract socket message and pass it to 'iSpindel' tab
+                    # Extract socket message and pass it to iSpindel tab
                     if self.socket_data:
                         socket_message_raw += self.socket_data
                     else:
@@ -71,6 +71,9 @@ class SocketThread(threading.Thread):
                         del (socket_message_copy['temp_units'],
                              socket_message_copy['interval'],
                              )
+
+                        # del self.socket_message['temp_units']
+                        # del self.socket_message['interval']
 
                         self.fermentation_tab_gui.socket_parameters_update(socket_message_copy)
                         break

@@ -30,7 +30,8 @@ class GraphGUI(Frame):
 
         # f_toolbar
         self.f_navigation_toolbar = Frame(self.f_toolbar)
-        self.cb_choice_0 = ttk.Combobox(self.f_toolbar, font=(None, 14), values=['Fermentation', 'Brewery'], state='readonly')
+        self.cb_choice_0 =\
+            ttk.Combobox(self.f_toolbar, font=(None, 14), values=['Fermentation', 'Brewery'], state='readonly')
         self.cb_choice_1 = ttk.Combobox(self.f_toolbar, font=(None, 14), state='readonly')
         self.cb_choice_2 = ttk.Combobox(self.f_toolbar, font=(None, 14), state='readonly')
         self.cb_choice_3 = ttk.Combobox(self.f_toolbar, font=(None, 14), state='readonly')

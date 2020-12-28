@@ -16,22 +16,13 @@ class Database:
         self.connection_string = ("Driver={Microsoft Access Driver (*.mdb, *.accdb)};" +
                                   "DBQ=" + self.database_path + ";")
 
-        # DO NOT REMOVE
-        # # Prepare query for table creation
-        # self.query = ("""CREATE TABLE Fermentation_settings""" +
-        #               """(batch_number short PRIMARY KEY NOT NULL,""" +
-        #               """temperature_offset DOUBLE NOT NULL, """ +
-        #               """gravity_1 DOUBLE NOT NULL,""" +
-        #               """gravity_2 DOUBLE NOT NULL,""" +
-        #               """angle_1 DOUBLE NOT NULL,""" +
-        #               """angle_2 DOUBLE NOT NULL,""" +
-        #               """a DOUBLE NOT NULL,""" +
-        #               """b DOUBLE NOT NULL);""")
-        #
-        # # Check existence / create table
-        # if not self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
-        #     self.db_connection.execute(self.query)
-        # DO NOT REMOVE
+    def establish_connection(self):
+        self.db_connection = db.connect(self.connection_string, autocommit=True)
+        self.cursor = self.db_connection.cursor()
+
+    def terminate_connection(self):
+        self.cursor.close()
+        self.db_connection.close()
 
     def execute_fermentation(self, batch_number, socket_message):
         self.establish_connection()
@@ -42,29 +33,26 @@ class Database:
         self.query = ("""CREATE TABLE """ + fermentation +
                       """(id AUTOINCREMENT PRIMARY KEY NOT NULL,""" +
                       """measurement_time DATETIME NOT NULL,""" +
-                      # """name VARCHAR(11) NOT NULL,""" +
                       """angle DOUBLE NOT NULL,""" +
                       """temperature DOUBLE NOT NULL,""" +
-                      # """temp_units VARCHAR(1) NOT NULL, """ +
                       """battery DOUBLE NOT NULL,""" +
                       """gravity DOUBLE NOT NULL,""" +
-                      # """interval SHORT NOT NULL,""" +
                       """rssi SHORT NOT NULL);""")
 
         # Check existence / create table
         if not self.cursor.tables(table=fermentation, tableType='TABLE').fetchone():
             self.cursor.execute(self.query)
 
-        # Save new data
+        # Prepare query
         self.query = """INSERT INTO """ + fermentation + """("""
 
-        for key in socket_message:
-            self.query += key + ','
+        for k in socket_message:
+            self.query += k + ','
         self.query = self.query[:-1]
 
         self.query += """) VALUES ("""
 
-        for key in socket_message:
+        for k in socket_message:
             self.query += '?,'
         self.query = self.query[:-1]
         self.query += """);"""
@@ -77,35 +65,16 @@ class Database:
     def execute_fermentation_settings(self, ispindel_parameters):
         self.establish_connection()
 
-        # # Prepare query for table creation
-        # self.query = ("""CREATE TABLE Fermentation_settings""" +
-        #               """(id AUTOINCREMENT PRIMARY KEY NOT NULL,""" +
-        #               """batch_number LONG NOT NULL,""" +
-        #               """fermentation_vessel VARCHAR(25) NOT NULL,""" +
-        #               """ispindel_name VARCHAR(25) NOT NULL,""" +
-        #               """temperature_offset DOUBLE NOT NULL,""" +
-        #               """gravity_0 DOUBLE NOT NULL,""" +
-        #               """gravity_1 DOUBLE NOT NULL, """ +
-        #               """angle_0 DOUBLE NOT NULL,""" +
-        #               """angle_1 DOUBLE NOT NULL,""" +
-        #               """a DOUBLE NOT NULL,""" +
-        #               """b DOUBLE NOT NULL,""" +
-        #               """battery_notification BIT NOT NULL);""")
-        #
-        # # Check existence / create table
-        # if not self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
-        #     self.cursor.execute(self.query)
-
-        # Save new data
+        # Prepare query
         self.query = """INSERT INTO Fermentation_settings("""
 
-        for key in ispindel_parameters.parameters:
-            self.query += key + ','
+        for k in ispindel_parameters.parameters:
+            self.query += k + ','
         self.query = self.query[:-1]
 
         self.query += """) VALUES ("""
 
-        for key in ispindel_parameters.parameters:
+        for k in ispindel_parameters.parameters:
             self.query += '?,'
         self.query = self.query[:-1]
         self.query += """);"""
@@ -114,14 +83,6 @@ class Database:
             self.cursor.execute(self.query, tuple(ispindel_parameters.parameters.values()))
 
         self.terminate_connection()
-
-    def establish_connection(self):
-        self.db_connection = db.connect(self.connection_string, autocommit=True)
-        self.cursor = self.db_connection.cursor()
-
-    def terminate_connection(self):
-        self.cursor.close()
-        self.db_connection.close()
 
     def get_ispindel_settings_temperature_offset(self, ispindel_name):
         self.establish_connection()
@@ -316,7 +277,8 @@ class Database:
                       """FROM %s """ +
                       """;""") % table
 
-        self.cursor.execute(self.query)
+        if self.cursor.tables(table=table, tableType='TABLE').fetchone():
+            self.cursor.execute(self.query)
 
         results = [result[0] for result in self.cursor.description]
 
