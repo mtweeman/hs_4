@@ -328,7 +328,6 @@ class ISpindelTabGUI(Frame):
             self.ispindel_parameters.parameters['fermentation_vessel'] = self.e_fermentation_vessel.get()
             self.ispindel_parameters.parameters['ispindel_name'] = self.parameters_values['name']
             self.ispindel_parameters.parameters['temperature_offset'] = float(self.e_temperature_offset.get())
-            self.ispindel_parameters.parameters['battery_notification'] = False
             self.ispindel_parameters.parameters['log'] = False
 
             self.database.execute_fermentation_settings(self.ispindel_parameters)
