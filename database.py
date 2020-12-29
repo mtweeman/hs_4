@@ -9,7 +9,6 @@ import pyodbc as db
 
 class Database:
     """A class for database handling"""
-
     def __init__(self):
         # Database setup
         self.database_path = os.getcwd() + r"/hajle_silesia_db.accdb"
@@ -105,7 +104,7 @@ class Database:
             return None
 
     def get_fermentation_settings(self, ispindel_name, log):
-        # Search master if not log
+        # Searching master if log = False
         if not log:
             name = self.get_ispindel_settings_master()
             if not name:

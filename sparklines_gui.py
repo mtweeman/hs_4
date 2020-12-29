@@ -10,7 +10,6 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
 
 class SparklinesGUI(Frame):
     """A class for Sparklines creation"""
-
     def __init__(self, f_frame, database, dpi):
         super().__init__(f_frame)
         self.database = database

@@ -7,7 +7,7 @@ from tkinter import *
 
 
 class AddGraphTabGUI(Frame):
-    """A class for 'AddGraph' tab creation"""
+    """A class for + tab creation"""
     def __init__(self, tab_control):
         super().__init__(tab_control)
         self.name = '+'

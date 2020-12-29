@@ -25,14 +25,14 @@ class RecipeTabGUI(Frame):
         self.database = database
 
         # Images for labels
-        self.img_switch_on = Image.open('images/switch_on.png')
-        self.img_switch_off = Image.open('images/switch_off.png')
+        self.img_toggle_on = Image.open('images/toggle_on.png')
+        self.img_toggle_off = Image.open('images/toggle_off.png')
 
-        self.img_switch_on_copy = self.img_switch_on.copy()
-        self.img_switch_off_copy = self.img_switch_off.copy()
+        self.img_toggle_on_copy = self.img_toggle_on.copy()
+        self.img_toggle_off_copy = self.img_toggle_off.copy()
 
-        self.img_l_switch_on = ImageTk.PhotoImage(image=self.img_switch_on)
-        self.img_l_switch_off = ImageTk.PhotoImage(image=self.img_switch_off)
+        self.img_l_toggle_on = ImageTk.PhotoImage(image=self.img_toggle_on)
+        self.img_l_toggle_off = ImageTk.PhotoImage(image=self.img_toggle_off)
 
         # Names of GUI objects in the tab
         self.f_user_settings = Frame(self)
@@ -52,11 +52,11 @@ class RecipeTabGUI(Frame):
         self.l_fermentation_program = Label(self.f_user_settings, font=(None, 14), text='Fermentation program')
         self.b_import_recipe = Button(self.f_user_settings, font=(None, 14), text='Import recipe',
                                       command=self.import_xml_recipe)
-        self.t_yos = Label(self.f_user_settings, image=self.img_l_switch_off)
-        self.t_mlt_rinse = Label(self.f_user_settings, image=self.img_l_switch_off)
-        self.t_mlt_cip = Label(self.f_user_settings, image=self.img_l_switch_off)
-        self.t_bk_rinse = Label(self.f_user_settings, image=self.img_l_switch_off)
-        self.t_bk_cip = Label(self.f_user_settings, image=self.img_l_switch_off)
+        self.t_yos = Label(self.f_user_settings, image=self.img_l_toggle_off)
+        self.t_mlt_rinse = Label(self.f_user_settings, image=self.img_l_toggle_off)
+        self.t_mlt_cip = Label(self.f_user_settings, image=self.img_l_toggle_off)
+        self.t_bk_rinse = Label(self.f_user_settings, image=self.img_l_toggle_off)
+        self.t_bk_cip = Label(self.f_user_settings, image=self.img_l_toggle_off)
         self.cb_fv = ttk.Combobox(self.f_user_settings, font=(None, 14),
                                   values=tuple(self.fermentation_parameters.fv_parameters),
                                   state='readonly')
@@ -291,9 +291,9 @@ class RecipeTabGUI(Frame):
     def update_toggles(self):
         for i, toggle in enumerate(self.t_toggles):
             if list(self.recipe_parameters.user_parameters.items())[i][1]:
-                toggle.config(image=self.img_l_switch_on)
+                toggle.config(image=self.img_l_toggle_on)
             else:
-                toggle.config(image=self.img_l_switch_off)
+                toggle.config(image=self.img_l_toggle_off)
 
     def toggle_switch(self, key):
         self.recipe_parameters.verify_user_parameters(key)

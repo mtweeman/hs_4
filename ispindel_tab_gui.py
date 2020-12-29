@@ -48,7 +48,6 @@ class ISpindelTabGUI(Frame):
         # c_ispindel
         self.c_dots = {}
         self.c_lines = {}
-
         self.c_background = self.c_ispindel.create_image(0, 0, anchor=N + W, image=self.img_c_ispindel)
 
         # f_settings_parameters
@@ -210,7 +209,7 @@ class ISpindelTabGUI(Frame):
     def socket_parameters_update(self, socket_message):
         self.l_status.config(text='Data processing')
 
-        # Create dynamic GUI objects (dots, lines)
+        # Creating dynamic GUI objects (dots, lines)
         if not self.c_dots and not self.c_lines:
             for k, v in self.ispindel_coords.items():
                 self.c_dots[k] = self.c_ispindel.create_oval(
@@ -227,7 +226,7 @@ class ISpindelTabGUI(Frame):
                     int(round(self.h_scale * self.img_ispindel.height * (v[1] / self.ispindel_rect[1]), 0)),
                     width=2)
 
-        # Draw lines in realtime
+        # Drawing lines in realtime
         difference = 1
         start = datetime.datetime.now()
         stop = start + datetime.timedelta(seconds=difference)
@@ -249,18 +248,18 @@ class ISpindelTabGUI(Frame):
 
             self.c_ispindel.update_idletasks()
 
-        # Extract parameters (only to screen - there can be many socket readings, but not all end as parameters value)
+        # Extracting parameters (only to screen - there can be many readings, but not all end as parameters value)
         for k in self.parameters_values:
             if k in socket_message:
                 self.parameters_values[k] = socket_message[k]
 
-        # Extract parameters (to ispindel_parameters, not displayed on screen - saved for each socket reading)
+        # Extracting parameters (to ispindel_parameters, not displayed on screen - saved for each socket reading)
         if 'temp_units' in socket_message:
             self.ispindel_parameters.parameters['temp_units'] = socket_message['temp_units']
         if 'interval' in socket_message:
             self.ispindel_parameters.parameters['interval'] = socket_message['interval']
 
-        # Get temperature offset for iSpindel
+        # Getting temperature offset for iSpindel
         temperature_offset = self.database.get_ispindel_settings_temperature_offset(self.parameters_values['name'])
 
         if temperature_offset:
@@ -268,7 +267,7 @@ class ISpindelTabGUI(Frame):
             self.e_temperature_offset.insert(0, temperature_offset)
             self.e_temperature_offset.config(fg='#000000')
 
-        # Print socket data on the screen
+        # Printing socket data on the screen
         for i, parameter_value_tuple in enumerate(self.parameters_values.items()):
             if parameter_value_tuple[0] == 'rssi':
                 self.l_parameters_names[i].config(text=parameter_value_tuple[0].upper())

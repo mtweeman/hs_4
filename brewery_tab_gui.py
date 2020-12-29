@@ -49,10 +49,11 @@ class BreweryTabGUI(Frame):
         self.c_brewery = Canvas(self)
 
         # c_brewery
-        self.c_items = {}
+        self.c_items = {}  # buttons
         self.c_background = self.c_brewery.create_image(0, 0, anchor=N + W, image=self.img_c_brewery)
 
         for k, v in self.brewery_coords.items():
+            # Buttons
             self.c_items[k] = self.c_brewery.create_image(
                 int(round(self.w_scale * self.img_brewery.width * (v[0] / self.brewery_rect[0]), 0)),
                 int(round(self.h_scale * self.img_brewery.height * (v[1] / self.brewery_rect[1]), 0)),
@@ -64,7 +65,7 @@ class BreweryTabGUI(Frame):
         # Adding commands to GUI objects
         self.c_brewery.bind('<Configure>', self.resize_image)
 
-        for k, v in self.brewery_coords.items():
+        for k in self.brewery_coords:
             self.c_brewery.tag_bind(self.c_items[k], '<Button-1>', lambda event, key=k: self.button_switch(key))
 
     def resize_image(self, event):
