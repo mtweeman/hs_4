@@ -290,6 +290,15 @@ class ISpindelTabGUI(Frame):
             else:
                 self.l_parameters_values[i].config(text=parameter_value_tuple[1])
 
+        # Coloring battery information in red if battery voltage is low
+        if socket_message['battery'] <= battery_min_voltage:
+            self.l_parameters_names[list(self.parameters_values).index('battery')].config(fg='red')
+            self.l_parameters_values[list(self.parameters_values).index('battery')].config(fg='red')
+        else:
+            self.l_parameters_names[list(self.parameters_values).index('battery')].config(fg='black')
+            self.l_parameters_values[list(self.parameters_values).index('battery')].config(fg='black')
+
+
         self.l_status.config(text='Waiting for data acquisition')
 
     def entry_click(self, event):
