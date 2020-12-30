@@ -12,11 +12,12 @@ from PIL import Image, ImageTk
 
 class ISpindelTabGUI(Frame):
     """A class for iSpindel tab creation"""
-    def __init__(self, tab_control, ispindel_parameters, database):
+    def __init__(self, tab_control, ispindel_parameters, database, mail):
         super().__init__(tab_control)
         self.name = 'iSpindel'
         self.ispindel_parameters = ispindel_parameters
         self.database = database
+        self.mail = mail
         self.w_scale = 1.0
         self.h_scale = 1.0
 
@@ -269,13 +270,13 @@ class ISpindelTabGUI(Frame):
 
         # Setting battery_notification for iSpindel
         battery_notification = self.database.get_ispindel_settings_battery_notification(self.parameters_values['name'])
-        battery_min_voltage = 4.1
+        battery_min_voltage = 4.2
 
         if socket_message['battery'] <= battery_min_voltage and not battery_notification:
-                print('mail')
-                self.database.execute_ispindel_settings_battery_notification(self.parameters_values['name'], True)
+            self.database.execute_ispindel_settings_battery_notification(self.parameters_values['name'], True)
+            self.mail.battery_notification(self.parameters_values['name'], battery_min_voltage)
         elif socket_message['battery'] > battery_min_voltage and battery_notification:
-                self.database.execute_ispindel_settings_battery_notification(self.parameters_values['name'], False)
+            self.database.execute_ispindel_settings_battery_notification(self.parameters_values['name'], False)
 
         # Printing socket data on the screen
         for i, parameter_value_tuple in enumerate(self.parameters_values.items()):
@@ -297,7 +298,6 @@ class ISpindelTabGUI(Frame):
         else:
             self.l_parameters_names[list(self.parameters_values).index('battery')].config(fg='black')
             self.l_parameters_values[list(self.parameters_values).index('battery')].config(fg='black')
-
 
         self.l_status.config(text='Waiting for data acquisition')
 

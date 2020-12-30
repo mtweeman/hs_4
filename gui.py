@@ -19,7 +19,7 @@ from ispindel_parameters import ISpindelParameters
 from fermentation_parameters import FermentationParameters
 from socket_thread import SocketThread
 from database import Database
-
+from mail import Mail
 
 def add_graph_to_graph_tab_gui(event):
     # Add graph to GraphTabGUI instance when AddGraphTabGUI tab was clicked
@@ -36,6 +36,7 @@ title_str = 'Hajle Silesia Homebrewing System '
 
 # Create instances for parameter/database classes except for Threading classes
 database = Database()
+mail = Mail()
 recipe_parameters = RecipeParameters()
 brewery_parameters = BreweryParameters()
 ispindel_parameters = ISpindelParameters()
@@ -72,7 +73,7 @@ style.theme_use('hs_theme')
 tab_control = ttk.Notebook(root)
 tab_control.pack(fill='both', expand=1)
 
-ispindel_tab_gui = ISpindelTabGUI(tab_control, ispindel_parameters, database)
+ispindel_tab_gui = ISpindelTabGUI(tab_control, ispindel_parameters, database, mail)
 recipe_tab_gui = RecipeTabGUI(tab_control, recipe_parameters, ispindel_tab_gui, fermentation_parameters,
                               ispindel_parameters, database)
 brewery_tab__gui = BreweryTabGUI(tab_control, brewery_parameters)
