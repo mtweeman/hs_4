@@ -199,7 +199,6 @@ class GraphGUI(Frame):
             # Values only reloaded when load_columns executed as it can result in different set of columns
             if not self.cb_choice_3['values']:
                 self.load_columns()
-
         elif event.widget == self.cb_choice_3:
             x, y = self.database.get_column(self.cb_choice_1.get(), self.cb_choice_3.get())
             if not self.ax2:

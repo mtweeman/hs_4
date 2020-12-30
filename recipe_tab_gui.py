@@ -227,54 +227,82 @@ class RecipeTabGUI(Frame):
 
         # Creating text from recipe parameters (lists)
         for i, current_list in enumerate(self.recipe_parameters.lists):
-            if current_list:
-                for current_dict in current_list:
-                    if not texts[i]:
-                        for k in current_dict:
-                            texts[i][k] = k
-                    for k, v in current_dict.items():
-                        texts[i][k] += '\n' + str(v)
+            for current_dict in current_list:
+                if not texts[i]:
+                    for k in current_dict:
+                        texts[i][k] = k
+                for k, v in current_dict.items():
+                    texts[i][k] += '\n' + str(v)
 
         # Create text from recipe parameters (dictionary)
-        if self.recipe_parameters.parameters:
-            for k, v in self.recipe_parameters.parameters.items():
-                if k != 'recipe_name' and k != 'equipment_name' and k != 'mash_program':
-                    parameters_texts['NAME'] += '\n' + k
-                    parameters_texts['VALUE'] += '\n' + str(v)
+        for k, v in self.recipe_parameters.parameters.items():
+            if k != 'recipe_name' and k != 'equipment_name' and k != 'mash_program':
+                parameters_texts['NAME'] += '\n' + k
+                parameters_texts['VALUE'] += '\n' + str(v)
 
         # Adding texts to GUI objects
         self.l_recipe_name.config(text=self.recipe_parameters.parameters['recipe_name'])
 
         # f_miscs
-        self.l_miscs_name.config(text='Minerals & Boil additions')
-        self.l_misc_name.config(text=miscs_texts['NAME'])
-        self.l_misc_use.config(text=miscs_texts['USE'])
-        self.l_misc_amount.config(text=miscs_texts['AMOUNT'])
-        self.l_misc_time.config(text=miscs_texts['TIME'])
+        if miscs_texts:
+            self.l_miscs_name.config(text='Minerals & Boil additions')
+            self.l_misc_name.config(text=miscs_texts['NAME'])
+            self.l_misc_use.config(text=miscs_texts['USE'])
+            self.l_misc_amount.config(text=miscs_texts['AMOUNT'])
+            self.l_misc_time.config(text=miscs_texts['TIME'])
+        else:
+            self.l_miscs_name.config(text='')
+            self.l_misc_name.config(text='')
+            self.l_misc_use.config(text='')
+            self.l_misc_amount.config(text='')
+            self.l_misc_time.config(text='')
 
         # f_fermentables
-        self.l_fermentables_name.config(text='Grains: ' + str(self.recipe_parameters.parameters['GRAINS_WEIGHT']))
-        self.l_fermentable_name.config(text=fermentables_texts['NAME'])
-        self.l_fermentable_amount.config(text=fermentables_texts['AMOUNT'])
+        if fermentables_texts:
+            self.l_fermentables_name.config(text='Grains: ' + str(self.recipe_parameters.parameters['GRAINS_WEIGHT']))
+            self.l_fermentable_name.config(text=fermentables_texts['NAME'])
+            self.l_fermentable_amount.config(text=fermentables_texts['AMOUNT'])
+        else:
+            self.l_fermentables_name.config(text='')
+            self.l_fermentable_name.config(text='')
+            self.l_fermentable_amount.config(text='')
 
         # f_parameters
-        self.l_parameters_name.config(text='Parameters, equipment: ' +
-                                           self.recipe_parameters.parameters['equipment_name'])
-        self.l_parameter_name.config(text=parameters_texts['NAME'])
-        self.l_parameter_value.config(text=parameters_texts['VALUE'])
+        if parameters_texts:
+            self.l_parameters_name.config(text='Parameters, equipment: ' +
+                                               self.recipe_parameters.parameters['equipment_name'])
+            self.l_parameter_name.config(text=parameters_texts['NAME'])
+            self.l_parameter_value.config(text=parameters_texts['VALUE'])
+        else:
+            self.l_parameters_name.config(text='')
+            self.l_parameter_name.config(text='')
+            self.l_parameter_value.config(text='')
 
         # f_mash
-        self.l_mash_name.config(text='Mash program: ' + self.recipe_parameters.parameters['mash_program'])
-        self.l_mash_step_name.config(text=mash_texts['NAME'])
-        self.l_mash_step_time.config(text=mash_texts['STEP_TIME'])
-        self.l_mash_step_temp.config(text=mash_texts['STEP_TEMP'])
+        if mash_texts:
+            self.l_mash_name.config(text='Mash program: ' + self.recipe_parameters.parameters['mash_program'])
+            self.l_mash_step_name.config(text=mash_texts['NAME'])
+            self.l_mash_step_time.config(text=mash_texts['STEP_TIME'])
+            self.l_mash_step_temp.config(text=mash_texts['STEP_TEMP'])
+        else:
+            self.l_mash_name.config(text='')
+            self.l_mash_step_name.config(text='')
+            self.l_mash_step_time.config(text='')
+            self.l_mash_step_temp.config(text='')
 
         # f_hops
-        self.l_hops_name.config(text='Hops: ' + str(self.recipe_parameters.parameters['HOPS_WEIGHT']))
-        self.l_hop_name.config(text=hops_texts['NAME'])
-        self.l_hop_use.config(text=hops_texts['USE'])
-        self.l_hop_amount.config(text=hops_texts['AMOUNT'])
-        self.l_hop_time.config(text=hops_texts['TIME'])
+        if hops_texts:
+            self.l_hops_name.config(text='Hops: ' + str(self.recipe_parameters.parameters['HOPS_WEIGHT']))
+            self.l_hop_name.config(text=hops_texts['NAME'])
+            self.l_hop_use.config(text=hops_texts['USE'])
+            self.l_hop_amount.config(text=hops_texts['AMOUNT'])
+            self.l_hop_time.config(text=hops_texts['TIME'])
+        else:
+            self.l_hops_name.config(text='')
+            self.l_hop_name.config(text='')
+            self.l_hop_use.config(text='')
+            self.l_hop_amount.config(text='')
+            self.l_hop_time.config(text='')
 
         # Adding GUI objects to the grid
         self.f_miscs.grid(row=1, column=0, sticky=NSEW)

@@ -185,8 +185,6 @@ class FermentationTabGUI(Frame):
         self.fermentation_parameters.verify_parameters(key)
         self.update_toggles_and_buttons()
 
-        # only for visual purposes - no delay for toggle/button to switch
-        # otherwise it waits until function is finished
         self.c_fermentation.update_idletasks()
 
         # Updating database

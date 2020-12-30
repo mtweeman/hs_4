@@ -335,10 +335,9 @@ class Database:
 
         results = self.cursor.fetchall()
 
-        if results:
-            for result in results:
-                x.append(result[0])
-                y.append(result[1])
+        for result in results:
+            x.append(result[0])
+            y.append(result[1])
 
         self.terminate_connection()
 

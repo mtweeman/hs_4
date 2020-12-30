@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><RECIPES>
+<RECIPE>
+ <NAME>#097 Puste</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>All Grain</TYPE>
+ <BREWER></BREWER>
+ <ASST_BREWER></ASST_BREWER>
+ <EFFICIENCY>60.0000000</EFFICIENCY>
+ 
+ <DODANE>$dodane</DODANE>
+ <BATCH_SIZE>21.0000000</BATCH_SIZE>
+ <BOIL_TIME>60.0000000</BOIL_TIME>
+ <BOIL_SIZE>27.5833333</BOIL_SIZE>
+ <SPARGE_VOLUME>16.72 L</SPARGE_VOLUME>
+ <PRIMARY_TEMP>19.4444444</PRIMARY_TEMP>
+ <EVAP_RATE>1.8126888</EVAP_RATE>
+ <EQUIPMENT.TRUB_CHILLER_LOSS>5.0000000</EQUIPMENT.TRUB_CHILLER_LOSS>
+ <EQUIPMENT.LAUTER_DEADSPACE>0.0000000</EQUIPMENT.LAUTER_DEADSPACE>
+ <GRAIN_TEMP>22.2 C</GRAIN_TEMP>
+ <PRE_BOIL_OG>1.000 SG</PRE_BOIL_OG>
+ <EST_OG>1.000 SG</EST_OG>
+ <IBU>0.0 IBUs</IBU>
+ <EQUIPMENT.COOLING_LOSS_PCT>4.0000000</EQUIPMENT.COOLING_LOSS_PCT>
+ <EQUIPMENT.NAME>HS_3</EQUIPMENT.NAME>
+ <DODANE>$dodane</DODANE>
+
+ 
+ 
+ <MISCS>
+<MISC>
+ <NAME>Baker&#39;s Dry Yeast</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>YOS</USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>1000.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>0.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Brewtan B</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Fenton reactions</USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>500.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>100.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>L-ascorbic Acid</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Antioxident</USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>400.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>100.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Phosphoric Acid 75%</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Water Agent</USE_FOR>
+ <NOTES>Multiply ml by 1.6954 to get grams at 20*C
+Used to lower the pH of the mash without altering the water profile.  Lower pH mashes generally improves head retention, increases extraction rate.</NOTES>
+ <DISPLAY_AMOUNT>0.00 ml</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 ml</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>18.93 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Sodium Metabisulfite</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Other</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Preservative</USE_FOR>
+ <NOTES>Sodium metabisulfite can be used in the same method/quantity as potasium metabisulfite, but it adds sodium ions.  Also sold as Campden tablets. Some wine makers prefer to use sodium for cleaning and the potassium for late fermentation additions.</NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>500.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>0.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Sodium Metabisulfite</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Other</TYPE>
+ <USE></USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Preservative</USE_FOR>
+ <NOTES>Sodium metabisulfite can be used in the same method/quantity as potasium metabisulfite, but it adds sodium ions.  Also sold as Campden tablets. Some wine makers prefer to use sodium for cleaning and the potassium for late fermentation additions.</NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>500.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>0.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Baker&#39;s Dry Yeast</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE></USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>YOS</USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>1000.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>0.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Brewtan B</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE></USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Fenton reactions</USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>500.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>100.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>L-ascorbic Acid</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE></USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Antioxident</USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>400.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>100.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Phosphoric Acid 75%</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE></USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Water Agent</USE_FOR>
+ <NOTES>Multiply ml by 1.6954 to get grams at 20*C
+Used to lower the pH of the mash without altering the water profile.  Lower pH mashes generally improves head retention, increases extraction rate.</NOTES>
+ <DISPLAY_AMOUNT>0.00 ml</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 ml</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>18.93 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Brewtan B</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Boil</USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>7.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Fenton reactions</USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>500.00 g</INVENTORY>
+ <DISPLAY_TIME>7.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>100.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Whirlfloc Tablet</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Fining</TYPE>
+ <USE>Boil</USE>
+ <AMOUNT>0.001250</AMOUNT>
+ <TIME>5.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Clarity</USE_FOR>
+ <NOTES>Aids in clearing yeast and chill haze.  Easy to use tablet form.</NOTES>
+ <DISPLAY_AMOUNT>1.25 g</DISPLAY_AMOUNT>
+ <INVENTORY>31.25 g</INVENTORY>
+ <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>21.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>PVPP</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Fining</TYPE>
+ <USE>Boil</USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>3.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Trub</USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>95.28 g</INVENTORY>
+ <DISPLAY_TIME>3.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>100.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Zinc Sulfate Heptahydrate</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Primary</USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+ <USE_FOR></USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.00 ml</DISPLAY_AMOUNT>
+ <INVENTORY>50000.00 ml</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>20.00 L</BATCH_SIZE>
+</MISC>
+</MISCS>
+
+ 
+ 
+ <STYLE>
+ <NAME>American Pale Ale</NAME>
+ <VERSION>1</VERSION>
+ <CATEGORY>Pale American Ale</CATEGORY>
+ <CATEGORY_NUMBER>18</CATEGORY_NUMBER>
+ <STYLE_LETTER>B</STYLE_LETTER>
+ <STYLE_GUIDE>BJCP 2015</STYLE_GUIDE>
+ <TYPE>Ale</TYPE>
+ <OG_MIN>1.0450000</OG_MIN>
+ <OG_MAX>1.0600000</OG_MAX>
+ <FG_MIN>1.0100000</FG_MIN>
+ <FG_MAX>1.0150000</FG_MAX>
+ <IBU_MIN>30.0000000</IBU_MIN>
+ <IBU_MAX>50.0000000</IBU_MAX>
+ <COLOR_MIN>9.8500000</COLOR_MIN>
+ <COLOR_MAX>19.7000000</COLOR_MAX>
+ <CARB_MIN>2.3000000</CARB_MIN>
+ <CARB_MAX>3.0000000</CARB_MAX>
+ <ABV_MAX>6.2000000</ABV_MAX>
+ <ABV_MIN>4.5000000</ABV_MIN>
+ <NOTES>A pale, refreshing and hoppy ale, yet with sufficient supporting malt to make the beer balanced and drinkable. The clean hop presence can reflect classic or modern American or New World hop varieties with a wide range of characteristics. An average-strength hop-forward pale American craft beer, generally balanced to be more accessible than modern American IPAs. History: A modern American craft beer era adaptation of English pale ale, reflecting indigenous ingredients (hops, malt, yeast, and water). Prior to the explosion in popularity of IPAs, was traditionally the most well-known and popular of American craft beers. Style Comparison: Typically lighter in color, cleaner in fermentation by-products, and having less caramel flavors than English counterparts. There can be some overlap in color between American pale ale and American amber ale. The American pale ale will generally be cleaner, have a less caramelly malt profile, less body, and often more finishing hops. Less bitterness in the balance and alcohol strength than an American IPA. More balanced and drinkable, and less intensely hop-focused and bitter than session-strength American IPAs (aka Session IPAs).</NOTES>
+ <PROFILE>Aroma: Moderate to strong hop aroma from American or New World hop varieties with a wide range of possible characteristics, including citrus, floral, pine, resinous, spicy, tropical fruit, stone fruit, berry, or melon. None of these specific characteristics are required, but hops should be apparent. Low to moderate maltiness supports the hop presentation, and may optionally show small amounts of specialty malt character (bready, toasty, biscuit, caramelly). Fruity esters vary from moderate to none. Dry hopping (if used) may add grassy notes, although this character should not be excessive. Appearance: Pale golden to light amber. Moderately large white to off-white head with good retention. Generally quite clear, although dry-hopped versions may be slightly hazy. Flavor: Moderate to high hop flavor, typically showing an American or New World hop character (citrus, floral, pine, resinous, spicy, tropical fruit, stone fruit, berry, melon, etc.). Low to moderate clean grainy-malt character supports the hop presentation, and may optionally show small amounts of specialty malt character (bready, toasty, biscuity). The balance is typically towards the late hops and bitterness, but the malt presence should be supportive, not distracting. Caramel flavors are often absent or fairly restrained (but are acceptable as long as they don&#8217;t clash with the hops). Fruity yeast esters can be moderate to none, although many hop varieties are quite fruity. Moderate to high hop bitterness with a medium to dry finish. Hop flavor and bitterness often lingers into the finish, but the aftertaste should generally be clean and not harsh. Dry hopping (if used) may add grassy notes, although this character should not be excessive. Mouthfeel: Medium-light to medium body. Moderate to high carbonation. Overall smooth finish without astringency and harshness. Comments: New hop varieties and usage methods continue to be developed. Judges should allow for characteristics of modern hops in this style, as well as classic varieties. Becoming more of an international craft style, with local adaptations appearing in many countries with an emerging craft beer market. Hopping styles can vary from the classic large bitterness addition, to more modern late hop-bursted examples; all variations are allowable.</PROFILE>
+ <INGREDIENTS>Pale ale malt, typically North American two-row. American or New World hops, with a wide range of allowable characteristics. American or English ale yeast (neutral to lightly fruity). Specialty grains may add character and complexity, but generally make up a relatively small portion of the grist. Grains that add malt flavor and richness, light sweetness, and toasty or bready notes are often used (along with late hops) to differentiate brands.</INGREDIENTS>
+ <EXAMPLES>Ballast Point Grunion Pale Ale, Firestone Walker Pale 31, Great Lakes Burning River, Sierra Nevada Pale Ale, Stone Pale Ale, Tr&#246;egs Pale Ale</EXAMPLES>
+ <DISPLAY_OG_MIN>1.045 SG</DISPLAY_OG_MIN>
+ <DISPLAY_OG_MAX>1.060 SG</DISPLAY_OG_MAX>
+ <DISPLAY_FG_MIN>1.010 SG</DISPLAY_FG_MIN>
+ <DISPLAY_FG_MAX>1.015 SG</DISPLAY_FG_MAX>
+ <DISPLAY_COLOR_MIN>9.8 EBC</DISPLAY_COLOR_MIN>
+ <DISPLAY_COLOR_MAX>19.7 EBC</DISPLAY_COLOR_MAX>
+ <OG_RANGE>1,045-1,060 SG</OG_RANGE>
+ <FG_RANGE>1,010-1,015 SG</FG_RANGE>
+ <IBU_RANGE>30,0-50,0 IBUs</IBU_RANGE>
+ <CARB_RANGE>2,30-3,00 Vols</CARB_RANGE>
+ <COLOR_RANGE>9,8-19,7 EBC</COLOR_RANGE>
+ <ABV_RANGE>4,50-6,20 %</ABV_RANGE>
+</STYLE>
+
+ <EQUIPMENT>
+ <NAME>HS_3</NAME>
+ <VERSION>1</VERSION>
+ <BOIL_SIZE>27.5833333</BOIL_SIZE>
+ <BATCH_SIZE>21.0000000</BATCH_SIZE>
+ <TUN_VOLUME>49.9997118</TUN_VOLUME>
+ <TUN_WEIGHT>7.9499949</TUN_WEIGHT>
+ <TUN_SPECIFIC_HEAT>0.1200000</TUN_SPECIFIC_HEAT>
+ <TOP_UP_WATER>0.0000000</TOP_UP_WATER>
+ <TRUB_CHILLER_LOSS>5.0000000</TRUB_CHILLER_LOSS>
+ <EVAP_RATE>1.8126888</EVAP_RATE>
+ <BOIL_TIME>60.0000000</BOIL_TIME>
+ <CALC_BOIL_VOLUME>TRUE</CALC_BOIL_VOLUME>
+ <LAUTER_DEADSPACE>0.0000000</LAUTER_DEADSPACE>
+ <TOP_UP_KETTLE>0.0000000</TOP_UP_KETTLE>
+ <HOP_UTILIZATION>90.0000000</HOP_UTILIZATION>
+ <COOLING_LOSS_PCT>4.0000000</COOLING_LOSS_PCT>
+ <NOTES></NOTES>
+ <DISPLAY_BOIL_SIZE>27.58 L</DISPLAY_BOIL_SIZE>
+ <DISPLAY_BATCH_SIZE>21.00 L</DISPLAY_BATCH_SIZE>
+ <DISPLAY_TUN_VOLUME>50.00 L</DISPLAY_TUN_VOLUME>
+ <DISPLAY_TUN_WEIGHT>7.95 kg</DISPLAY_TUN_WEIGHT>
+ <DISPLAY_TOP_UP_WATER>0.00 L</DISPLAY_TOP_UP_WATER>
+ <DISPLAY_TRUB_CHILLER_LOSS>5.00 L</DISPLAY_TRUB_CHILLER_LOSS>
+ <DISPLAY_LAUTER_DEADSPACE>0.00 L</DISPLAY_LAUTER_DEADSPACE>
+ <DISPLAY_TOP_UP_KETTLE>0.00 L</DISPLAY_TOP_UP_KETTLE>
+</EQUIPMENT>
+
+ <MASH>
+ <NAME>Hochkurz Mash</NAME>
+ <VERSION>1</VERSION>
+ <GRAIN_TEMP>22.2000000</GRAIN_TEMP>
+ <TUN_TEMP>22.2000000</TUN_TEMP>
+ <SPARGE_TEMP>75.6000000</SPARGE_TEMP>
+ <PH>5.4000000</PH>
+ <TUN_WEIGHT>280.4280456</TUN_WEIGHT>
+ <TUN_SPECIFIC_HEAT>0.1200000</TUN_SPECIFIC_HEAT>
+ <EQUIP_ADJUST>TRUE</EQUIP_ADJUST>
+ <NOTES>Simple single infusion mash for use with most modern well modified grains (about 95% of the time).</NOTES>
+ <DISPLAY_GRAIN_TEMP>22.2 C</DISPLAY_GRAIN_TEMP>
+ <DISPLAY_TUN_TEMP>22.2 C</DISPLAY_TUN_TEMP>
+ <DISPLAY_SPARGE_TEMP>75.6 C</DISPLAY_SPARGE_TEMP>
+ <DISPLAY_TUN_WEIGHT>7.95 kg</DISPLAY_TUN_WEIGHT>
+<MASH_STEPS>
+<MASH_STEP>
+ <NAME>Mash In</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Infusion</TYPE>
+ <INFUSE_AMOUNT>13.3481624</INFUSE_AMOUNT>
+ <STEP_TIME>0.0000000</STEP_TIME>
+ <STEP_TEMP>55.0000000</STEP_TEMP>
+ <RAMP_TIME>0.0000000</RAMP_TIME>
+ <END_TEMP>55.0000000</END_TEMP>
+ <DESCRIPTION>Add 16,01 L of water at 59,9 C</DESCRIPTION>
+ <WATER_GRAIN_RATIO>2,600 l/kg</WATER_GRAIN_RATIO>
+ <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
+ <INFUSE_TEMP>59.9 C</INFUSE_TEMP>
+ <DISPLAY_STEP_TEMP>55.0 C</DISPLAY_STEP_TEMP>
+ <DISPLAY_INFUSE_AMT>16.01 L</DISPLAY_INFUSE_AMT>
+</MASH_STEP>
+<MASH_STEP>
+ <NAME>Beta 1</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Temperature</TYPE>
+ <INFUSE_AMOUNT>0.0000000</INFUSE_AMOUNT>
+ <STEP_TIME>30.0000000</STEP_TIME>
+ <STEP_TEMP>62.0000000</STEP_TEMP>
+ <RAMP_TIME>4.0000000</RAMP_TIME>
+ <END_TEMP>62.0000000</END_TEMP>
+ <DESCRIPTION>Heat to 62,0 C over 4 min</DESCRIPTION>
+ <WATER_GRAIN_RATIO>3,118 l/kg</WATER_GRAIN_RATIO>
+ <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
+ <INFUSE_TEMP>62.0 C</INFUSE_TEMP>
+ <DISPLAY_STEP_TEMP>62.0 C</DISPLAY_STEP_TEMP>
+ <DISPLAY_INFUSE_AMT>0.00 L</DISPLAY_INFUSE_AMT>
+</MASH_STEP>
+<MASH_STEP>
+ <NAME>Beta 2</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Temperature</TYPE>
+ <INFUSE_AMOUNT>0.0000000</INFUSE_AMOUNT>
+ <STEP_TIME>30.0000000</STEP_TIME>
+ <STEP_TEMP>64.0000000</STEP_TEMP>
+ <RAMP_TIME>4.0000000</RAMP_TIME>
+ <END_TEMP>64.0000000</END_TEMP>
+ <DESCRIPTION>Heat to 64,0 C over 4 min</DESCRIPTION>
+ <WATER_GRAIN_RATIO>3,118 l/kg</WATER_GRAIN_RATIO>
+ <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
+ <INFUSE_TEMP>64.0 C</INFUSE_TEMP>
+ <DISPLAY_STEP_TEMP>64.0 C</DISPLAY_STEP_TEMP>
+ <DISPLAY_INFUSE_AMT>0.00 L</DISPLAY_INFUSE_AMT>
+</MASH_STEP>
+<MASH_STEP>
+ <NAME>Beta 3</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Temperature</TYPE>
+ <INFUSE_AMOUNT>0.0000000</INFUSE_AMOUNT>
+ <STEP_TIME>10.0000000</STEP_TIME>
+ <STEP_TEMP>67.0000000</STEP_TEMP>
+ <RAMP_TIME>4.0000000</RAMP_TIME>
+ <END_TEMP>67.0000000</END_TEMP>
+ <DESCRIPTION>Heat to 67,0 C over 4 min</DESCRIPTION>
+ <WATER_GRAIN_RATIO>3,118 l/kg</WATER_GRAIN_RATIO>
+ <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
+ <INFUSE_TEMP>67.0 C</INFUSE_TEMP>
+ <DISPLAY_STEP_TEMP>67.0 C</DISPLAY_STEP_TEMP>
+ <DISPLAY_INFUSE_AMT>0.00 L</DISPLAY_INFUSE_AMT>
+</MASH_STEP>
+<MASH_STEP>
+ <NAME>Alpha</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Temperature</TYPE>
+ <INFUSE_AMOUNT>0.0000000</INFUSE_AMOUNT>
+ <STEP_TIME>30.0000000</STEP_TIME>
+ <STEP_TEMP>72.0000000</STEP_TEMP>
+ <RAMP_TIME>4.0000000</RAMP_TIME>
+ <END_TEMP>72.0000000</END_TEMP>
+ <DESCRIPTION>Heat to 72,0 C over 4 min</DESCRIPTION>
+ <WATER_GRAIN_RATIO>3,118 l/kg</WATER_GRAIN_RATIO>
+ <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
+ <INFUSE_TEMP>72.0 C</INFUSE_TEMP>
+ <DISPLAY_STEP_TEMP>72.0 C</DISPLAY_STEP_TEMP>
+ <DISPLAY_INFUSE_AMT>0.00 L</DISPLAY_INFUSE_AMT>
+</MASH_STEP>
+<MASH_STEP>
+ <NAME>Mash Out</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Temperature</TYPE>
+ <INFUSE_AMOUNT>0.0000000</INFUSE_AMOUNT>
+ <STEP_TIME>10.0000000</STEP_TIME>
+ <STEP_TEMP>76.0000000</STEP_TEMP>
+ <RAMP_TIME>4.0000000</RAMP_TIME>
+ <END_TEMP>76.0000000</END_TEMP>
+ <DESCRIPTION>Heat to 76,0 C over 4 min</DESCRIPTION>
+ <WATER_GRAIN_RATIO>3,118 l/kg</WATER_GRAIN_RATIO>
+ <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
+ <INFUSE_TEMP>76.0 C</INFUSE_TEMP>
+ <DISPLAY_STEP_TEMP>76.0 C</DISPLAY_STEP_TEMP>
+ <DISPLAY_INFUSE_AMT>0.00 L</DISPLAY_INFUSE_AMT>
+</MASH_STEP>
+</MASH_STEPS>
+
+</MASH>
+
+ <NOTES>YOS</NOTES>
+ <TASTE_NOTES></TASTE_NOTES>
+ <TASTE_RATING>30.0000000</TASTE_RATING>
+ <OG>1.0459998</OG>
+ <FG>1.0100000</FG>
+ <CARBONATION>2.5000000</CARBONATION>
+ <FERMENTATION_STAGES>2</FERMENTATION_STAGES>
+ <PRIMARY_AGE>4.0000000</PRIMARY_AGE>
+ <PRIMARY_TEMP>19.4444444</PRIMARY_TEMP>
+ <SECONDARY_AGE>10.0000000</SECONDARY_AGE>
+ <SECONDARY_TEMP>19.4444444</SECONDARY_TEMP>
+ <TERTIARY_AGE>7.0000000</TERTIARY_AGE>
+ <AGE>30.0000000</AGE>
+ <AGE_TEMP>18.3333333</AGE_TEMP>
+ <CARBONATION_USED>Bottle with 121,65 g Table Sugar</CARBONATION_USED>
+ <FORCED_CARBONATION>TRUE</FORCED_CARBONATION>
+ <PRIMING_SUGAR_NAME>Table Sugar</PRIMING_SUGAR_NAME>
+ <PRIMING_SUGAR_EQUIV>0.9099181</PRIMING_SUGAR_EQUIV>
+ <KEG_PRIMING_FACTOR>0.5000000</KEG_PRIMING_FACTOR>
+ <CARBONATION_TEMP>21.1111111</CARBONATION_TEMP>
+ <DISPLAY_CARB_TEMP>21.1 C</DISPLAY_CARB_TEMP>
+ <DATE>04 Aug 2018</DATE>
+ <EST_OG>1.000 SG</EST_OG>
+ <EST_FG>1.000 SG</EST_FG>
+ <EST_COLOR>0.0 EBC</EST_COLOR>
+ <IBU>0.0 IBUs</IBU>
+ <IBU_METHOD>Rager</IBU_METHOD>
+ <EST_ABV>0.0 %</EST_ABV>
+ <ABV>4.7 %</ABV>
+ <ACTUAL_EFFICIENCY>0.0 %</ACTUAL_EFFICIENCY>
+ <CALORIES>427.1 kcal/l</CALORIES>
+ <DISPLAY_BATCH_SIZE>21.00 L</DISPLAY_BATCH_SIZE>
+ <DISPLAY_BOIL_SIZE>27.58 L</DISPLAY_BOIL_SIZE>
+ <DISPLAY_OG>1.046 SG</DISPLAY_OG>
+ <DISPLAY_FG>1.010 SG</DISPLAY_FG>
+ <DISPLAY_PRIMARY_TEMP>19.4 C</DISPLAY_PRIMARY_TEMP>
+ <DISPLAY_SECONDARY_TEMP>19.4 C</DISPLAY_SECONDARY_TEMP>
+ <DISPLAY_TERTIARY_TEMP>18.3 C</DISPLAY_TERTIARY_TEMP>
+ <DISPLAY_AGE_TEMP>18.3 C</DISPLAY_AGE_TEMP>
+</RECIPE>
+</RECIPES>

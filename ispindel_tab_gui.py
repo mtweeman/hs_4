@@ -260,24 +260,6 @@ class ISpindelTabGUI(Frame):
         if 'interval' in socket_message:
             self.ispindel_parameters.parameters['interval'] = socket_message['interval']
 
-        # Getting temperature_offset for iSpindel
-        temperature_offset = self.database.get_ispindel_settings_temperature_offset(self.parameters_values['name'])
-
-        if temperature_offset:
-            self.e_temperature_offset.delete(0, END)
-            self.e_temperature_offset.insert(0, temperature_offset)
-            self.e_temperature_offset.config(fg='#000000')
-
-        # Setting battery_notification for iSpindel
-        battery_notification = self.database.get_ispindel_settings_battery_notification(self.parameters_values['name'])
-        battery_min_voltage = 4.2
-
-        if socket_message['battery'] <= battery_min_voltage and not battery_notification:
-            self.database.execute_ispindel_settings_battery_notification(self.parameters_values['name'], True)
-            self.mail.battery_notification(self.parameters_values['name'], battery_min_voltage)
-        elif socket_message['battery'] > battery_min_voltage and battery_notification:
-            self.database.execute_ispindel_settings_battery_notification(self.parameters_values['name'], False)
-
         # Printing socket data on the screen
         for i, parameter_value_tuple in enumerate(self.parameters_values.items()):
             if parameter_value_tuple[0] == 'rssi':
@@ -292,12 +274,33 @@ class ISpindelTabGUI(Frame):
                 self.l_parameters_values[i].config(text=parameter_value_tuple[1])
 
         # Coloring battery information in red if battery voltage is low
+        battery_min_voltage = 4.1
+
         if socket_message['battery'] <= battery_min_voltage:
             self.l_parameters_names[list(self.parameters_values).index('battery')].config(fg='red')
             self.l_parameters_values[list(self.parameters_values).index('battery')].config(fg='red')
         else:
             self.l_parameters_names[list(self.parameters_values).index('battery')].config(fg='black')
             self.l_parameters_values[list(self.parameters_values).index('battery')].config(fg='black')
+
+        self.update_idletasks()
+
+        # Getting temperature_offset for iSpindel
+        temperature_offset = self.database.get_ispindel_settings_temperature_offset(self.parameters_values['name'])
+
+        if temperature_offset:
+            self.e_temperature_offset.delete(0, END)
+            self.e_temperature_offset.insert(0, temperature_offset)
+            self.e_temperature_offset.config(fg='#000000')
+
+        # Setting battery_notification for iSpindel
+        battery_notification = self.database.get_ispindel_settings_battery_notification(self.parameters_values['name'])
+
+        if socket_message['battery'] <= battery_min_voltage and not battery_notification:
+            self.database.execute_ispindel_settings_battery_notification(self.parameters_values['name'], True)
+            self.mail.battery_notification(self.parameters_values['name'], battery_min_voltage)
+        elif socket_message['battery'] > battery_min_voltage and battery_notification:
+            self.database.execute_ispindel_settings_battery_notification(self.parameters_values['name'], False)
 
         self.l_status.config(text='Waiting for data acquisition')
 
