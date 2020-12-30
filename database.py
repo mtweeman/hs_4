@@ -83,6 +83,39 @@ class Database:
 
         self.terminate_connection()
 
+    def get_ispindel_settings_battery_notification(self, ispindel_name):
+        self.establish_connection()
+
+        # Prepare query
+        self.query = ("""SELECT battery_notification """ +
+                      """FROM iSpindel_settings """ +
+                      """WHERE name=?;""")
+
+        if self.cursor.tables(table='iSpindel_settings', tableType='TABLE').fetchone():
+            self.cursor.execute(self.query, ispindel_name)
+
+        battery_notification = self.cursor.fetchone()
+
+        self.terminate_connection()
+
+        if battery_notification:
+            return battery_notification[0]
+        else:
+            return None
+
+    def execute_ispindel_settings_battery_notification(self, ispindel_name, battery_notification):
+        self.establish_connection()
+
+        # Prepare query
+        self.query = ("""UPDATE iSpindel_settings """ +
+                      """SET battery_notification=? """
+                      """WHERE name=?;""")
+
+        if self.cursor.tables(table='iSpindel_settings', tableType='TABLE').fetchone():
+            self.cursor.execute(self.query, battery_notification, ispindel_name)
+
+        self.terminate_connection()
+
     def get_ispindel_settings_temperature_offset(self, ispindel_name):
         self.establish_connection()
 
