@@ -21,7 +21,9 @@ class BreweryParameters:
             next(reader)
 
             for row in reader:
-                if row[0] != 'rect':
+                # rect for background image dimension
+                # _cam for cameras only (separate _sightglass parameter for on/off)
+                if row[0] != 'rect' and '_cam' not in row[0]:
                     self.parameters[row[0]] = False
 
     def verify_parameters(self, key):

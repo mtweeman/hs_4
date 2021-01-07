@@ -73,3 +73,21 @@ TWINX + TOOLBAR WITH TWO Y AXES
 https://stackoverflow.com/questions/21583965/matplotlib-cursor-value-with-two-axes
 
 https://stackoverflow.com/questions/38258890/matplotlib-how-to-adjust-navigation-and-cursor-display
+
+CAMERA:
+
+https://stackoverflow.com/questions/49978705/access-ip-camera-in-python-opencv
+
+https://pythonpedia.com/en/knowledge-base/49978705/access-ip-camera-in-python-opencv
+
+https://towardsdatascience.com/video-streaming-in-web-browsers-with-opencv-flask-93a38846fe00
+
+https://www.reddit.com/r/networking/comments/7yyjro/v380_ip_camera_rtsp_stream_issue/
+
+https://ipcamtalk.com/threads/how-to-access-v380-video-feed-on-a-web-browser.35661/page-2
+
+https://cyberlinksecurity.ie/vulnerabilities-to-exploit-a-chinese-ip-camera/
+
+http://www.python-exemplary.com/index_en.php?inhalt_links=navigation_en.inc.php&inhalt_mitte=raspi/en/communication.inc.php
+
+
