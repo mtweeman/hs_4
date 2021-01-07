@@ -73,13 +73,13 @@ class BreweryTabGUI(Frame):
 
         for k, v in self.brewery_parameters.parameters.items():
             if '_sightglass' in k:
-                self.i_cams[k + '_cam'] = (self.brewery_coords[k + '_cam'][0] / self.brewery_rect[0],
-                                           self.brewery_coords[k + '_cam'][1] / self.brewery_rect[1],
-                                           2 * abs(self.brewery_coords[k + '_cam'][0] -
-                                                   self.brewery_coords[k + '_size'][0]) /self.brewery_rect[0],
-                                           2 * abs(self.brewery_coords[k + '_cam'][1] -
-                                                   self.brewery_coords[k + '_size'][1]) / self.brewery_rect[1],
-                                           )
+                self.i_cams[k + '_size'] = (self.brewery_coords[k + '_cam'][0] / self.brewery_rect[0],
+                                            self.brewery_coords[k + '_cam'][1] / self.brewery_rect[1],
+                                            2 * abs(self.brewery_coords[k + '_cam'][0] -
+                                                    self.brewery_coords[k + '_size'][0]) / self.brewery_rect[0],
+                                            2 * abs(self.brewery_coords[k + '_cam'][1] -
+                                                    self.brewery_coords[k + '_size'][1]) / self.brewery_rect[1],
+                                            )
 
         # Adding GUI objects to the grid
         self.c_brewery.place(relwidth=1, relheight=1)
@@ -141,14 +141,10 @@ class BreweryTabGUI(Frame):
     def execute_action(self, key):
         if '_sightglass' in key:
             if self.brewery_parameters.parameters[key]:
-                self.f_cams[key + '_cam'].place(relx=self.brewery_coords[key + '_cam'][0] / self.brewery_rect[0],
-                                                rely=self.brewery_coords[key + '_cam'][1] / self.brewery_rect[1],
-                                                relwidth=2 * abs(self.brewery_coords[key + '_cam'][0] -
-                                                                 self.brewery_coords[key + '_size'][0]) /
-                                                         self.brewery_rect[0],
-                                                relheight=2 * abs(self.brewery_coords[key + '_cam'][1] -
-                                                                  self.brewery_coords[key + '_size'][1]) /
-                                                          self.brewery_rect[1],
+                self.f_cams[key + '_cam'].place(relx=self.i_cams[key + '_size'][0],
+                                                rely=self.i_cams[key + '_size'][1],
+                                                relwidth=self.i_cams[key + '_size'][2],
+                                                relheight=self.i_cams[key + '_size'][3],
                                                 anchor=CENTER)
             else:
                 self.f_cams[key + '_cam'].place_forget()

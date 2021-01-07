@@ -105,5 +105,5 @@ tab_control.bind('<ButtonRelease-1>', add_graph_to_graph_tab_gui)
 
 socket_thread = SocketThread(ispindel_tab_gui, fermentation_tab_gui)
 camera_thread = Camera(brewery_tab_gui.f_cams['mlt_sightglass_cam'],
-                       brewery_tab_gui.i_cams['mlt_sightglass_cam'])
+                       brewery_tab_gui.i_cams['mlt_sightglass_size'])
 root.mainloop()
