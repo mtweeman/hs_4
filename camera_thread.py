@@ -10,16 +10,13 @@ import cv2
 
 
 class Camera(Frame, threading.Thread):
-    def __init__(self, camera_frame):
-        Frame.__init__(self, camera_frame)
+    def __init__(self, camera_frame, camera_size):
+        Frame.__init__(self, camera_frame, )
         threading.Thread.__init__(self, daemon=True)
         self.camera_frame = camera_frame
-        self.width_normal = 99
-        self.height_normal = 176
+        self.camera_size = camera_size
         self.width_zoom = None
         self.height_zoom = None
-        self.width = self.width_normal
-        self.height = self.height_normal
         self.zoom = False
         self.cam = cv2.VideoCapture('rtsp://admin:123456a@192.168.0.103:554/live/ch00_1')
 
@@ -36,12 +33,20 @@ class Camera(Frame, threading.Thread):
 
     def resize_image(self, event):
         if self.zoom:
-            self.width = self.width_normal
-            self.height = self.height_normal
+            self.camera_frame.place_forget()
+            self.camera_frame.place(relx=self.camera_size[0],
+                                    rely=self.camera_size[1],
+                                    relwidth=self.camera_size[2],
+                                    relheight=self.camera_size[3],
+                                    anchor=CENTER)
             self.zoom = False
         else:
-            self.width = self.width_zoom
-            self.height = self.height_zoom
+            self.camera_frame.place_forget()
+            self.camera_frame.place(relx=self.camera_size[0],
+                                    rely=self.camera_size[1],
+                                    width=self.width_zoom,
+                                    height=self.height_zoom,
+                                    anchor=CENTER)
             self.zoom = True
 
     def show_frame(self):
@@ -55,12 +60,12 @@ class Camera(Frame, threading.Thread):
             img_cv2 = cv2.cvtColor(rot, cv2.COLOR_BGR2RGBA)
             self.img_cam = Image.fromarray(img_cv2)
 
-            # Setting zoomed picture size if not set
+            # Setting normal picture size if not set
             if not self.width_zoom and not self.height_zoom:
                 self.width_zoom = self.img_cam.width
                 self.height_zoom = self.img_cam.height
 
-            self.img_cam = self.img_cam.resize((self.width, self.height))
+            self.img_cam = self.img_cam.resize((self.camera_frame.winfo_width(), self.camera_frame.winfo_height()))
             self.img_l_cam = ImageTk.PhotoImage(image=self.img_cam)
             self.l_cam.img_l_cam = self.img_l_cam
             self.l_cam.config(image=self.img_l_cam)

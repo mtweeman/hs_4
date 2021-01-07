@@ -54,6 +54,7 @@ class BreweryTabGUI(Frame):
         # c_brewery
         self.c_items = {}  # buttons
         self.f_cams = {}  # frames for cams
+        self.i_cams = {}  # sizes for cams
         self.cams = {}
         self.c_background = self.c_brewery.create_image(0, 0, anchor=N + W, image=self.img_c_brewery)
 
@@ -61,12 +62,24 @@ class BreweryTabGUI(Frame):
             if '_cam' in k:
                 # frames for cams
                 self.f_cams[k] = Frame(self)
+            elif '_size' in k:
+                pass
             else:
                 # buttons
                 self.c_items[k] = self.c_brewery.create_image(
                     int(round(self.w_scale * self.img_brewery.width * (v[0] / self.brewery_rect[0]), 0)),
                     int(round(self.h_scale * self.img_brewery.height * (v[1] / self.brewery_rect[1]), 0)),
                     anchor=CENTER, image=self.img_c_button_off)
+
+        for k, v in self.brewery_parameters.parameters.items():
+            if '_sightglass' in k:
+                self.i_cams[k + '_cam'] = (self.brewery_coords[k + '_cam'][0] / self.brewery_rect[0],
+                                           self.brewery_coords[k + '_cam'][1] / self.brewery_rect[1],
+                                           2 * abs(self.brewery_coords[k + '_cam'][0] -
+                                                   self.brewery_coords[k + '_size'][0]) /self.brewery_rect[0],
+                                           2 * abs(self.brewery_coords[k + '_cam'][1] -
+                                                   self.brewery_coords[k + '_size'][1]) / self.brewery_rect[1],
+                                           )
 
         # Adding GUI objects to the grid
         self.c_brewery.place(relwidth=1, relheight=1)
@@ -75,7 +88,7 @@ class BreweryTabGUI(Frame):
         self.c_brewery.bind('<Configure>', self.resize_image)
 
         for k in self.brewery_coords:
-            if '_cam' not in k:
+            if '_cam' not in k and '_size' not in k:
                 self.c_brewery.tag_bind(self.c_items[k], '<Button-1>', lambda event, key=k: self.button_switch(key))
 
     def resize_image(self, event):
@@ -106,7 +119,7 @@ class BreweryTabGUI(Frame):
 
         # Updating coordinates of GUI objects
         for k, v in self.brewery_coords.items():
-            if '_cam' not in k:
+            if '_cam' not in k and '_size' not in k:
                 self.c_brewery.coords(self.c_items[k],
                                       int(round(self.w_scale * self.img_brewery.width *
                                                 (v[0] / self.brewery_rect[0]), 0)),
@@ -130,6 +143,12 @@ class BreweryTabGUI(Frame):
             if self.brewery_parameters.parameters[key]:
                 self.f_cams[key + '_cam'].place(relx=self.brewery_coords[key + '_cam'][0] / self.brewery_rect[0],
                                                 rely=self.brewery_coords[key + '_cam'][1] / self.brewery_rect[1],
+                                                relwidth=2 * abs(self.brewery_coords[key + '_cam'][0] -
+                                                                 self.brewery_coords[key + '_size'][0]) /
+                                                         self.brewery_rect[0],
+                                                relheight=2 * abs(self.brewery_coords[key + '_cam'][1] -
+                                                                  self.brewery_coords[key + '_size'][1]) /
+                                                          self.brewery_rect[1],
                                                 anchor=CENTER)
             else:
                 self.f_cams[key + '_cam'].place_forget()
