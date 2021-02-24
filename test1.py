@@ -1,33 +1,27 @@
-#!python3
+from tkinter import *
+from test import thr
+from queue import Queue
 
-import tkinter as tk
-import time
+def gui(event):
+    if not queue.empty():
+        queue.get()
 
-class Splash(tk.Toplevel):
-    def __init__(self, parent):
-        tk.Toplevel.__init__(self, parent)
-        self.title("Splash")
+def err(event):
+    if not queue.empty():
+        queue.get()
 
-        ## required to make window show before the program gets to the mainloop
-        self.update()
+def watek(label, queue):
+    thread = thr(label, queue)
+    print('watek')
 
-class App(tk.Tk):
-    def __init__(self):
-        tk.Tk.__init__(self)
-        self.withdraw()
-        splash = Splash(self)
+root = Tk()
+queue = Queue()
+l = Label(root, text='NA')
+b = Button(root, text='przycisk')
+l.grid(row=0, column=0)
+b.grid(row=1, column=0)
+l.bind('<<GUIUpdate>>', gui)
+l.bind('<<GUIError>>', err)
+b.bind('<Button-1>', lambda event, label=l: watek(label, queue))
 
-        ## setup stuff goes here
-        self.title("Main Window")
-        ## simulate a delay while loading
-        time.sleep(6)
-
-        ## finished loading so destroy splash
-        splash.destroy()
-
-        ## show window again
-        self.deiconify()
-
-if __name__ == "__main__":
-    app = App()
-    app.mainloop()
+root.mainloop()

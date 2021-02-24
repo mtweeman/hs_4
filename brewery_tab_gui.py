@@ -1,13 +1,16 @@
 # Standard libraries
 from tkinter import *
 import csv
+from queue import Queue
+import threading
+import datetime
 
 # Imported libraries
 from PIL import Image, ImageTk
 
 # My libraries
-# from camera_gui import Camera
-from camera_thread import Camera
+# from camera_thread import Camera
+from camera_thread_test import Camera
 
 
 class BreweryTabGUI(Frame):
@@ -17,8 +20,9 @@ class BreweryTabGUI(Frame):
         super().__init__(tab_control)
         self.name = 'Brewery'
         self.brewery_parameters = brewery_parameters
-        self.w_scale = 1.0
-        self.h_scale = 1.0
+        self.w_scale = 1
+        self.h_scale = 1
+        self.queue = Queue()
 
         # Images for labels
         self.img_brewery = Image.open('images/test7.bmp')
@@ -54,14 +58,21 @@ class BreweryTabGUI(Frame):
         # c_brewery
         self.c_items = {}  # buttons
         self.f_cams = {}  # frames for cams
+        self.l_cams = {}  # labels for cams
         self.i_cams = {}  # sizes for cams
+        self.b_cams = {}  # zoom for cams
         self.cams = {}
+        self.img_cams = {}
+        self.img_l_cams = {}
         self.c_background = self.c_brewery.create_image(0, 0, anchor=N + W, image=self.img_c_brewery)
 
         for k, v in self.brewery_coords.items():
             if '_cam' in k:
-                # frames for cams
+                # frames and labels for cams
                 self.f_cams[k] = Frame(self)
+                self.l_cams[k] = Label(self.f_cams[k], font=(None, 14), text='NA')
+                # print(id(self.l_cams[k]))
+                self.b_cams[k] = False
             elif '_size' in k:
                 pass
             else:
@@ -88,8 +99,45 @@ class BreweryTabGUI(Frame):
         self.c_brewery.bind('<Configure>', self.resize_image)
 
         for k in self.brewery_coords:
-            if '_cam' not in k and '_size' not in k:
+            if '_cam' in k:
+                self.l_cams[k].bind('<<MessageGenerated>>', lambda event, key=k: self.video_refresh(key))
+                self.l_cams[k].bind('<Button-1>', lambda event, key=k: self.video_zoom(key))
+            elif '_size' in k:
+                pass
+            else:
                 self.c_brewery.tag_bind(self.c_items[k], '<Button-1>', lambda event, key=k: self.button_switch(key))
+
+    def video_zoom(self, key):
+        if self.b_cams[key]:
+            self.f_cams[key].place_forget()
+            self.f_cams[key].place(relx=self.i_cams[key.replace('_cam', '_size')][0],
+                                   rely=self.i_cams[key.replace('_cam', '_size')][1],
+                                   relwidth=self.i_cams[key.replace('_cam', '_size')][2],
+                                   relheight=self.i_cams[key.replace('_cam', '_size')][3],
+                                   anchor=CENTER)
+            self.b_cams[key] = False
+        else:
+            self.f_cams[key].place_forget()
+            self.f_cams[key].place(relx=self.i_cams[key.replace('_cam', '_size')][0],
+                                   rely=self.i_cams[key.replace('_cam', '_size')][1],
+                                   width=self.image.width,
+                                   height=self.image.height,
+                                   anchor=CENTER)
+            self.b_cams[key] = True
+
+    def video_refresh(self, key):
+        # print('refresh')
+        if not self.queue.empty():
+            self.image = self.queue.get()
+            # print(self.image)
+            if not isinstance(self.image, str):
+                self.img_cams[key] = self.image.resize((self.f_cams[key].winfo_width(),
+                                                                self.f_cams[key].winfo_height()))
+                self.img_l_cams[key] = ImageTk.PhotoImage(image=self.img_cams[key])
+                self.l_cams[key].config(image=self.img_l_cams[key])
+            else:
+                self.l_cams[key].config(text=self.image)
+
 
     def resize_image(self, event):
         # Getting scale
@@ -141,10 +189,19 @@ class BreweryTabGUI(Frame):
     def execute_action(self, key):
         if '_sightglass' in key:
             if self.brewery_parameters.parameters[key]:
+                self.l_cams[key + '_cam'].pack(fill=BOTH, expand=1)
                 self.f_cams[key + '_cam'].place(relx=self.i_cams[key + '_size'][0],
                                                 rely=self.i_cams[key + '_size'][1],
                                                 relwidth=self.i_cams[key + '_size'][2],
                                                 relheight=self.i_cams[key + '_size'][3],
                                                 anchor=CENTER)
+                print(datetime.datetime.now())
+                self.cams[key + '_cam'] = Camera(self.queue, self.l_cams[key + '_cam'],
+                                                 self.brewery_parameters.parameters,
+                                                 key,
+                                                 )
+                print(self.cams[key + '_cam'])
+                print(datetime.datetime.now())
             else:
                 self.f_cams[key + '_cam'].place_forget()
+                self.cams[key + '_cam'] = None

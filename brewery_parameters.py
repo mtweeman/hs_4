@@ -28,4 +28,8 @@ class BreweryParameters:
 
     def verify_parameters(self, key):
         # Check if set of parameters is allowed
-        self.parameters[key] = not self.parameters[key]
+        # self.parameters[key] = not self.parameters[key]
+        if self.parameters[key]:
+            self.parameters[key] = False
+        else:
+            self.parameters[key] = True

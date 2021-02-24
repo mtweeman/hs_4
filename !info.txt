@@ -90,4 +90,15 @@ https://cyberlinksecurity.ie/vulnerabilities-to-exploit-a-chinese-ip-camera/
 
 http://www.python-exemplary.com/index_en.php?inhalt_links=navigation_en.inc.php&inhalt_mitte=raspi/en/communication.inc.php
 
+https://docs.opencv.org/2.4/modules/highgui/doc/reading_and_writing_images_and_video.html
 
+https://stackoverflow.com/questions/52583911/create-a-gui-that-can-turn-on-off-camera-images-using-python-3-and-tkinter
+
+MAIL + SAFETY
+
+https://developers.google.com/gmail/api/quickstart/python?authuser=1
+
+https://stackoverflow.com/questions/25944883/how-to-send-an-email-through-gmail-without-enabling-insecure-access
+
+Tego używam:
+https://stackoverflow.com/questions/37201250/sending-email-via-gmail-python

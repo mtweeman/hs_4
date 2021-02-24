@@ -1,5 +1,6 @@
 # Standard libraries
 import os
+import datetime
 
 # Imported libraries
 import pyodbc as db
@@ -28,7 +29,7 @@ class Database:
 
         fermentation = str(batch_number) + '_Ferm'
 
-        # Prepare query for table creation
+        # Preparing query for table creation
         self.query = ("""CREATE TABLE """ + fermentation +
                       """(id AUTOINCREMENT PRIMARY KEY NOT NULL,""" +
                       """measurement_time DATETIME NOT NULL,""" +
@@ -38,11 +39,11 @@ class Database:
                       """gravity DOUBLE NOT NULL,""" +
                       """rssi SHORT NOT NULL);""")
 
-        # Check existence / create table
+        # Checking existence / create table
         if not self.cursor.tables(table=fermentation, tableType='TABLE').fetchone():
             self.cursor.execute(self.query)
 
-        # Prepare query
+        # Preparing query
         self.query = """INSERT INTO """ + fermentation + """("""
 
         for k in socket_message:
@@ -64,7 +65,7 @@ class Database:
     def execute_fermentation_settings(self, ispindel_parameters):
         self.establish_connection()
 
-        # Prepare query
+        # Preparing query
         self.query = """INSERT INTO Fermentation_settings("""
 
         for k in ispindel_parameters.parameters:
@@ -86,7 +87,7 @@ class Database:
     def get_ispindel_settings_battery_notification(self, ispindel_name):
         self.establish_connection()
 
-        # Prepare query
+        # Preparing query
         self.query = ("""SELECT battery_notification """ +
                       """FROM iSpindel_settings """ +
                       """WHERE name=?;""")
@@ -106,7 +107,7 @@ class Database:
     def execute_ispindel_settings_battery_notification(self, ispindel_name, battery_notification):
         self.establish_connection()
 
-        # Prepare query
+        # Preparing query
         self.query = ("""UPDATE iSpindel_settings """ +
                       """SET battery_notification=? """
                       """WHERE name=?;""")
@@ -119,7 +120,7 @@ class Database:
     def get_ispindel_settings_temperature_offset(self, ispindel_name):
         self.establish_connection()
 
-        # Prepare query
+        # Preparing query
         self.query = ("""SELECT temperature_offset """ +
                       """FROM iSpindel_settings """ +
                       """WHERE name=?;""")
@@ -145,8 +146,9 @@ class Database:
 
         self.establish_connection()
 
-        # Prepare query
-        self.query = ("""SELECT fermentation_vessel, batch_number, a, b, temperature_offset, log, batch_name """ +
+        # Preparing query
+        self.query = ("""SELECT fermentation_vessel, batch_number, a, b, temperature_offset, log, batch_name, """ +
+                      """gravity_1 """ +
                       """FROM Fermentation_settings """ +
                       """WHERE log=? AND ispindel_name=? """ +
                       """ORDER BY batch_number DESC;""")
@@ -166,7 +168,7 @@ class Database:
     def get_ispindel_settings_master(self):
         self.establish_connection()
 
-        # Prepare query
+        # Preparing query
         self.query = ("""SELECT name """ +
                       """FROM iSpindel_settings """ +
                       """WHERE master=True;""")
@@ -183,26 +185,67 @@ class Database:
         else:
             return None
 
+    def get_fermentation_settings_start(self, key):
+        self.establish_connection()
+
+        # Preparing query
+        self.query = ("""SELECT start """ +
+                      """FROM Fermentation_settings """ +
+                      """WHERE batch_number=?;""")
+
+        if self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
+            self.cursor.execute(self.query, key)
+
+        start = self.cursor.fetchone()
+
+        self.terminate_connection()
+
+        if start:
+            return start[0]
+        else:
+            return None
+
+    def execute_fermentation_settings_start(self, key):
+        self.establish_connection()
+
+        # Preparing query
+        self.query = ("""UPDATE Fermentation_settings """ +
+                      """SET start=? """ +
+                      """WHERE batch_number=?;""")
+
+        if self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
+            self.cursor.execute(self.query, datetime.datetime.now(), key)
+
+        self.terminate_connection()
+
     def execute_fermentation_settings_log(self, key, log):
         self.establish_connection()
 
-        # Prepare query
-        self.query = ("""UPDATE Fermentation_settings """ +
-                      """SET log=? """ +
-                      """WHERE batch_number=(SELECT TOP 1 batch_number """ +
-                                          """FROM Fermentation_settings """ +
-                                          """WHERE fermentation_vessel=? """ +
-                                          """ORDER BY batch_number DESC);""")
+        # Preparing query
+        if log:
+            self.query = ("""UPDATE Fermentation_settings """ +
+                          """SET log=?, pitch=? """ +
+                          """WHERE batch_number=(SELECT TOP 1 batch_number """ +
+                                              """FROM Fermentation_settings """ +
+                                              """WHERE fermentation_vessel=? """ +
+                                              """ORDER BY batch_number DESC);""")
+        else:
+            self.query = ("""UPDATE Fermentation_settings """ +
+                          """SET log=?, finish=? """ +
+                          """WHERE batch_number=(SELECT TOP 1 batch_number """ +
+                                              """FROM Fermentation_settings """ +
+                                              """WHERE fermentation_vessel=? """ +
+                                              """ORDER BY batch_number DESC);""")
 
         if self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
-            self.cursor.execute(self.query, log, key)
+            self.cursor.execute(self.query, log, datetime.datetime.now(), key)
 
         self.terminate_connection()
 
     def execute_ispindel_settings_master(self, ispindel_name=None):
         self.establish_connection()
 
-        # Prepare query
+        # Preparing query
         self.query = ("""UPDATE iSpindel_settings """ +
                       """SET master=False """ +
                       """WHERE master=True;""")
@@ -220,11 +263,11 @@ class Database:
 
         self.terminate_connection()
 
-    def get_fermentation_settings_batch_number(self, fermentation_vessel):
+    def get_fermentation_settings_batch_number_batch_name(self, fermentation_vessel):
         self.establish_connection()
 
-        # Prepare query
-        self.query = ("""SELECT batch_number """ +
+        # Preparing query
+        self.query = ("""SELECT batch_number, batch_name """ +
                       """FROM Fermentation_settings """ +
                       """WHERE fermentation_vessel=? """ +
                       """AND log=True """ +
@@ -233,19 +276,19 @@ class Database:
         if self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
             self.cursor.execute(self.query, fermentation_vessel)
 
-        batch_number = self.cursor.fetchone()
+        result = self.cursor.fetchone()
 
         self.terminate_connection()
 
-        if batch_number:
-            return batch_number[0]
+        if result:
+            return result
         else:
             return None
 
     def get_fermentation_settings_log(self, fermentation_vessel):
         self.establish_connection()
 
-        # Prepare query
+        # Preparing query
         self.query = ("""SELECT log """ +
                       """FROM Fermentation_settings """ +
                       """WHERE fermentation_vessel=? """ +
@@ -267,7 +310,7 @@ class Database:
     def get_fermentation_settings_ispindel_name(self, fermentation_vessel):
         self.establish_connection()
 
-        # Prepare query
+        # Preparing query
         self.query = ("""SELECT ispindel_name """ +
                       """FROM Fermentation_settings """ +
                       """WHERE fermentation_vessel=? """ +
@@ -304,7 +347,7 @@ class Database:
     def get_columns(self, table):
         self.establish_connection()
 
-        # Prepare query
+        # Preparing query
         self.query = ("""SELECT * """ +
                       """FROM %s """ +
                       """;""") % table
@@ -326,7 +369,7 @@ class Database:
         x, y = [], []
         self.establish_connection()
 
-        # Prepare query
+        # Preparing query
         self.query = ("""SELECT measurement_time, %s """ +
                       """FROM %s;""") % (column, table)
 

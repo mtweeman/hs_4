@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><RECIPES>
+<RECIPE>
+ <NAME>#078 German Pils</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>All Grain</TYPE>
+ <BREWER></BREWER>
+ <ASST_BREWER></ASST_BREWER>
+ <EFFICIENCY>53.0000000</EFFICIENCY>
+ 
+ <DODANE>$dodane</DODANE>
+ <BATCH_SIZE>12.5000000</BATCH_SIZE>
+ <BOIL_TIME>60.0000000</BOIL_TIME>
+ <BOIL_SIZE>18.7291667</BOIL_SIZE>
+ <SPARGE_VOLUME>18.73 L</SPARGE_VOLUME>
+ <PRIMARY_TEMP>10.0000000</PRIMARY_TEMP>
+ <EVAP_RATE>2.6696329</EVAP_RATE>
+ <EQUIPMENT.TRUB_CHILLER_LOSS>5.0000000</EQUIPMENT.TRUB_CHILLER_LOSS>
+ <EQUIPMENT.LAUTER_DEADSPACE>8.2200000</EQUIPMENT.LAUTER_DEADSPACE>
+ <GRAIN_TEMP>22.2 C</GRAIN_TEMP>
+ <PRE_BOIL_OG>1.043 SG</PRE_BOIL_OG>
+ <EST_OG>1.046 SG</EST_OG>
+ <IBU>34.9 IBUs</IBU>
+ <EQUIPMENT.COOLING_LOSS_PCT>4.0000000</EQUIPMENT.COOLING_LOSS_PCT>
+ <EQUIPMENT.NAME>HS_3</EQUIPMENT.NAME>
+ <DODANE>$dodane</DODANE>
+
+ <HOPS>
+<HOP>
+ <NAME>TB Hallertau Tradition 2019</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Niemcy</ORIGIN>
+ <ALPHA>6.3000000</ALPHA>
+ <AMOUNT>0.0350000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>50.0000000</TIME>
+ <NOTES></NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <STEEP_TEMP>$steep_temp</STEEP_TEMP>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>35.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>100.00 g</INVENTORY>
+ <DISPLAY_TIME>50.0 min</DISPLAY_TIME>
+</HOP>
+</HOPS>
+
+ <FERMENTABLES>
+<FERMENTABLE>
+ <NAME>Weyermann S&#322;&#243;d Barke pilzne&#324;ski 4 EBC</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Grain</TYPE>
+ <AMOUNT>2.7802191</AMOUNT>
+ <YIELD>81.9000000</YIELD>
+ <COLOR>4.0000001</COLOR>
+ <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
+ <ORIGIN>Niemcy</ORIGIN>
+ <SUPPLIER>Browamator</SUPPLIER>
+ <NOTES>V245-21113025-01</NOTES>
+ <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
+ <MOISTURE>4.5000000</MOISTURE>
+ <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
+ <PROTEIN>10.5000000</PROTEIN>
+ <MAX_IN_BATCH>100.0000000</MAX_IN_BATCH>
+ <RECOMMEND_MASH>TRUE</RECOMMEND_MASH>
+ <IBU_GAL_PER_LB>0.0000000</IBU_GAL_PER_LB>
+ <DISPLAY_AMOUNT>2.78 kg</DISPLAY_AMOUNT>
+ <INVENTORY>19.57 kg</INVENTORY>
+ <POTENTIAL>1.0376740</POTENTIAL>
+ <DISPLAY_COLOR>4.0 EBC</DISPLAY_COLOR>
+ <EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
+</FERMENTABLE>
+<FERMENTABLE>
+ <NAME>Tw&#243;j Browar S&#322;&#243;d Monachijski 15 EBC</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Grain</TYPE>
+ <AMOUNT>0.6950548</AMOUNT>
+ <YIELD>79.0000000</YIELD>
+ <COLOR>15.0000000</COLOR>
+ <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
+ <ORIGIN>Polska</ORIGIN>
+ <SUPPLIER>DMGP Strzegom</SUPPLIER>
+ <NOTES></NOTES>
+ <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
+ <MOISTURE>4.5000000</MOISTURE>
+ <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
+ <PROTEIN>11.7000000</PROTEIN>
+ <MAX_IN_BATCH>100.0000000</MAX_IN_BATCH>
+ <RECOMMEND_MASH>TRUE</RECOMMEND_MASH>
+ <IBU_GAL_PER_LB>0.0000000</IBU_GAL_PER_LB>
+ <DISPLAY_AMOUNT>0.70 kg</DISPLAY_AMOUNT>
+ <INVENTORY>8.14 kg</INVENTORY>
+ <POTENTIAL>1.0363400</POTENTIAL>
+ <DISPLAY_COLOR>15.0 EBC</DISPLAY_COLOR>
+ <EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
+</FERMENTABLE>
+</FERMENTABLES>
+
+ <MISCS>
+<MISC>
+ <NAME>Phosphoric Acid 75%</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.004000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Water Agent</USE_FOR>
+ <NOTES>Multiply ml by 1.6954 to get grams at 20*C
+Used to lower the pH of the mash without altering the water profile.  Lower pH mashes generally improves head retention, increases extraction rate.</NOTES>
+ <DISPLAY_AMOUNT>4.00 ml</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 ml</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>18.93 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Baker&#39;s Dry Yeast</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>YOS</USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>1000.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>0.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Brewtan B</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Fenton reactions</USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>500.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>100.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Fermcap-S</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>60.00</TIME>
+ <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Foam Inhibitor</USE_FOR>
+ <NOTES>Prevent boil overs on the hot side, add 2 drops per gallon for a nice rolling boil. On the cold side, Fermcap keeps the krausen in your fermenter to 1/2 an inch. Fermcap works very well for brewers who use a carboy for primary fermentation. In a 6 gallon carboy there is no need for blow off tubing when you use this product. Use only two drops per gallon at the start of fermentation. If you add Fermcap during the boil you do not need to add it again in your fermenter. Used in the fermenter, it increases the bitterness of your beer (retained IBUs) by about 10%! Enough for about 20 batches. Keep refrigerated. Size: 1 Oz.</NOTES>
+ <DISPLAY_AMOUNT>0.00 ml</DISPLAY_AMOUNT>
+ <INVENTORY>60.00 ml</INVENTORY>
+ <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>18.93 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>L-ascorbic Acid</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Antioxident</USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>400.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>100.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Sodium Metabisulfite</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Other</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Preservative</USE_FOR>
+ <NOTES>Sodium metabisulfite can be used in the same method/quantity as potasium metabisulfite, but it adds sodium ions.  Also sold as Campden tablets. Some wine makers prefer to use sodium for cleaning and the potassium for late fermentation additions.</NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>500.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>0.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Ultraflo Max</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Other</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+ <USE_FOR></USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.00 ml</DISPLAY_AMOUNT>
+ <INVENTORY>80.00 ml</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>0.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Sodium Metabisulfite</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Other</TYPE>
+ <USE></USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Preservative</USE_FOR>
+ <NOTES>Sodium metabisulfite can be used in the same method/quantity as potasium metabisulfite, but it adds sodium ions.  Also sold as Campden tablets. Some wine makers prefer to use sodium for cleaning and the potassium for late fermentation additions.</NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>500.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>0.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Phosphoric Acid 75%</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE></USE>
+ <AMOUNT>0.002000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Water Agent</USE_FOR>
+ <NOTES>Multiply ml by 1.6954 to get grams at 20*C
+Used to lower the pH of the mash without altering the water profile.  Lower pH mashes generally improves head retention, increases extraction rate.</NOTES>
+ <DISPLAY_AMOUNT>2.00 ml</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 ml</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>18.93 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Baker&#39;s Dry Yeast</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE></USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>YOS</USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>1000.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>0.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Brewtan B</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE></USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Fenton reactions</USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>500.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>100.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>L-ascorbic Acid</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE></USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Antioxident</USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>400.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>100.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Fermcap-S</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Boil</USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>60.00</TIME>
+ <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Foam Inhibitor</USE_FOR>
+ <NOTES>Prevent boil overs on the hot side, add 2 drops per gallon for a nice rolling boil. On the cold side, Fermcap keeps the krausen in your fermenter to 1/2 an inch. Fermcap works very well for brewers who use a carboy for primary fermentation. In a 6 gallon carboy there is no need for blow off tubing when you use this product. Use only two drops per gallon at the start of fermentation. If you add Fermcap during the boil you do not need to add it again in your fermenter. Used in the fermenter, it increases the bitterness of your beer (retained IBUs) by about 10%! Enough for about 20 batches. Keep refrigerated. Size: 1 Oz.</NOTES>
+ <DISPLAY_AMOUNT>0.00 ml</DISPLAY_AMOUNT>
+ <INVENTORY>60.00 ml</INVENTORY>
+ <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>18.93 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Brewtan B</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Boil</USE>
+ <AMOUNT>0.000500</AMOUNT>
+ <TIME>7.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Fenton reactions</USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.50 g</DISPLAY_AMOUNT>
+ <INVENTORY>470.77 g</INVENTORY>
+ <DISPLAY_TIME>7.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>100.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Whirlfloc Tablet</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Fining</TYPE>
+ <USE>Boil</USE>
+ <AMOUNT>0.001250</AMOUNT>
+ <TIME>5.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Clarity</USE_FOR>
+ <NOTES>Aids in clearing yeast and chill haze.  Easy to use tablet form.</NOTES>
+ <DISPLAY_AMOUNT>1.25 g</DISPLAY_AMOUNT>
+ <INVENTORY>31.25 g</INVENTORY>
+ <DISPLAY_TIME>5.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>21.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>PVPP</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Fining</TYPE>
+ <USE>Boil</USE>
+ <AMOUNT>0.001875</AMOUNT>
+ <TIME>3.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Trub</USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>1.88 g</DISPLAY_AMOUNT>
+ <INVENTORY>62.73 g</INVENTORY>
+ <DISPLAY_TIME>3.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>100.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Zinc Sulfate Heptahydrate</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Primary</USE>
+ <AMOUNT>0.000820</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+ <USE_FOR></USE_FOR>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>0.82 ml</DISPLAY_AMOUNT>
+ <INVENTORY>50000.00 ml</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>20.00 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Fermcap-S</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Primary</USE>
+ <AMOUNT>0.000000</AMOUNT>
+ <TIME>0.00</TIME>
+ <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Foam Inhibitor</USE_FOR>
+ <NOTES>Prevent boil overs on the hot side, add 2 drops per gallon for a nice rolling boil. On the cold side, Fermcap keeps the krausen in your fermenter to 1/2 an inch. Fermcap works very well for brewers who use a carboy for primary fermentation. In a 6 gallon carboy there is no need for blow off tubing when you use this product. Use only two drops per gallon at the start of fermentation. If you add Fermcap during the boil you do not need to add it again in your fermenter. Used in the fermenter, it increases the bitterness of your beer (retained IBUs) by about 10%! Enough for about 20 batches. Keep refrigerated. Size: 1 Oz.</NOTES>
+ <DISPLAY_AMOUNT>0.00 ml</DISPLAY_AMOUNT>
+ <INVENTORY>60.00 ml</INVENTORY>
+ <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>18.93 L</BATCH_SIZE>
+</MISC>
+</MISCS>
+
+ <YEASTS>
+<YEAST>
+ <NAME>German Lager X</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Lager</TYPE>
+ <FORM>Liquid</FORM>
+ <AMOUNT>0.0000000</AMOUNT>
+ <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+ <LABORATORY>White Labs</LABORATORY>
+ <PRODUCT_ID>WLP835</PRODUCT_ID>
+ <MIN_TEMPERATURE>10.0000000</MIN_TEMPERATURE>
+ <MAX_TEMPERATURE>12.0000000</MAX_TEMPERATURE>
+ <FLOCCULATION>Medium</FLOCCULATION>
+ <ATTENUATION>73.0000000</ATTENUATION>
+ <NOTES>Classic yeast from a famous Bavarian monastery. This strain develops a creamy, malty beer profile with low sulfur production and low esters.</NOTES>
+ <BEST_FOR>Helles, Oktoberfest, Bock, and Dunkel.</BEST_FOR>
+ <MAX_REUSE>5</MAX_REUSE>
+ <TIMES_CULTURED>0</TIMES_CULTURED>
+ <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
+ <DISPLAY_AMOUNT>0.00 ml</DISPLAY_AMOUNT>
+ <DISP_MIN_TEMP>10.0 C</DISP_MIN_TEMP>
+ <DISP_MAX_TEMP>12.0 C</DISP_MAX_TEMP>
+ <INVENTORY>1.0 pkg</INVENTORY>
+ <CULTURE_DATE>19 Jan 2016</CULTURE_DATE>
+</YEAST>
+</YEASTS>
+
+ 
+ <STYLE>
+ <NAME>German Pils</NAME>
+ <VERSION>1</VERSION>
+ <CATEGORY>Pale Bitter European Beer</CATEGORY>
+ <CATEGORY_NUMBER>5</CATEGORY_NUMBER>
+ <STYLE_LETTER>D</STYLE_LETTER>
+ <STYLE_GUIDE>BJCP 2015</STYLE_GUIDE>
+ <TYPE>Lager</TYPE>
+ <OG_MIN>1.0440000</OG_MIN>
+ <OG_MAX>1.0500000</OG_MAX>
+ <FG_MIN>1.0080000</FG_MIN>
+ <FG_MAX>1.0130000</FG_MAX>
+ <IBU_MIN>22.0000000</IBU_MIN>
+ <IBU_MAX>40.0000000</IBU_MAX>
+ <COLOR_MIN>3.9400000</COLOR_MIN>
+ <COLOR_MAX>9.8500000</COLOR_MAX>
+ <CARB_MIN>2.5000000</CARB_MIN>
+ <CARB_MAX>3.2000000</CARB_MAX>
+ <ABV_MAX>5.2000000</ABV_MAX>
+ <ABV_MIN>4.4000000</ABV_MIN>
+ <NOTES>A light-bodied, highly-attenuated, gold-colored, bottom-fermented bitter German beer showing excellent head retention and an elegant, floral hop aroma. Crisp, clean, and refreshing, a German Pils showcases the finest quality German malt and hops. History: Adapted from Czech Pilsner to suit brewing conditions in Germany, particularly water with higher mineral content and domestic hop varieties. First brewed in Germany in the early 1870s. Became more popular after WWII as German brewing schools emphasized modern techniques. Along with its sister beer, Czech Pilsner, is the ancestor of the most widely produced beer styles today. Average IBUs of many well-regarded commercial examples have dropped over time. Style Comparison: Lighter in body and color, drier, crisper, and more fully attenuated, with more of a lingering bitterness, and with higher carbonation than a Czech Premium Pale Lager. More hop character, malt flavor, and bitterness than International Pale Lagers. More hop character and bitterness with a drier, crisper finish than a Munich Helles; the Helles has more malt flavor, but of the same character as the Pils.</NOTES>
+ <PROFILE>Aroma: Medium-low to low grainy-sweet-rich malt character (often with a light honey and slightly toasted cracker quality) and distinctive flowery, spicy, or herbal hops. Clean fermentation profile. May optionally have a very light sulfury note that comes from water as much as yeast. The hops are moderately-low to moderately-high, but should not totally dominate the malt presence. One-dimensional examples are inferior to the more complex qualities when all ingredients are sensed. May have a very low background note of DMS.
+Appearance: Straw to light gold, brilliant to very clear, with a creamy, long-lasting white head. Flavor: Medium to high hop bitterness dominates the palate and lingers into the aftertaste. Moderate to moderately-low grainy-sweet malt character supports the hop bitterness. Low to high floral, spicy, or herbal hop flavor. Clean fermentation profile. Dry to medium-dry, crisp, well-attenuated finish with a bitter aftertaste and light malt flavor. Examples made with water with higher sulfate levels often will have a low sulfury flavor that accentuates the dryness and lengthens the finish; this is acceptable but not mandatory. Some versions have a soft finish with more of a malt flavor, but still with noticeable hop bitterness and flavor, with the balance still towards bitterness. Mouthfeel: Medium-light body. Medium to high carbonation. Comments: Modern examples of Pils tend to become paler in color, drier in finish, and more bitter as you move from South to North in Germany, often mirroring the increase in sulfate in the water. The Pils found in Bavaria tend to be a bit softer in bitterness with more malt flavor and late hop character, yet still with sufficient hops and crispness of finish to differentiate itself from a Helles. The use of the term &#8216;Pils&#8217; is more common in Germany than &#8216;Pilsner&#8217; to differentiate it from the Czech style, and (some say) to show respect.</PROFILE>
+ <INGREDIENTS>Continental Pilsner malt, German hop varieties (especially Saazer-type varieties such as Tettnanger, Hallertauer, and Spalt for taste and aroma; Saaz is less common), German lager yeast.</INGREDIENTS>
+ <EXAMPLES>K&#246;nig Pilsener, Left Hand Polestar Pils, Paulaner Premium Pils, Sch&#246;nramer Pils, Stoudt Pils, Tr&#246;egs Sunshine Pils, Trumer Pils</EXAMPLES>
+ <DISPLAY_OG_MIN>1.044 SG</DISPLAY_OG_MIN>
+ <DISPLAY_OG_MAX>1.050 SG</DISPLAY_OG_MAX>
+ <DISPLAY_FG_MIN>1.008 SG</DISPLAY_FG_MIN>
+ <DISPLAY_FG_MAX>1.013 SG</DISPLAY_FG_MAX>
+ <DISPLAY_COLOR_MIN>3.9 EBC</DISPLAY_COLOR_MIN>
+ <DISPLAY_COLOR_MAX>9.8 EBC</DISPLAY_COLOR_MAX>
+ <OG_RANGE>1,044-1,050 SG</OG_RANGE>
+ <FG_RANGE>1,008-1,013 SG</FG_RANGE>
+ <IBU_RANGE>22,0-40,0 IBUs</IBU_RANGE>
+ <CARB_RANGE>2,50-3,20 Vols</CARB_RANGE>
+ <COLOR_RANGE>3,9-9,8 EBC</COLOR_RANGE>
+ <ABV_RANGE>4,40-5,20 %</ABV_RANGE>
+</STYLE>
+
+ <EQUIPMENT>
+ <NAME>HS_3</NAME>
+ <VERSION>1</VERSION>
+ <BOIL_SIZE>18.7291667</BOIL_SIZE>
+ <BATCH_SIZE>12.5000000</BATCH_SIZE>
+ <TUN_VOLUME>49.9997118</TUN_VOLUME>
+ <TUN_WEIGHT>7.9499949</TUN_WEIGHT>
+ <TUN_SPECIFIC_HEAT>0.1200000</TUN_SPECIFIC_HEAT>
+ <TOP_UP_WATER>0.0000000</TOP_UP_WATER>
+ <TRUB_CHILLER_LOSS>5.0000000</TRUB_CHILLER_LOSS>
+ <EVAP_RATE>2.6696329</EVAP_RATE>
+ <BOIL_TIME>60.0000000</BOIL_TIME>
+ <CALC_BOIL_VOLUME>TRUE</CALC_BOIL_VOLUME>
+ <LAUTER_DEADSPACE>8.2200000</LAUTER_DEADSPACE>
+ <TOP_UP_KETTLE>0.0000000</TOP_UP_KETTLE>
+ <HOP_UTILIZATION>90.0000000</HOP_UTILIZATION>
+ <COOLING_LOSS_PCT>4.0000000</COOLING_LOSS_PCT>
+ <NOTES></NOTES>
+ <DISPLAY_BOIL_SIZE>18.73 L</DISPLAY_BOIL_SIZE>
+ <DISPLAY_BATCH_SIZE>12.50 L</DISPLAY_BATCH_SIZE>
+ <DISPLAY_TUN_VOLUME>50.00 L</DISPLAY_TUN_VOLUME>
+ <DISPLAY_TUN_WEIGHT>7.95 kg</DISPLAY_TUN_WEIGHT>
+ <DISPLAY_TOP_UP_WATER>0.00 L</DISPLAY_TOP_UP_WATER>
+ <DISPLAY_TRUB_CHILLER_LOSS>5.00 L</DISPLAY_TRUB_CHILLER_LOSS>
+ <DISPLAY_LAUTER_DEADSPACE>8.22 L</DISPLAY_LAUTER_DEADSPACE>
+ <DISPLAY_TOP_UP_KETTLE>0.00 L</DISPLAY_TOP_UP_KETTLE>
+</EQUIPMENT>
+
+ <MASH>
+ <NAME>Lupulus Mash</NAME>
+ <VERSION>1</VERSION>
+ <GRAIN_TEMP>22.2000000</GRAIN_TEMP>
+ <TUN_TEMP>22.2000000</TUN_TEMP>
+ <SPARGE_TEMP>75.6000000</SPARGE_TEMP>
+ <PH>5.4000000</PH>
+ <TUN_WEIGHT>280.4280456</TUN_WEIGHT>
+ <TUN_SPECIFIC_HEAT>0.1200000</TUN_SPECIFIC_HEAT>
+ <EQUIP_ADJUST>TRUE</EQUIP_ADJUST>
+ <NOTES>Simple single infusion mash for use with most modern well modified grains (about 95% of the time).</NOTES>
+ <DISPLAY_GRAIN_TEMP>22.2 C</DISPLAY_GRAIN_TEMP>
+ <DISPLAY_TUN_TEMP>22.2 C</DISPLAY_TUN_TEMP>
+ <DISPLAY_SPARGE_TEMP>75.6 C</DISPLAY_SPARGE_TEMP>
+ <DISPLAY_TUN_WEIGHT>7.95 kg</DISPLAY_TUN_WEIGHT>
+<MASH_STEPS>
+<MASH_STEP>
+ <NAME>Mash In</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Infusion</TYPE>
+ <INFUSE_AMOUNT>9.0357178</INFUSE_AMOUNT>
+ <STEP_TIME>0.0000000</STEP_TIME>
+ <STEP_TEMP>55.0000000</STEP_TEMP>
+ <RAMP_TIME>0.0000000</RAMP_TIME>
+ <END_TEMP>55.0000000</END_TEMP>
+ <DESCRIPTION>Add 11,70 L of water at 59,6 C</DESCRIPTION>
+ <WATER_GRAIN_RATIO>2,600 l/kg</WATER_GRAIN_RATIO>
+ <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
+ <INFUSE_TEMP>59.6 C</INFUSE_TEMP>
+ <DISPLAY_STEP_TEMP>55.0 C</DISPLAY_STEP_TEMP>
+ <DISPLAY_INFUSE_AMT>11.70 L</DISPLAY_INFUSE_AMT>
+</MASH_STEP>
+<MASH_STEP>
+ <NAME>Beta 1</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Temperature</TYPE>
+ <INFUSE_AMOUNT>0.0000000</INFUSE_AMOUNT>
+ <STEP_TIME>5.0000000</STEP_TIME>
+ <STEP_TEMP>65.0000000</STEP_TEMP>
+ <RAMP_TIME>4.0000000</RAMP_TIME>
+ <END_TEMP>65.0000000</END_TEMP>
+ <DESCRIPTION>Heat to 65,0 C over 4 min</DESCRIPTION>
+ <WATER_GRAIN_RATIO>3,365 l/kg</WATER_GRAIN_RATIO>
+ <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
+ <INFUSE_TEMP>65.0 C</INFUSE_TEMP>
+ <DISPLAY_STEP_TEMP>65.0 C</DISPLAY_STEP_TEMP>
+ <DISPLAY_INFUSE_AMT>0.00 L</DISPLAY_INFUSE_AMT>
+</MASH_STEP>
+<MASH_STEP>
+ <NAME>Beta 2</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Temperature</TYPE>
+ <INFUSE_AMOUNT>0.0000000</INFUSE_AMOUNT>
+ <STEP_TIME>60.0000000</STEP_TIME>
+ <STEP_TEMP>61.0000000</STEP_TEMP>
+ <RAMP_TIME>4.0000000</RAMP_TIME>
+ <END_TEMP>61.0000000</END_TEMP>
+ <DESCRIPTION>Heat to 61,0 C over 4 min</DESCRIPTION>
+ <WATER_GRAIN_RATIO>3,365 l/kg</WATER_GRAIN_RATIO>
+ <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
+ <INFUSE_TEMP>61.0 C</INFUSE_TEMP>
+ <DISPLAY_STEP_TEMP>61.0 C</DISPLAY_STEP_TEMP>
+ <DISPLAY_INFUSE_AMT>0.00 L</DISPLAY_INFUSE_AMT>
+</MASH_STEP>
+<MASH_STEP>
+ <NAME>Alpha</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Temperature</TYPE>
+ <INFUSE_AMOUNT>0.0000000</INFUSE_AMOUNT>
+ <STEP_TIME>30.0000000</STEP_TIME>
+ <STEP_TEMP>72.0000000</STEP_TEMP>
+ <RAMP_TIME>4.0000000</RAMP_TIME>
+ <END_TEMP>72.0000000</END_TEMP>
+ <DESCRIPTION>Heat to 72,0 C over 4 min</DESCRIPTION>
+ <WATER_GRAIN_RATIO>3,365 l/kg</WATER_GRAIN_RATIO>
+ <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
+ <INFUSE_TEMP>72.0 C</INFUSE_TEMP>
+ <DISPLAY_STEP_TEMP>72.0 C</DISPLAY_STEP_TEMP>
+ <DISPLAY_INFUSE_AMT>0.00 L</DISPLAY_INFUSE_AMT>
+</MASH_STEP>
+<MASH_STEP>
+ <NAME>Mash Out</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Temperature</TYPE>
+ <INFUSE_AMOUNT>0.0000000</INFUSE_AMOUNT>
+ <STEP_TIME>10.0000000</STEP_TIME>
+ <STEP_TEMP>76.0000000</STEP_TEMP>
+ <RAMP_TIME>4.0000000</RAMP_TIME>
+ <END_TEMP>76.0000000</END_TEMP>
+ <DESCRIPTION>Heat to 76,0 C over 4 min</DESCRIPTION>
+ <WATER_GRAIN_RATIO>3,365 l/kg</WATER_GRAIN_RATIO>
+ <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
+ <INFUSE_TEMP>76.0 C</INFUSE_TEMP>
+ <DISPLAY_STEP_TEMP>76.0 C</DISPLAY_STEP_TEMP>
+ <DISPLAY_INFUSE_AMT>0.00 L</DISPLAY_INFUSE_AMT>
+</MASH_STEP>
+</MASH_STEPS>
+
+</MASH>
+
+ <NOTES>YOS</NOTES>
+ <TASTE_NOTES></TASTE_NOTES>
+ <TASTE_RATING>30.0000000</TASTE_RATING>
+ <OG>1.0459998</OG>
+ <FG>1.0100000</FG>
+ <CARBONATION>2.5000000</CARBONATION>
+ <FERMENTATION_STAGES>2</FERMENTATION_STAGES>
+ <PRIMARY_AGE>4.0000000</PRIMARY_AGE>
+ <PRIMARY_TEMP>10.0000000</PRIMARY_TEMP>
+ <SECONDARY_AGE>10.0000000</SECONDARY_AGE>
+ <SECONDARY_TEMP>19.4444444</SECONDARY_TEMP>
+ <TERTIARY_AGE>7.0000000</TERTIARY_AGE>
+ <AGE>30.0000000</AGE>
+ <AGE_TEMP>18.3333333</AGE_TEMP>
+ <CARBONATION_USED>Bottle with 69,95 g Table Sugar</CARBONATION_USED>
+ <FORCED_CARBONATION>TRUE</FORCED_CARBONATION>
+ <PRIMING_SUGAR_NAME>Table Sugar</PRIMING_SUGAR_NAME>
+ <PRIMING_SUGAR_EQUIV>0.9099181</PRIMING_SUGAR_EQUIV>
+ <KEG_PRIMING_FACTOR>0.5000000</KEG_PRIMING_FACTOR>
+ <CARBONATION_TEMP>21.1111111</CARBONATION_TEMP>
+ <DISPLAY_CARB_TEMP>21.1 C</DISPLAY_CARB_TEMP>
+ <DATE>31 Jan 2021</DATE>
+ <EST_OG>1.046 SG</EST_OG>
+ <EST_FG>1.010 SG</EST_FG>
+ <EST_COLOR>9.1 EBC</EST_COLOR>
+ <IBU>34.9 IBUs</IBU>
+ <IBU_METHOD>Rager</IBU_METHOD>
+ <EST_ABV>4.8 %</EST_ABV>
+ <ABV>4.7 %</ABV>
+ <ACTUAL_EFFICIENCY>80.3 %</ACTUAL_EFFICIENCY>
+ <CALORIES>427.1 kcal/l</CALORIES>
+ <DISPLAY_BATCH_SIZE>12.50 L</DISPLAY_BATCH_SIZE>
+ <DISPLAY_BOIL_SIZE>18.73 L</DISPLAY_BOIL_SIZE>
+ <DISPLAY_OG>1.046 SG</DISPLAY_OG>
+ <DISPLAY_FG>1.010 SG</DISPLAY_FG>
+ <DISPLAY_PRIMARY_TEMP>10.0 C</DISPLAY_PRIMARY_TEMP>
+ <DISPLAY_SECONDARY_TEMP>19.4 C</DISPLAY_SECONDARY_TEMP>
+ <DISPLAY_TERTIARY_TEMP>18.3 C</DISPLAY_TERTIARY_TEMP>
+ <DISPLAY_AGE_TEMP>18.3 C</DISPLAY_AGE_TEMP>
+</RECIPE>
+</RECIPES>

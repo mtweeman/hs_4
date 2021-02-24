@@ -20,6 +20,6 @@ hlt_drain,1695,599
 bk_cip,532,31
 mlt_cip,1092,31
 mlt_sightglass,1017,332
-mlt_sightglass_cam,1092,332
+mlt_sightglass_cam,1092,500
 mlt_sightglass_size,1042,409
 rect,2160,1215

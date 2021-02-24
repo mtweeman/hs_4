@@ -17,8 +17,8 @@ from recipe_parameters import RecipeParameters
 from brewery_parameters import BreweryParameters
 from ispindel_parameters import ISpindelParameters
 from fermentation_parameters import FermentationParameters
-from socket_thread import SocketThread
-from camera_thread import Camera
+from ispindel_socket_thread import ISpindelSocketThread
+from camera_thread_test import Camera
 from database import Database
 from mail import Mail
 
@@ -35,7 +35,7 @@ icon = 'images/icon.ico'
 image_brewery = Image.open('images/test7.bmp')
 title_str = 'Hajle Silesia Homebrewing System '
 
-# Create instances for parameter/database classes except for Threading classes
+# Create instances for parameter/database/mail classes
 database = Database()
 mail = Mail()
 recipe_parameters = RecipeParameters()
@@ -74,19 +74,20 @@ style.theme_use('hs_theme')
 tab_control = ttk.Notebook(root)
 tab_control.pack(fill='both', expand=1)
 
+# Create instances for GUI classes
 ispindel_tab_gui = ISpindelTabGUI(tab_control, ispindel_parameters, database, mail)
 recipe_tab_gui = RecipeTabGUI(tab_control, recipe_parameters, ispindel_tab_gui, fermentation_parameters,
                               ispindel_parameters, database)
 brewery_tab_gui = BreweryTabGUI(tab_control, brewery_parameters)
-fermentation_tab_gui = FermentationTabGUI(tab_control, fermentation_parameters, database, dpi)
+fermentation_tab_gui = FermentationTabGUI(tab_control, fermentation_parameters, database, dpi, mail)
 graph_tab_gui = GraphTabGUI(tab_control, database, dpi)
 add_graph_tab_gui = AddGraphTabGUI(tab_control)
 
-# Creating list with all tabs for loopings
-tabs = [brewery_tab_gui,
+# Creating list with all tabs for looping
+tabs = [fermentation_tab_gui,
+        brewery_tab_gui,
         graph_tab_gui,
         add_graph_tab_gui,
-        fermentation_tab_gui,
         recipe_tab_gui,
         ispindel_tab_gui,
         ]
@@ -103,7 +104,6 @@ tab_control.select(0)
 # Adding commands to GUI objects
 tab_control.bind('<ButtonRelease-1>', add_graph_to_graph_tab_gui)
 
-socket_thread = SocketThread(ispindel_tab_gui, fermentation_tab_gui)
-camera_thread = Camera(brewery_tab_gui.f_cams['mlt_sightglass_cam'],
-                       brewery_tab_gui.i_cams['mlt_sightglass_size'])
+ispindel_socket_thread = ISpindelSocketThread(ispindel_tab_gui, fermentation_tab_gui)
+
 root.mainloop()

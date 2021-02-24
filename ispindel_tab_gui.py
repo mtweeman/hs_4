@@ -18,8 +18,8 @@ class ISpindelTabGUI(Frame):
         self.ispindel_parameters = ispindel_parameters
         self.database = database
         self.mail = mail
-        self.w_scale = 1.0
-        self.h_scale = 1.0
+        self.w_scale = 1
+        self.h_scale = 1
 
         # Images for labels
         self.img_ispindel = Image.open('images/ispindel2.bmp')
@@ -207,7 +207,7 @@ class ISpindelTabGUI(Frame):
                 int(round(self.h_scale * (self.img_ispindel.height * (ispindel_coord_tuple[1][1] /
                                                                       self.ispindel_rect[1]) + 10), 0)))
 
-    def socket_parameters_update(self, socket_message):
+    def ispindel_socket_parameters_update(self, socket_message):
         self.l_status.config(text='Data processing')
 
         # Creating dynamic GUI objects (dots, lines)
