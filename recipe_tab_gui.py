@@ -208,6 +208,7 @@ class RecipeTabGUI(Frame):
             batch_number=int(xml_dict['RECIPE']['NAME'].split()[0][1:]),
             og=self.recipe_parameters.parameters['OG'],
             batch_name=xml_dict['RECIPE']['NAME'].strip(xml_dict['RECIPE']['NAME'].split()[0] + ' '),
+            fermentation_temperature=self.recipe_parameters.parameters['FERMENTATION_TEMP'],
         )
 
     def print_parameters(self):

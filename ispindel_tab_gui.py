@@ -360,7 +360,7 @@ class ISpindelTabGUI(Frame):
             pass
 
     def external_parameters_update(self, batch_number=None, og=None, batch_name=None, fermentation_vessel=None,
-                                   fermentation_program=None):
+                                   fermentation_program=None, fermentation_temperature=None):
         if batch_number:
             self.e_batch_number.delete(0, END)
             self.e_batch_number.insert(0, batch_number)
@@ -386,3 +386,6 @@ class ISpindelTabGUI(Frame):
 
         if fermentation_program:
             self.ispindel_parameters.parameters['fermentation_program'] = fermentation_program
+
+        if fermentation_temperature:
+            self.ispindel_parameters.parameters['fermentation_temperature'] = fermentation_temperature

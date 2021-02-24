@@ -143,21 +143,18 @@ class FermentationTabGUI(Frame):
                 self.f_sparklines[k].grid(row=1, column=0, sticky=NSEW)
 
                 # Checking fermentation vessel for log = True
-                # if condition is correct, update sparklines (so far only empty figure)
+                # if condition is correct, update sparklines and labels (so far only empty figure)
                 result = self.database.get_fermentation_settings_batch_number_batch_name(k)
                 if result:
                     self.f_sparklines[k].update_sparklines(result[0])
-                    self.l_labels[k].config(text=k.replace('_', ' ').upper() + '\n' +
-                                                 result[1])
+                    self.l_labels[k].config(text=k.replace('_', ' ').upper() + '\n' + result[1])
 
         # Adding commands to GUI objects
         self.c_fermentation.bind('<Configure>', self.resize_image)
 
         # f_status
-        for k in self.l_signs:
-            self.l_signs[k].bind('<Button-1>', self.change_temperature_manually)
-        # self.b_test.bind('<Button-1>',
-        #                  lambda event, input=self.socket_message: self.fermentation_socket_thread.transmit(input))
+        # for k in self.l_signs:
+        #     self.l_signs[k].bind('<Button-1>', self.change_temperature_manually)
 
         # c_fermentation
         for k in self.fermentation_coords:
@@ -177,8 +174,7 @@ class FermentationTabGUI(Frame):
 
         # Binding with slave socket
         # self.l_status has to be initialized first
-        self.fermentation_socket_thread = RequesterSocketThread(self,
-                                                                self.fermentation_parameters.parameters)
+        self.fermentation_socket_thread = RequesterSocketThread(self, self.fermentation_parameters.parameters)
 
     def resize_image(self, event):
         # Getting scale
@@ -259,21 +255,27 @@ class FermentationTabGUI(Frame):
 
         # Updating data on screen
         if 'fv' in key:
-            if (not self.fermentation_parameters.parameters[key] and
-                    not self.fermentation_parameters.parameters[key.replace('fv', 'master')]):
-                self.l_labels[key].config(text=key.replace('_', ' ').upper())
-                self.f_sparklines[key].clear_sparklines()
-            else:
+            if self.fermentation_parameters.parameters[key]:
                 result = self.database.get_fermentation_settings_batch_number_batch_name(key)
                 if result:
                     self.f_sparklines[key].update_sparklines(result[0])
-                    self.l_labels[key].config(text=key.replace('_', ' ').upper() + '\n' +
-                                                   result[1])
+                    if not self.fermentation_parameters.parameters[key.replace('fv', 'master')]:
+                        self.l_labels[key].config(text=key.replace('_', ' ').upper() + '\n' + result[1])
+            else:
+                self.f_sparklines[key].clear_sparklines()
+                if not self.fermentation_parameters.parameters[key.replace('fv', 'master')]:
+                    self.l_labels[key].config(text=key.replace('_', ' ').upper())
         elif 'master' in key:
-            if (not self.fermentation_parameters.parameters[key] and
-                    not self.fermentation_parameters.parameters[key.replace('master', 'fv')]):
-                self.l_labels[key.replace('master', 'fv')].config(text=key.replace('master_', 'fv ').upper())
-                self.f_sparklines[key.replace('master', 'fv')].clear_sparklines()
+            if self.fermentation_parameters.parameters[key]:
+                if not self.fermentation_parameters.parameters[key.replace('master', 'fv')]:
+                    result = self.database.get_fermentation_settings_batch_number_batch_name(
+                        key.replace('master', 'fv'), False)
+                    if result:
+                        self.l_labels[key.replace('master', 'fv')].config(text=key.replace('master_', 'fv ').upper() +
+                                                                               '\n' + result[1])
+            else:
+                if not self.fermentation_parameters.parameters[key.replace('master', 'fv')]:
+                    self.l_labels[key.replace('master', 'fv')].config(text=key.replace('master_', 'fv ').upper())
 
     def ispindel_socket_parameters_update(self, socket_message):
         # Checking if log = True for fermentation_vessel OR master

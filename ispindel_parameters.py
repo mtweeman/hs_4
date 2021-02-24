@@ -13,6 +13,7 @@ class ISpindelParameters:
                                                   'batch_name',
                                                   'fermentation_vessel',
                                                   'fermentation_program',
+                                                  'fermentation_temperature',
                                                   'ispindel_name',
                                                   'temperature_offset',
                                                   'temp_units',
