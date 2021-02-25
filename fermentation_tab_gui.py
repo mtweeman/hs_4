@@ -142,12 +142,17 @@ class FermentationTabGUI(Frame):
                 self.l_labels[k].grid(row=0, column=0, sticky=NSEW)
                 self.f_sparklines[k].grid(row=1, column=0, sticky=NSEW)
 
-                # Checking fermentation vessel for log = True
-                # if condition is correct, update sparklines and labels (so far only empty figure)
+                # Checking fermentation vessel for log = True or master = True
+                # if log = True - update sparklines (so far only empty figure) and labels
+                # if master = True - update labels
                 result = self.database.get_fermentation_settings_batch_number_batch_name(k)
                 if result:
                     self.f_sparklines[k].update_sparklines(result[0])
                     self.l_labels[k].config(text=k.replace('_', ' ').upper() + '\n' + result[1])
+                else:
+                    result = self.database.get_fermentation_settings_batch_name(k)
+                    if result:
+                        self.l_labels[k].config(text=k.replace('_', ' ').upper() + '\n' + result)
 
         # Adding commands to GUI objects
         self.c_fermentation.bind('<Configure>', self.resize_image)
@@ -247,11 +252,8 @@ class FermentationTabGUI(Frame):
         if 'fv' in key:
             self.database.execute_fermentation_settings_log(key, self.fermentation_parameters.parameters[key])
         elif 'master' in key:
-            if self.fermentation_parameters.parameters[key]:
-                ispindel_name = self.database.get_fermentation_settings_ispindel_name(key.replace('master', 'fv'))
-                self.database.execute_ispindel_settings_master(ispindel_name)
-            else:
-                self.database.execute_ispindel_settings_master()
+            self.database.execute_fermentation_settings_master(key.replace('master', 'fv'),
+                                                               self.fermentation_parameters.parameters[key])
 
         # Updating data on screen
         if 'fv' in key:

@@ -41,16 +41,9 @@ class FermentationParameters:
                 self.parameters[k] = self.database.get_fermentation_settings_log(k)
 
         # Checking fermentation vessel with master = True
-        name = self.database.get_ispindel_settings_master()
-        if name:
-            # Primary search: check if iSpindel received name has log = True for any fermentation vessel
-            # log for fermentation vessel already turned on
-            result = self.database.get_fermentation_settings(name, True)
-            # Secondary search: check if iSpindel received name has log = False for any fermentation vessel
-            # log for fermentation vessel not turned on yet, but settings for fermentation already provided
-            if not result:
-                result = self.database.get_fermentation_settings(name, False)
-            self.parameters[result[0].replace('fv', 'master')] = True
+        fermentation_vessel = self.database.get_fermentation_settings_master()
+        if fermentation_vessel and fermentation_vessel in self.parameters:
+            self.parameters[fermentation_vessel.replace('fv', 'master')] = True
 
     def extract_csv_data(self):
         # CATIA keys for GUI elements

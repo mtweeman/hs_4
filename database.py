@@ -140,8 +140,8 @@ class Database:
     def get_fermentation_settings(self, ispindel_name, log):
         # Searching master if log = False
         if not log:
-            name = self.get_ispindel_settings_master()
-            if not name:
+            fermentation_vessel = self.get_fermentation_settings_master()
+            if not fermentation_vessel:
                 return None
 
         self.establish_connection()
@@ -165,23 +165,23 @@ class Database:
         else:
             return None
 
-    def get_ispindel_settings_master(self):
+    def get_fermentation_settings_master(self):
         self.establish_connection()
 
         # Preparing query
-        self.query = ("""SELECT name """ +
-                      """FROM iSpindel_settings """ +
+        self.query = ("""SELECT fermentation_vessel """ +
+                      """FROM Fermentation_settings """ +
                       """WHERE master=True;""")
 
-        if self.cursor.tables(table='iSpindel_settings', tableType='TABLE').fetchone():
+        if self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
             self.cursor.execute(self.query)
 
-        name = self.cursor.fetchone()
+        fermentation_vessel = self.cursor.fetchone()
 
         self.terminate_connection()
 
-        if name:
-            return name[0]
+        if fermentation_vessel:
+            return fermentation_vessel[0]
         else:
             return None
 
@@ -218,7 +218,7 @@ class Database:
 
         self.terminate_connection()
 
-    def execute_fermentation_settings_log(self, key, log):
+    def execute_fermentation_settings_log(self, fermentation_vessel, log):
         self.establish_connection()
 
         # Preparing query
@@ -238,30 +238,55 @@ class Database:
                                               """ORDER BY batch_number DESC);""")
 
         if self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
-            self.cursor.execute(self.query, log, datetime.datetime.now(), key)
+            self.cursor.execute(self.query, log, datetime.datetime.now(), fermentation_vessel)
 
         self.terminate_connection()
 
-    def execute_ispindel_settings_master(self, ispindel_name=None):
+    def execute_fermentation_settings_master(self, fermentation_vessel, master):
         self.establish_connection()
 
         # Preparing query
-        self.query = ("""UPDATE iSpindel_settings """ +
+        self.query = ("""UPDATE Fermentation_settings """ +
                       """SET master=False """ +
                       """WHERE master=True;""")
 
-        if self.cursor.tables(table='iSpindel_settings', tableType='TABLE').fetchone():
+        if self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
             self.cursor.execute(self.query)
 
-        if ispindel_name:
-            self.query = ("""UPDATE iSpindel_settings """ +
+        if master:
+            self.query = ("""UPDATE Fermentation_settings """ +
                           """SET master=True """ +
-                          """WHERE name=?;""")
+                          """WHERE batch_number=(SELECT TOP 1 batch_number """ +
+                                              """FROM Fermentation_settings """ +
+                                              """WHERE fermentation_vessel=? """ +
+                                              """ORDER BY batch_number DESC);""")
 
-            if self.cursor.tables(table='iSpindel_settings', tableType='TABLE').fetchone():
-                self.cursor.execute(self.query, ispindel_name)
+            if self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
+                self.cursor.execute(self.query, fermentation_vessel)
 
         self.terminate_connection()
+
+    def get_fermentation_settings_batch_name(self, fermentation_vessel):
+        self.establish_connection()
+
+        # Preparing query
+        self.query = ("""SELECT batch_name """ +
+                      """FROM Fermentation_settings """ +
+                      """WHERE fermentation_vessel=? """ +
+                      """AND master=True """ +
+                      """ORDER BY batch_number DESC;""")
+
+        if self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
+            self.cursor.execute(self.query, fermentation_vessel)
+
+        result = self.cursor.fetchone()
+
+        self.terminate_connection()
+
+        if result:
+            return result[0]
+        else:
+            return None
 
     def get_fermentation_settings_batch_number_batch_name(self, fermentation_vessel, log=True):
         self.establish_connection()
