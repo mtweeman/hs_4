@@ -51,7 +51,7 @@ class RequesterSocketThread(threading.Thread):
                 if self.connection:
                     del self.write[0]
 
-            sleep(0.1)
+            sleep(.1)
 
     def transmit(self, msg):
         self.write.append(msg)
@@ -68,8 +68,9 @@ class RequesterSocketThread(threading.Thread):
 
         # Putting 'write' (=_set) parameters in write queue
         for k, v in self.master_parameters.items():
-            if ('_set' in k and 'set_' not in k) or\
-                    ('_offset' in k and 'offset_' not in k):
+            if (('_set' in k and 'set_' not in k) or
+                    ('_offset' in k and 'offset_' not in k) or
+                    ('control_' in k)):
                 self.transmit(k + '=' + str(v))
 
         self.start_time = datetime.datetime.now()

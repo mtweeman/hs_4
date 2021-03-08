@@ -69,3 +69,17 @@ class Mail:
 
         msg = self.create_message(subject, message_text)
         self.send_message(msg)
+
+    def microcontroller_sensors_offline_notification(self, side):
+        subject = 'Microcontroller/sensors offline for ' + side
+        message_text = ''
+
+        msg = self.create_message(subject, message_text)
+        self.send_message(msg)
+
+    def pitch_yeast_notification(self, batch_number, batch_name):
+        subject = 'Temperature appropriate for yeast pitch for ' + str(batch_number) + ', ' + batch_name
+        message_text = ''
+
+        msg = self.create_message(subject, message_text)
+        self.send_message(msg)

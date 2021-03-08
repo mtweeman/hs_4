@@ -1,6 +1,7 @@
 # Standard libraries
 from tkinter import *
 import csv
+import datetime
 
 # Imported libraries
 from PIL import Image, ImageTk
@@ -79,6 +80,9 @@ class FermentationTabGUI(Frame):
                 if pair[0] == 'microcontroller' or pair[0] == 'sensors':
                     self.l_statuses[pair[0]] = \
                         Label(self.f_status, fg='red', bg='#555555', font=(None, 14), text=pair[1].upper())
+                elif 'control_' in pair[0]:
+                    self.l_statuses[pair[0]] = \
+                        Label(self.f_status, fg='white', bg='#555555', font=(None, 14), text=str(pair[1]))
                 elif pair[0] == 'temperature_set':
                     self.l_signs['-'] = \
                         Label(self.f_status, fg='white', bg='blue', font=('Consolas', 14), text=' - ')
@@ -118,6 +122,10 @@ class FermentationTabGUI(Frame):
                     int(round(self.h_scale * self.img_fermentation.height * (v[1] / self.fermentation_rect[1]), 0)),
                     anchor=CENTER, image=self.img_c_button_off)
 
+        # Binding with slave socket
+        # self.l_status has to be initialized first
+        self.fermentation_socket_thread = RequesterSocketThread(self, self.fermentation_parameters.parameters)
+
         # Adding GUI objects to the grid
         self.c_fermentation.place(relwidth=1, relheight=1)
         self.f_status.place(relx=0.01, rely=0.087, anchor=N + W)
@@ -142,17 +150,11 @@ class FermentationTabGUI(Frame):
                 self.l_labels[k].grid(row=0, column=0, sticky=NSEW)
                 self.f_sparklines[k].grid(row=1, column=0, sticky=NSEW)
 
-                # Checking fermentation vessel for log = True or master = True
-                # if log = True - update sparklines (so far only empty figure) and labels
-                # if master = True - update labels
-                result = self.database.get_fermentation_settings_batch_number_batch_name(k)
-                if result:
-                    self.f_sparklines[k].update_sparklines(result[0])
-                    self.l_labels[k].config(text=k.replace('_', ' ').upper() + '\n' + result[1])
-                else:
-                    result = self.database.get_fermentation_settings_batch_name(k)
-                    if result:
-                        self.l_labels[k].config(text=k.replace('_', ' ').upper() + '\n' + result)
+        # Updating data on screen
+        for k in self.fermentation_parameters.parameters:
+            if 'fv' in k or 'master' in k:
+                self.update_set_temperatures(k)
+                self.update_data_on_screen(k)
 
         # Adding commands to GUI objects
         self.c_fermentation.bind('<Configure>', self.resize_image)
@@ -176,10 +178,6 @@ class FermentationTabGUI(Frame):
         for k in self.f_frames:
             self.f_frames[k].columnconfigure(0, weight=1)
             self.f_frames[k].rowconfigure(1, weight=1)
-
-        # Binding with slave socket
-        # self.l_status has to be initialized first
-        self.fermentation_socket_thread = RequesterSocketThread(self, self.fermentation_parameters.parameters)
 
     def resize_image(self, event):
         # Getting scale
@@ -255,29 +253,87 @@ class FermentationTabGUI(Frame):
             self.database.execute_fermentation_settings_master(key.replace('master', 'fv'),
                                                                self.fermentation_parameters.parameters[key])
 
-        # Updating data on screen
+        self.update_set_temperatures(key)
+        self.update_data_on_screen(key)
+
+    def update_data_on_screen(self, key):
         if 'fv' in key:
             if self.fermentation_parameters.parameters[key]:
                 result = self.database.get_fermentation_settings_batch_number_batch_name(key)
                 if result:
                     self.f_sparklines[key].update_sparklines(result[0])
                     if not self.fermentation_parameters.parameters[key.replace('fv', 'master')]:
-                        self.l_labels[key].config(text=key.replace('_', ' ').upper() + '\n' + result[1])
+                        self.l_labels[key].config(text=key.replace('_', ' ').upper() + '\n' +
+                                                       result[1] + '\n' +
+                                                       'T SET: %.2f' % self.fermentation_parameters.
+                                                  parameters[key.replace('fv', 'temperature_set')])
             else:
                 self.f_sparklines[key].clear_sparklines()
                 if not self.fermentation_parameters.parameters[key.replace('fv', 'master')]:
                     self.l_labels[key].config(text=key.replace('_', ' ').upper())
         elif 'master' in key:
-            if self.fermentation_parameters.parameters[key]:
-                if not self.fermentation_parameters.parameters[key.replace('master', 'fv')]:
-                    result = self.database.get_fermentation_settings_batch_number_batch_name(
-                        key.replace('master', 'fv'), False)
-                    if result:
-                        self.l_labels[key.replace('master', 'fv')].config(text=key.replace('master_', 'fv ').upper() +
-                                                                               '\n' + result[1])
+            if self.fermentation_parameters.parameters[key] and\
+                    not self.fermentation_parameters.parameters[key.replace('master', 'fv')]:
+                result = self.database.get_fermentation_settings_batch_name(key.replace('master', 'fv'))
+                if result:
+                    self.l_labels[key.replace('master', 'fv')].\
+                        config(text=key.replace('master_', 'fv ').upper() + '\n' +
+                                    result + '\n' +
+                                    'T SET: %.2f' % self.fermentation_parameters.
+                               parameters[key.replace('master', 'temperature_set')])
             else:
                 if not self.fermentation_parameters.parameters[key.replace('master', 'fv')]:
                     self.l_labels[key.replace('master', 'fv')].config(text=key.replace('master_', 'fv ').upper())
+
+    def update_set_temperatures(self, key):
+        if ('fv' in key and self.fermentation_parameters.parameters[key]) or\
+                ('master' in key and self.fermentation_parameters.parameters[key] and
+                 not self.fermentation_parameters.parameters[key.replace('master', 'fv')]):
+            if 'fv' in key:
+                result = self.database.get_fermentation_settings_fermentation_data(key)
+            elif 'master' in key:
+                result = self.database.get_fermentation_settings_fermentation_data(key.replace('master', 'fv'), False)
+            if result:
+                # yeast not pitched = bring wort to pitch temperature regardless of ambient temperature
+                if not result[2]:
+                    temp = result[1] + self.database.get_fermentation_programs_temperature(result[0], 0)
+                    ctrl = False
+                # fermentation not started = keep wort at pitch temperature with regard of ambient temperature
+                elif not result[3]:
+                    temp = result[1] + self.database.get_fermentation_programs_temperature(result[0], 0)
+                    ctrl = True
+                    # fermentation started = execute fermentation program
+                elif result[2] and result[3]:
+                    fermentation_time = datetime.datetime.now() - result[3]
+                    fermentation_days = int(fermentation_time / datetime.timedelta(days=1))
+                    fermentation_days_fract = fermentation_time % datetime.timedelta(days=1) / \
+                                              datetime.timedelta(days=1)
+
+                    temp_days = self.database.get_fermentation_programs_temperature(result[0], fermentation_days)
+                    temp_days_fract = 0
+
+                    if fermentation_days_fract != 0:
+                        temp_days_next = \
+                            self.database.get_fermentation_programs_temperature(result[0],
+                                                                                fermentation_days + 1)
+                        temp_days_fract = fermentation_days_fract * (temp_days_next - temp_days)
+
+                    temp = result[1] + temp_days + temp_days_fract
+                    ctrl = True
+
+                if 'fv' in key:
+                    self.fermentation_parameters.parameters[key.replace('fv', 'temperature_set')] = temp
+                elif 'master' in key:
+                    self.fermentation_parameters.parameters[key.replace('master', 'temperature_set')] = temp
+                    self.fermentation_parameters.parameters['temperature_set'] = temp
+                    self.fermentation_parameters.parameters['control_ambient'] = ctrl
+                    self.fermentation_parameters.parameters['control_freezer'] = True
+                    self.fermentation_socket_thread.transmit('temperature_set=' + str(temp))
+                    self.fermentation_socket_thread.transmit('control_ambient=' + str(ctrl))
+                    self.fermentation_socket_thread.transmit('control_freezer=' + str(True))
+                    self.l_statuses['temperature_set'].config(text='%.2f' % temp)
+                    self.l_statuses['control_ambient'].config(text=str(ctrl))
+                    self.l_statuses['control_freezer'].config(text=str(True))
 
     def ispindel_socket_parameters_update(self, socket_message):
         # Checking if log = True for fermentation_vessel OR master
@@ -286,6 +342,7 @@ class FermentationTabGUI(Frame):
             result = self.database.get_fermentation_settings(socket_message['name'], False)
 
         if result:
+            print(result)
             # Calculating gravity basing on polynomial and temperature with offset
             socket_message['gravity'] = socket_message['angle'] * result[2] + result[3]
             socket_message['temperature'] = socket_message['temperature'] + result[4]
@@ -297,10 +354,12 @@ class FermentationTabGUI(Frame):
                 self.database.execute_fermentation(result[1], socket_message)
                 self.f_sparklines[result[0]].update_sparklines()
 
+            # Updating set temperature
+
             # Updating data on screen
             self.l_labels[result[0]].config(text=result[0].replace('_', ' ').upper() + '\n' +
                                                  result[6] + '\n' +
-                                                 'T: ' + '%.1f' % socket_message['temperature'] + '\n' +
+                                                 'T: ' + '%.2f' % socket_message['temperature'] + '\n' +
                                                  'SG: ' + '%.3f' % socket_message['gravity'])
 
             # Setting fermentation notification
@@ -315,12 +374,13 @@ class FermentationTabGUI(Frame):
         # Extracting parameters
         # parameters controlled by server are not overwritten
         for k, v in socket_message.items():
-            if '_set' not in k and '_offset' not in k and self.fermentation_parameters.parameters[k] != v:
+            if ('_set' not in k and '_offset' not in k and 'control_' not in k and
+                    self.fermentation_parameters.parameters[k] != v):
                 self.fermentation_parameters.parameters[k] = v
 
         # Printing socket data on the screen
         for k, v in socket_message.items():
-            if '_set' not in k and '_offset' not in k and k in self.l_statuses:
+            if '_set' not in k and '_offset' not in k and 'control_' not in k and k in self.l_statuses:
                 if k == 'microcontroller' or k == 'sensors':
                     self.l_statuses[k].config(text=str(v).upper())
                     if v == 'online':
@@ -329,6 +389,12 @@ class FermentationTabGUI(Frame):
                         self.l_statuses[k].config(fg='red')
                 else:
                     self.l_statuses[k].config(text='%.2f' % v)
+
+        # Sending microcontroller/sensors notification
+        for k, v in socket_message.items():
+            if (k == 'microcontroller' or k == 'sensors') and v == 'offline':
+                self.mail.microcontroller_sensors_offline_notification('fermentation')
+                break
 
     def change_temperature_manually(self, event):
         # Updating parameters

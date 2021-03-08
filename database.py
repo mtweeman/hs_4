@@ -288,11 +288,32 @@ class Database:
         else:
             return None
 
-    def get_fermentation_settings_batch_number_batch_name(self, fermentation_vessel, log=True):
+    def get_fermentation_programs_temperature(self, fermentation_program, day):
         self.establish_connection()
 
         # Preparing query
-        self.query = ("""SELECT batch_number, batch_name """ +
+        self.query = ("""SELECT * """ +
+                      """FROM Fermentation_programs """ +
+                      """WHERE program=?;""")
+
+        if self.cursor.tables(table='Fermentation_programs', tableType='TABLE').fetchone():
+            self.cursor.execute(self.query, fermentation_program)
+
+        result = self.cursor.fetchone()
+        result = result[1:]
+
+        self.terminate_connection()
+
+        if result:
+            return result[day]
+        else:
+            return None
+
+    def get_fermentation_settings_fermentation_data(self, fermentation_vessel, log=True):
+        self.establish_connection()
+
+        # Preparing query
+        self.query = ("""SELECT fermentation_program, fermentation_temperature, pitch, start """ +
                       """FROM Fermentation_settings """ +
                       """WHERE fermentation_vessel=? """ +
                       """AND log=? """ +
@@ -300,6 +321,28 @@ class Database:
 
         if self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
             self.cursor.execute(self.query, fermentation_vessel, log)
+
+        result = self.cursor.fetchone()
+
+        self.terminate_connection()
+
+        if result:
+            return result
+        else:
+            return None
+
+    def get_fermentation_settings_batch_number_batch_name(self, fermentation_vessel):
+        self.establish_connection()
+
+        # Preparing query
+        self.query = ("""SELECT batch_number, batch_name """ +
+                      """FROM Fermentation_settings """ +
+                      """WHERE fermentation_vessel=? """ +
+                      """AND log=True """ +
+                      """ORDER BY batch_number DESC;""")
+
+        if self.cursor.tables(table='Fermentation_settings', tableType='TABLE').fetchone():
+            self.cursor.execute(self.query, fermentation_vessel)
 
         result = self.cursor.fetchone()
 

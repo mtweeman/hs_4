@@ -20,6 +20,8 @@ class FermentationParameters:
                            'temperature_freezer': 0,
                            'temperature_ambient_offset': 0,
                            'temperature_freezer_offset': 0.2,
+                           'control_ambient': False,
+                           'control_freezer': False,
                            }
         self.fv_parameters = {}
         self.fermentation_parameters = []
@@ -57,7 +59,7 @@ class FermentationParameters:
                 if row[0] != 'rect':
                     self.parameters[row[0]] = False
                     if 'fv_' in row[0]:
-                        self.parameters['temperature_set_ ' + row[0].split('_')[1]] = 0
+                        self.parameters['temperature_set_' + row[0].split('_')[1]] = 0
 
     def verify_parameters(self, key):
         # Checking if set of parameters is allowed
